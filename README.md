@@ -1,20 +1,25 @@
 # content-block
 
-Monorepo-Light: Directus (CMS) und spaeter React/Vite (Frontend).
+Monorepo-Light: Directus (CMS) und React/Vite (Frontend).
 
 ## Voraussetzungen
 
 - Docker mit Docker Compose
+- Node 20.19+ oder 22.12+
 
-## Directus starten
+## Quickstart
 
-1. Die Werte in `.env` pruefen und insbesondere Passwoerter anpassen.
+1. Die Werte in `.env` pruefen und insbesondere Secret und Passwoerter anpassen.
 2. `docker compose up -d` aus dem Repository-Root ausfuehren.
-3. Directus unter http://localhost:8055 mit `ADMIN_EMAIL` und
-	`ADMIN_PASSWORD` aus `.env` anmelden.
+	Directus ist danach unter http://localhost:8055 erreichbar.
+3. `cd apps/web && npm install && npm run dev` ausfuehren.
+	Das Frontend ist danach unter http://localhost:5173 erreichbar.
 
-## Aktueller Stand
+Zum Anmelden in Directus werden `ADMIN_EMAIL` und `ADMIN_PASSWORD` aus `.env`
+verwendet.
 
-- `apps/cms` enthaelt die Directus-Konfiguration.
-- PostgreSQL und Redis laufen ausschliesslich innerhalb des Compose-Netzwerks.
-- Directus ist auf Port `8055` erreichbar.
+## Struktur
+
+- `apps/web` - React/Vite-Frontend mit Directus-Verbindungstest
+- `apps/cms` - Directus-Konfiguration und lokale Laufzeitdaten
+- `docs/architecture` - Architekturuebersicht
