@@ -1,0 +1,50 @@
+:root {
+  color: #18261f;
+  background: #eef4ef;
+  font-family: Aptos, "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+#root {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  padding: 2rem;
+}
+
+.connection-status {
+  width: min(100%, 34rem);
+  border: 1px solid #8ca895;
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 2rem;
+  font-size: 1.125rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.connection-status--connected {
+  border-color: #2f7d4a;
+  color: #1b5e34;
+}
+
+.connection-status--failed {
+  border-color: #bb4d42;
+  color: #8e2e25;
+}
+
+.connection-status--failed p {
+  margin: 0;
+}
+
+.connection-status--failed p + p {
+  margin-top: 0.5rem;
+  overflow-wrap: anywhere;
+}
