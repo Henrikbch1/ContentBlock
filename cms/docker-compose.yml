@@ -5,7 +5,7 @@ services:
     image: postgres:17-alpine
     restart: unless-stopped
     volumes:
-      - ../apps/cms/database:/var/lib/postgresql/data
+      - ./database:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
@@ -26,8 +26,8 @@ services:
     ports:
       - "8055:8055"
     volumes:
-      - ../apps/cms/uploads:/directus/uploads
-      - ../apps/cms/extensions:/directus/extensions
+      - ./uploads:/directus/uploads
+      - ./extensions:/directus/extensions
     depends_on:
       database:
         condition: service_healthy
@@ -49,3 +49,4 @@ services:
       CORS_ENABLED: "true"
       CORS_ORIGIN: "http://localhost:5173"
       EXTENSIONS_AUTO_RELOAD: "true"
+      MARKETPLACE_TRUST: "all"

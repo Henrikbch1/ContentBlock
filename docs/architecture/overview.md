@@ -1,9 +1,9 @@
 # Architekturuebersicht
 
-`apps/web` enthaelt das React/Vite-Frontend. Es verwendet den Directus SDK
+`frontend` enthaelt das React/Vite-Frontend. Es verwendet den Directus SDK
 Client und prueft beim Start die Erreichbarkeit des CMS ueber `/server/ping`.
 
-`apps/cms` enthaelt keinen Directus-Core-Code. Directus laeuft als Docker-Image;
+`cms` enthaelt keinen Directus-Core-Code. Directus laeuft als Docker-Image;
 der Ordner ist fuer Konfiguration und spaetere Schema-Snapshots vorgesehen.
 
 Der Compose-Stack startet drei Container:

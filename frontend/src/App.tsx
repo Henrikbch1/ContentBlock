@@ -1,15 +1,17 @@
-import { useEffect, useState } from 'react';
-import { pingDirectus } from './lib/directus';
+import { useEffect, useState } from "react";
+import { pingDirectus } from "./lib/directus";
 
-type ConnectionStatus = 'checking' | 'connected' | 'failed';
+type ConnectionStatus = "checking" | "connected" | "failed";
 
-const DEFAULT_ERROR_MESSAGE = 'Die Verbindung zu Directus konnte nicht hergestellt werden.';
+const DEFAULT_ERROR_MESSAGE =
+  "Die Verbindung zu Directus konnte nicht hergestellt werden.";
 
 const getErrorMessage = (error: unknown): string =>
   error instanceof Error ? error.message : DEFAULT_ERROR_MESSAGE;
 
 export const App = (): React.JSX.Element => {
-  const [connectionStatus, setConnectionStatus] = useState<ConnectionStatus>('checking');
+  const [connectionStatus, setConnectionStatus] =
+    useState<ConnectionStatus>("checking");
   const [errorMessage, setErrorMessage] = useState<string>();
 
   useEffect(() => {
@@ -19,11 +21,11 @@ export const App = (): React.JSX.Element => {
       try {
         await pingDirectus();
         if (isMounted) {
-          setConnectionStatus('connected');
+          setConnectionStatus("connected");
         }
       } catch (error) {
         if (isMounted) {
-          setConnectionStatus('failed');
+          setConnectionStatus("failed");
           setErrorMessage(getErrorMessage(error));
         }
       }
@@ -36,11 +38,15 @@ export const App = (): React.JSX.Element => {
     };
   }, []);
 
-  if (connectionStatus === 'checking') {
-    return <main className="connection-status">Directus-Verbindung wird geprueft ...</main>;
+  if (connectionStatus === "checking") {
+    return (
+      <main className="connection-status">
+        Directus-Verbindung wird geprueft ...
+      </main>
+    );
   }
 
-  if (connectionStatus === 'failed') {
+  if (connectionStatus === "failed") {
     return (
       <main className="connection-status connection-status--failed">
         <p>Directus nicht erreichbar.</p>
@@ -49,5 +55,9 @@ export const App = (): React.JSX.Element => {
     );
   }
 
-  return <main className="connection-status connection-status--connected">✅ Directus erreichbar</main>;
+  return (
+    <main className="connection-status connection-status--connected">
+      ✅ Directus erreichbar
+    </main>
+  );
 };

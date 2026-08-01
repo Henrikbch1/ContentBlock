@@ -143,5 +143,5 @@ vite.config.ts.timestamp-*
 .vite/
 
 # Directus runtime data
-apps/cms/uploads/
-apps/cms/database/
+cms/uploads/
+cms/database/
