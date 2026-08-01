@@ -26,8 +26,8 @@ services:
     ports:
       - "8055:8055"
     volumes:
-      - ./uploads:/directus/uploads
-      - ./extensions:/directus/extensions
+      - directus_uploads:/directus/uploads
+      - directus_extensions:/directus/extensions
     depends_on:
       database:
         condition: service_healthy
@@ -50,3 +50,7 @@ services:
       CORS_ORIGIN: "http://localhost:5173"
       EXTENSIONS_AUTO_RELOAD: "true"
       MARKETPLACE_TRUST: "all"
+
+volumes:
+  directus_extensions:
+  directus_uploads:

@@ -2,7 +2,7 @@
 
 Hier liegt kein Directus-Core-Code. Directus laeuft als Container-Image.
 Dieser Ordner enthaelt nur Konfiguration: `snapshots/` fuer die
-Schema-Versionierung sowie spaeter `extensions/`, `seeds/` und `flows/`.
+Schema-Versionierung sowie spaeter `seeds/` und `flows/`.
 
-Lokale Laufzeitdaten werden in `database/` und `uploads/` abgelegt und nicht
-eingecheckt.
+Die Datenbank liegt lokal in `database/`. Uploads und Marketplace-Erweiterungen
+liegen in persistenten Docker-Volumes und werden nicht eingecheckt.
