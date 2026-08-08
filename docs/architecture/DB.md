@@ -1,94 +1,100 @@
+# Directus v12 - Datenmodell aus `cms/snapshots/snapshot.json`
+
 ```mermaid
 erDiagram
-    %% ===== GLOBALS (Singletons) =====
-    THEME ||..|| SITE : "1 Datensatz"
+    %% ===== GLOBALE KONFIGURATION =====
+    SITE }o--|| NAVIGATION : "navigation"
+    SITE }o--|| FOOTER : "footer"
+    SITE }o--|| THEME : "theme"
     NAVIGATION ||--o{ NAV_ITEMS : "items (O2M)"
-    NAV_ITEMS ||--o{NAV_ITEMS : "parent (self-ref, Baum)"
-    NAV_ITEMS}o--o| PAGES : "page (M2O)"
-    NAV_ITEMS ||--o{NAV_ITEMS_BLOCKS : "blocks (M2A, custom)"
-    FOOTER}o--|| PAGES : "imprint_page (PFLICHT)"
-    FOOTER }o--|| PAGES : "privacy_page (PFLICHT)"
+    NAV_ITEMS ||--o{ NAV_ITEMS : "parent (self-ref)"
+    NAV_ITEMS }o--o| PAGES : "page (M2O)"
+    FOOTER }o--|| PAGES : "imprint_page"
+    FOOTER }o--|| PAGES : "privacy_page"
     FOOTER ||--o{ FOOTER_LINKS : "columns (O2M)"
+    FOOTER_LINKS }o--o| PAGES : "page (M2O)"
 
-    %% ===== STRUKTUR =====
-    PAGES ||--o{ PAGES_BLOCKS : "blocks (M2A)"
+    %% ===== SEITEN UND TEMPLATES =====
+    TEMPLATES ||--o{ TEMPLATES_BLOCKS : "blocks (O2M)"
     TEMPLATES ||--o{ PAGES : "template (M2O)"
-    TEMPLATES ||--o{TEMPLATE_SLOTS : "slots (O2M)"
+    PAGES ||--o{ PAGES_BLOCKS : "blocks (M2A)"
 
-    %% ===== BLÖCKE (M2A) =====
-    PAGES_BLOCKS}o--|| BLOCK_HERO      : "item"
-    PAGES_BLOCKS }o--|| BLOCK_TEXT      : "item"
-    PAGES_BLOCKS }o--|| BLOCK_IMAGE     : "item"
-    PAGES_BLOCKS }o--|| BLOCK_TABLE     : "item"
-    PAGES_BLOCKS }o--|| BLOCK_CARDS     : "item"
-    PAGES_BLOCKS }o--|| BLOCK_FAQ       : "item"
-    PAGES_BLOCKS }o--|| BLOCK_CONTACTS  : "item"
-    PAGES_BLOCKS }o--|| BLOCK_DOCUMENTS : "item"
-    PAGES_BLOCKS }o--|| BLOCK_TICKER    : "item"
+    %% collection + item bilden die polymorphe M2A-Verknuepfung.
+    PAGES_BLOCKS }o--|| BLOCK_HERO : "item (wenn collection)"
+    PAGES_BLOCKS }o--|| BLOCK_TEXT : "item (wenn collection)"
+    PAGES_BLOCKS }o--|| BLOCK_IMAGE : "item (wenn collection)"
+    PAGES_BLOCKS }o--|| BLOCK_TABLE : "item (wenn collection)"
+    PAGES_BLOCKS }o--|| BLOCK_CARDS : "item (wenn collection)"
+    PAGES_BLOCKS }o--|| BLOCK_FAQ : "item (wenn collection)"
+    PAGES_BLOCKS }o--|| BLOCK_CONTACTS : "item (wenn collection)"
+    PAGES_BLOCKS }o--|| BLOCK_DOCUMENTS : "item (wenn collection)"
+    PAGES_BLOCKS }o--|| BLOCK_NEWS : "item (wenn collection)"
+    PAGES_BLOCKS }o--|| BLOCK_EVENTS : "item (wenn collection)"
+    PAGES_BLOCKS }o--|| BLOCK_TICKER : "item (wenn collection)"
 
-    %% ===== O2M statt JSON =====
-    BLOCK_HERO   ||--o{ BLOCK_HERO_BUTTONS  : "buttons (O2M)"
-    BLOCK_CARDS  ||--o{ BLOCK_CARDS_ITEMS   : "cards (O2M)"
-    BLOCK_FAQ    ||--o{ BLOCK_FAQ_ITEMS     : "faqs (O2M)"
-    BLOCK_TICKER ||--o{ BLOCK_TICKER_ITEMS  : "messages (O2M)"
+    %% ===== BLOCK-INHALTE =====
+    BLOCK_HERO ||--o{ BLOCK_HERO_BUTTONS : "buttons (O2M)"
+    BLOCK_CARDS ||--o{ BLOCK_CARDS_ITEMS : "cards (O2M)"
+    BLOCK_FAQ ||--o{ BLOCK_FAQ_ITEMS : "faqs (O2M)"
+    BLOCK_TICKER ||--o{ BLOCK_TICKER_ITEMS : "messages (O2M)"
+    BLOCK_CONTACTS ||--o{ BLOCK_CONTACTS_ROLES : "roles (O2M)"
+    BLOCK_CONTACTS_ROLES }o--|| ROLES : "role (M2O)"
+    BLOCK_DOCUMENTS ||--o{ BLOCK_DOCS_DOCS : "docs (O2M)"
+    BLOCK_DOCS_DOCS }o--|| DOCUMENTS : "document (M2O)"
+    BLOCK_DOCUMENTS }o--o| CATEGORIES : "filter_category (M2O)"
+    BLOCK_NEWS }o--o| CATEGORIES : "filter_category (M2O)"
+    BLOCK_EVENTS }o--o| CATEGORIES : "filter_category (M2O)"
 
-    %% ===== DATA-BOUND =====
-    BLOCK_CONTACTS  ||--o{BLOCK_CONTACTS_ROLES : "roles (M2M, sort)"
-    BLOCK_CONTACTS_ROLES}o--|| ROLES           : "role"
-    BLOCK_DOCUMENTS ||--o{BLOCK_DOCS_DOCS      : "docs (M2M, sort)"
-    BLOCK_DOCS_DOCS}o--|| DOCUMENTS            : "document"
-
-    %% ===== STAMMDATEN + TAXONOMIE =====
-    ROLES ||--o{ ROLES         : "parent (self-ref)"
-    ROLES ||--o{ PEOPLE        : "role (M2O)"
+    %% ===== CONTENT UND STAMMDATEN =====
+    CATEGORIES ||--o{ CATEGORIES : "parent (self-ref)"
+    ROLES ||--o{ ROLES : "parent (self-ref)"
+    ROLES ||--o{ PEOPLE : "role (M2O)"
     CATEGORIES ||--o{ DOCUMENTS : "category (M2O)"
+    CATEGORIES ||--o{ NEWS : "category (M2O)"
+    CATEGORIES ||--o{ EVENTS : "category (M2O)"
+    PAGES ||--o{ BLOCK_TICKER_ITEMS : "link (M2O)"
 
-    %% ===== ATTRIBUTE =====
     SITE {
         uuid id PK
-        uuid navigation_id FK
-        uuid footer_id FK
-        uuid theme_id FK
+        uuid navigation FK
+        uuid footer FK
+        uuid theme FK
     }
     THEME {
-        uuid id PK "SINGLETON"
-        string primary_color "Color-Interface"
-        string secondary_color "Color-Interface"
-        string accent_color "Color-Interface"
-        string background_color "Color-Interface"
-        string text_color "Color-Interface"
-        string font_heading "Select"
-        string border_radius "Select"
+        uuid id PK
+        string primary_color
+        string secondary_color
+        string accent_color
+        string background_color
+        string text_color
+        string font_heading
+        string border_radius
     }
     NAVIGATION {
-        uuid id PK "SINGLETON"
+        uuid id PK
         uuid logo FK
+        alias items
     }
     NAV_ITEMS {
         uuid id PK
+        uuid navigation FK
         string label
-        uuid parent FK "self-ref (Baum)"
-        int sort
-        string type "group|page|url|custom"
-        uuid page FK "→ PAGES"
+        uuid parent FK
+        string type
+        uuid page FK
         string external_url
-    }
-    NAV_ITEMS_BLOCKS {
-        uuid id PK
-        uuid nav_items_id FK
-        string collection "block_*"
-        uuid item
         int sort
     }
     FOOTER {
-        uuid id PK "SINGLETON"
+        uuid id PK
         string copyright
-        uuid imprint_page FK "PFLICHT"
-        uuid privacy_page FK "PFLICHT"
+        uuid imprint_page FK
+        uuid privacy_page FK
+        alias columns
     }
     FOOTER_LINKS {
         uuid id PK
-        uuid footer_id FK
+        uuid footer FK
         string label
         uuid page FK
         string external_url
@@ -97,110 +103,188 @@ erDiagram
     PAGES {
         uuid id PK
         string title
-        string slug UK
-        string status "draft|published"
-        uuid template_id FK
+        string slug
+        uuid template FK
+        alias blocks
     }
     PAGES_BLOCKS {
         uuid id PK
         uuid pages_id FK
-        string collection "block_*"
-        uuid item
+        string collection
+        string item
         int sort
     }
-    BLOCK_TICKER {
+    TEMPLATES {
         uuid id PK
-        bool active
-        string speed "slow|medium|fast"
-        string background_color
+        string name
+        alias blocks
     }
-    BLOCK_TICKER_ITEMS {
+    TEMPLATES_BLOCKS {
         uuid id PK
-        uuid ticker_id FK
-        string text
-        uuid link FK
+        uuid templates_id FK
+        string collection
+        string item
         int sort
     }
+
     BLOCK_HERO {
         uuid id PK
         string title
         string subtitle
         uuid image FK
+        alias buttons
     }
     BLOCK_HERO_BUTTONS {
         uuid id PK
-        uuid hero_id FK
+        uuid hero FK
         string label
         string href
-        string variant "Select"
+        string variant
         int sort
     }
-    BLOCK_TEXT { uuid id PK
+    BLOCK_TEXT {
+        uuid id PK
         string headline
-        text content }
-    BLOCK_IMAGE { uuid id PK
+        text content
+    }
+    BLOCK_IMAGE {
+        uuid id PK
         uuid image FK
-        string alt }
-    BLOCK_TABLE { uuid id PK
+        string alt
+    }
+    BLOCK_TABLE {
+        uuid id PK
         string title
-        json data "Spreadsheet-Extension!" }
-    BLOCK_CARDS { uuid id PK
-        string title }
-    BLOCK_CARDS_ITEMS { uuid id PK
-        uuid card_id FK
+        json data
+    }
+    BLOCK_CARDS {
+        uuid id PK
         string title
-        int sort }
-    BLOCK_FAQ { uuid id PK
-        string title }
-    BLOCK_FAQ_ITEMS { uuid id PK
-        uuid faq_id FK
+        alias cards
+    }
+    BLOCK_CARDS_ITEMS {
+        uuid id PK
+        uuid card FK
+        string title
+        text text
+        uuid image FK
+        int sort
+    }
+    BLOCK_FAQ {
+        uuid id PK
+        string title
+        alias faqs
+    }
+    BLOCK_FAQ_ITEMS {
+        uuid id PK
+        uuid faq FK
         string question
         text answer
-        int sort }
+        int sort
+    }
+    BLOCK_TICKER {
+        uuid id PK
+        string background_color
+        string text_color
+        alias messages
+    }
+    BLOCK_TICKER_ITEMS {
+        uuid id PK
+        uuid ticker FK
+        string text
+        uuid link FK
+        int sort
+    }
     BLOCK_CONTACTS {
         uuid id PK
         string title
-        string mode "manual|by_role"
-        bool show_photo
-        bool show_email
-        bool show_phone
+        string mode
+        boolean show_photo
+        boolean show_email
+        boolean show_phone
         string layout
+        alias roles
     }
-    BLOCK_CONTACTS_ROLES { uuid id PK
-        uuid block_contacts_id FK
-        uuid roles_id FK
-        int sort }
+    BLOCK_CONTACTS_ROLES {
+        uuid id PK
+        uuid block_contacts FK
+        uuid role FK
+        int sort
+    }
     BLOCK_DOCUMENTS {
         uuid id PK
         string title
-        string mode "manual|by_category"
+        string mode
         uuid filter_category FK
+        alias docs
     }
-    BLOCK_DOCS_DOCS { uuid id PK
-        uuid block_documents_id FK
-        uuid documents_id FK
-        int sort }
-    ROLES { uuid id PK
+    BLOCK_DOCS_DOCS {
+        uuid id PK
+        uuid block_documents FK
+        uuid document FK
+        int sort
+    }
+    BLOCK_NEWS {
+        uuid id PK
+        string title
+        string mode
+        uuid filter_category FK
+        int limit
+    }
+    BLOCK_EVENTS {
+        uuid id PK
+        string title
+        string mode
+        uuid filter_category FK
+        int limit
+    }
+
+    CATEGORIES {
+        uuid id PK
+        string name
+        string slug
+        uuid parent FK
+        int sort
+    }
+    ROLES {
+        uuid id PK
         string name
         uuid parent FK
-        int sort }
-    PEOPLE { uuid id PK
+        int sort
+    }
+    PEOPLE {
+        uuid id PK
         string first_name
         string last_name
         uuid role FK
         uuid photo FK
-        string email }
-    DOCUMENTS { uuid id PK
+        string email
+    }
+    DOCUMENTS {
+        uuid id PK
         string title
         uuid file FK
-        uuid category FK }
-    CATEGORIES { uuid id PK
-        string name
-        string slug UK }
-    TEMPLATES { uuid id PK
-        string name }
-    TEMPLATE_SLOTS { uuid id PK
-        uuid template_id FK
-        string allowed_type
-        int sort }
+        uuid category FK
+    }
+    NEWS {
+        uuid id PK
+        string title
+        string slug
+        timestamp published_date
+        string teaser
+        uuid cover_image FK
+        text body
+        uuid category FK
+    }
+    EVENTS {
+        uuid id PK
+        string title
+        string slug
+        timestamp start_date
+        timestamp end_date
+        string location
+        text description
+        int show_days_before
+        uuid category FK
+    }
 ```
