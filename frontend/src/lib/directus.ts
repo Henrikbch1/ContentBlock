@@ -63,9 +63,13 @@ const missingUrlMessage = "VITE_DIRECTUS_URL is not configured.";
 
 const createDirectusClient = () => {
   const client = createDirectus<Schema>(directusUrl ?? "");
+  const restClient = rest({
+    onRequest: (options) => ({ ...options, cache: "no-store" }),
+  });
+
   return directusToken
-    ? client.with(staticToken(directusToken)).with(rest())
-    : client.with(rest());
+    ? client.with(staticToken(directusToken)).with(restClient)
+    : client.with(restClient);
 };
 
 export const directus = createDirectusClient();
