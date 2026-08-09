@@ -186,14 +186,18 @@ export const getEventsForBlock = async (cfg: BlockEvents): Promise<Event[]> => {
     return [];
   }
 
+  const filter = {
+    ...(cfg.mode === "upcoming"
+      ? { start_date: { _gte: new Date().toISOString() } }
+      : {}),
+    ...(categoryId === null ? {} : { category: { _eq: categoryId } }),
+  };
+
   return directus.request(
     readItems("events", {
       fields: EVENT_FIELDS,
-      filter: {
-        start_date: { _gte: new Date().toISOString() },
-        ...(categoryId === null ? {} : { category: { _eq: categoryId } }),
-      },
-      sort: ["start_date"],
+      filter,
+      sort: cfg.mode === "upcoming" ? ["start_date"] : ["-start_date"],
       limit: cfg.limit ?? -1,
     }),
   );
