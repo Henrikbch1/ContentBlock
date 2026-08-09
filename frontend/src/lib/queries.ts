@@ -265,7 +265,6 @@ export const getContactsForBlock = async (
     ...PERSON_FIELDS,
     ...(cfg.show_photo ? ["photo"] : []),
     ...(cfg.show_email ? ["email"] : []),
-    ...(cfg.show_phone ? ["phone"] : []),
   ];
 
   return directus.request(

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { getEventsForBlock } from "../../lib/queries";
 import type { BlockEvents, Event } from "../../lib/types";
 import { EmptyState } from "../common/EmptyState";
+import { RichText } from "../common/RichText";
 
 const formatDate = (date: string | null | undefined): string =>
   date ? new Date(date).toLocaleDateString("de-DE") : "";
@@ -47,7 +48,7 @@ export const EventsBlock = ({ item }: { item: BlockEvents }): React.JSX.Element 
               <p className="text-sm text-muted-foreground">{formatDate(event.start_date)}</p>
               <h3 className="mt-2 text-xl font-semibold">{event.title ?? ""}</h3>
               {event.location && <p className="mt-2 text-sm text-muted-foreground">{event.location}</p>}
-              {event.description && <p className="mt-3 text-muted-foreground">{event.description}</p>}
+              {event.description && <RichText content={event.description} className="mt-3 text-muted-foreground" />}
             </a>
           ))}
         </div>

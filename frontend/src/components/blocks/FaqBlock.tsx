@@ -1,4 +1,5 @@
 import type { BlockFaq } from "../../lib/types";
+import { RichText } from "../common/RichText";
 
 export const FaqBlock = ({ item }: { item: BlockFaq }): React.JSX.Element => (
   <section className="mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-16">
@@ -7,7 +8,7 @@ export const FaqBlock = ({ item }: { item: BlockFaq }): React.JSX.Element => (
       {[...item.faqs].sort((a, b) => (a.sort ?? 0) - (b.sort ?? 0)).map((faq, index) => (
         <details className="group py-5" key={faq.id ?? index}>
           <summary className="cursor-pointer list-none pr-8 text-lg font-medium marker:hidden">{faq.question || "Frage"}</summary>
-          <p className="pt-3 leading-7 text-muted-foreground">{faq.answer || ""}</p>
+          <RichText content={faq.answer} className="pt-3 leading-7 text-muted-foreground" />
         </details>
       ))}
     </div> : <p className="text-sm text-muted-foreground">Keine Fragen vorhanden.</p>}
