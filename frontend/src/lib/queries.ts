@@ -26,6 +26,8 @@ const SITE_FIELDS = [
   "footer.*",
   "footer.columns.*",
   "footer.columns.page.*",
+  "footer.imprint_page.*",
+  "footer.privacy_page.*",
   "theme.*",
 ] as const;
 
