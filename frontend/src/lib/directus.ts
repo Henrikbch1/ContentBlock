@@ -1,4 +1,4 @@
-import { createDirectus, rest, serverPing } from "@directus/sdk";
+import { createDirectus, rest, serverPing, staticToken } from "@directus/sdk";
 
 import type {
   BlockCards,
@@ -57,10 +57,18 @@ export type Schema = {
 };
 
 const directusUrl = import.meta.env.VITE_DIRECTUS_URL;
+const directusToken = import.meta.env.VITE_DIRECTUS_TOKEN;
 
 const missingUrlMessage = "VITE_DIRECTUS_URL is not configured.";
 
-export const directus = createDirectus<Schema>(directusUrl ?? "").with(rest());
+const createDirectusClient = () => {
+  const client = createDirectus<Schema>(directusUrl ?? "");
+  return directusToken
+    ? client.with(staticToken(directusToken)).with(rest())
+    : client.with(rest());
+};
+
+export const directus = createDirectusClient();
 
 export const assertDirectusConfigured = (): void => {
   if (!directusUrl) {
