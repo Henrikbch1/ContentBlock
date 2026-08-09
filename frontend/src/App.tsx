@@ -22,7 +22,11 @@ const getPathSegments = (pathname: string): string[] =>
     .filter(Boolean)
     .map((segment) => decodeURIComponent(segment));
 
-const RouteContent = ({ pathname }: { pathname: string }): React.JSX.Element => {
+const RouteContent = ({
+  pathname,
+}: {
+  pathname: string;
+}): React.JSX.Element => {
   const segments = getPathSegments(pathname);
   const [section, slug] = segments;
 
@@ -32,10 +36,13 @@ const RouteContent = ({ pathname }: { pathname: string }): React.JSX.Element => 
   if (section === "news" && slug) {
     return <NewsPage slug={segments.slice(1).join("/")} />;
   }
-  if (section === "events" && segments.length === 1) {
+  if (
+    (section === "events" || section === "termine") &&
+    segments.length === 1
+  ) {
     return <EventsPage />;
   }
-  if (section === "events" && slug) {
+  if ((section === "events" || section === "termine") && slug) {
     return <EventsPage slug={segments.slice(1).join("/")} />;
   }
   if (segments.length === 0) {
@@ -55,20 +62,36 @@ export const App = (): React.JSX.Element => {
   useEffect(() => {
     const handlePopState = (): void => setPathname(window.location.pathname);
     const handleDocumentClick = (event: MouseEvent): void => {
-      if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+      if (
+        event.defaultPrevented ||
+        event.button !== 0 ||
+        event.metaKey ||
+        event.ctrlKey ||
+        event.shiftKey ||
+        event.altKey
+      ) {
         return;
       }
 
       const target = event.target;
       if (!(target instanceof Element)) return;
       const anchor = target.closest("a");
-      if (!anchor || anchor.target === "_blank" || anchor.hasAttribute("download")) return;
+      if (
+        !anchor ||
+        anchor.target === "_blank" ||
+        anchor.hasAttribute("download")
+      )
+        return;
 
       const url = new URL(anchor.href, window.location.href);
       if (url.origin !== window.location.origin) return;
 
       event.preventDefault();
-      window.history.pushState({}, "", `${url.pathname}${url.search}${url.hash}`);
+      window.history.pushState(
+        {},
+        "",
+        `${url.pathname}${url.search}${url.hash}`,
+      );
       setPathname(url.pathname);
     };
 
@@ -115,7 +138,11 @@ export const App = (): React.JSX.Element => {
 
   if (connectionStatus === "failed") {
     return (
-      <main aria-live="assertive" className="connection-status connection-status--failed" role="alert">
+      <main
+        aria-live="assertive"
+        className="connection-status connection-status--failed"
+        role="alert"
+      >
         <p>Directus nicht erreichbar.</p>
         <p>{errorMessage}</p>
       </main>
@@ -123,7 +150,9 @@ export const App = (): React.JSX.Element => {
   }
 
   return (
-    <ThemeProvider theme={site?.theme && typeof site.theme === "object" ? site.theme : null}>
+    <ThemeProvider
+      theme={site?.theme && typeof site.theme === "object" ? site.theme : null}
+    >
       <div className="flex min-h-screen flex-col bg-background text-foreground">
         <Header navigation={site?.navigation} />
         <main className="flex-1">

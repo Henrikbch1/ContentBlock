@@ -3,6 +3,7 @@ import { createDirectus, rest, serverPing, staticToken } from "@directus/sdk";
 import type {
   BlockCards,
   BlockContacts,
+  BlockContactsRole,
   BlockDocuments,
   BlockEvents,
   BlockFaq,
@@ -48,6 +49,7 @@ export type Schema = {
   block_image: BlockImage;
   block_table: BlockTable;
   block_cards: BlockCards;
+  block_contacts_roles: BlockContactsRole;
   block_faq: BlockFaq;
   block_contacts: BlockContacts;
   block_documents: BlockDocuments;

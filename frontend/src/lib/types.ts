@@ -3,7 +3,13 @@ export type DirectusAsset = DirectusId | { id: DirectusId } | null;
 export type DirectusRelation<T> = T | DirectusId | null;
 
 export type NavItemType = "group" | "page" | "url" | string;
-export type BlockMode = "manual" | "latest" | "upcoming" | "by_category" | "by_role" | string;
+export type BlockMode =
+  | "manual"
+  | "latest"
+  | "upcoming"
+  | "by_category"
+  | "by_role"
+  | string;
 
 export interface Theme {
   id: DirectusId;
@@ -163,6 +169,12 @@ export interface BlockFaq {
   faqs?: FaqItem[] | null;
 }
 
+export interface BlockContactsRole {
+  id: DirectusId;
+  role?: DirectusRelation<Role>;
+  sort?: number | null;
+}
+
 export interface BlockTickerMessage {
   id?: DirectusId;
   text?: string | null;
@@ -185,7 +197,7 @@ export interface BlockContacts {
   show_email?: boolean | null;
   show_phone?: boolean | null;
   layout?: string | null;
-  roles?: Array<DirectusRelation<Role>> | null;
+  roles?: Array<DirectusRelation<BlockContactsRole>> | null;
 }
 
 export interface BlockDocuments {

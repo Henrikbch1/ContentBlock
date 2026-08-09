@@ -3,6 +3,7 @@ import { readItems, readSingleton } from "@directus/sdk";
 import { assertDirectusConfigured, directus } from "./directus";
 import type {
   BlockContacts,
+  BlockContactsRole,
   BlockDocuments,
   BlockEvents,
   BlockNews,
@@ -14,6 +15,7 @@ import type {
   Page,
   Person,
   Site,
+  Theme,
 } from "./types";
 
 const SITE_FIELDS = [
@@ -29,6 +31,17 @@ const SITE_FIELDS = [
   "footer.imprint_page.*",
   "footer.privacy_page.*",
   "theme.*",
+] as const;
+
+const THEME_FIELDS = [
+  "id",
+  "primary_color",
+  "secondary_color",
+  "accent_color",
+  "background_color",
+  "text_color",
+  "font_heading",
+  "border_radius",
 ] as const;
 
 const PAGE_FIELDS = [
@@ -51,6 +64,7 @@ const PAGE_FIELDS = [
   "blocks.item:block_faq.faqs.*",
   "blocks.item:block_contacts.*",
   "blocks.item:block_contacts.roles.*",
+  "blocks.item:block_contacts.roles.role.*",
   "blocks.item:block_documents.*",
   "blocks.item:block_documents.docs.*",
   "blocks.item:block_ticker.*",
@@ -84,12 +98,7 @@ const EVENT_FIELDS = [
 
 const DOCUMENT_FIELDS = ["id", "title", "file", "category.*"] as const;
 
-const PERSON_FIELDS = [
-  "id",
-  "first_name",
-  "last_name",
-  "role.*",
-] as const;
+const PERSON_FIELDS = ["id", "first_name", "last_name", "role.*"] as const;
 
 const getRelationId = <T extends { id: DirectusId }>(
   relation: DirectusRelation<T> | undefined,
@@ -108,13 +117,36 @@ const getRelationIds = <T extends { id: DirectusId }>(
     .map((relation) => getRelationId(relation))
     .filter((id): id is DirectusId => id !== null);
 
+const getContactRoleIds = (
+  relations: Array<DirectusRelation<BlockContactsRole>> | null | undefined,
+): DirectusId[] =>
+  (relations ?? [])
+    .map((relation) =>
+      relation && typeof relation === "object"
+        ? getRelationId(relation.role)
+        : null,
+    )
+    .filter((id): id is DirectusId => id !== null);
+
 export const getSite = async (): Promise<Site | null> => {
   assertDirectusConfigured();
-  return directus.request(
-    readSingleton("site", {
-      fields: SITE_FIELDS,
-    }),
-  );
+  const [site, themes] = await Promise.all([
+    directus.request(
+      readSingleton("site", {
+        fields: SITE_FIELDS,
+        _cb: Date.now(),
+      }),
+    ),
+    directus.request(
+      readItems("theme" as never, {
+        fields: THEME_FIELDS as never,
+        limit: 1,
+        _cb: Date.now(),
+      }) as never,
+    ) as Promise<Theme[]>,
+  ]);
+
+  return site ? { ...site, theme: themes[0] ?? null } : null;
 };
 
 export const getPageBySlug = async (slug: string): Promise<Page | null> => {
@@ -137,7 +169,9 @@ export const getPageSlugs = async (): Promise<string[]> => {
       filter: { slug: { _nnull: true } },
     }),
   );
-  return pages.flatMap((page) => (typeof page.slug === "string" ? [page.slug] : []));
+  return pages.flatMap((page) =>
+    typeof page.slug === "string" ? [page.slug] : [],
+  );
 };
 
 export const getNewsForBlock = async (cfg: BlockNews): Promise<News[]> => {
@@ -150,7 +184,8 @@ export const getNewsForBlock = async (cfg: BlockNews): Promise<News[]> => {
   return directus.request(
     readItems("news", {
       fields: NEWS_FIELDS,
-      filter: categoryId === null ? undefined : { category: { _eq: categoryId } },
+      filter:
+        categoryId === null ? undefined : { category: { _eq: categoryId } },
       sort: ["-published_date"],
       limit: cfg.limit ?? -1,
     }),
@@ -254,7 +289,7 @@ export const getContactsForBlock = async (
   cfg: BlockContacts,
 ): Promise<Array<Person & { phone?: string | null }>> => {
   assertDirectusConfigured();
-  const roleIds = getRelationIds(cfg.roles);
+  const roleIds = getContactRoleIds(cfg.roles);
   if (cfg.mode === "manual" && roleIds.length === 0) {
     return [];
   }
@@ -271,6 +306,7 @@ export const getContactsForBlock = async (
     readItems("people", {
       fields,
       filter: { role: { _in: roleIds } },
+      sort: ["role.sort"],
     }),
   );
 };
