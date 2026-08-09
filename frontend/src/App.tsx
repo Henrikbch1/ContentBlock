@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { pingDirectus } from "./lib/directus";
 import { getSite } from "./lib/queries";
 import type { Site } from "./lib/types";
 import { ThemeProvider } from "./components/common/ThemeProvider";
@@ -86,7 +85,7 @@ export const App = (): React.JSX.Element => {
 
     const checkConnection = async (): Promise<void> => {
       try {
-        const [, loadedSite] = await Promise.all([pingDirectus(), getSite()]);
+        const loadedSite = await getSite();
         if (isMounted) {
           setSite(loadedSite);
           setConnectionStatus("connected");
