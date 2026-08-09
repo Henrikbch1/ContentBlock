@@ -90,10 +90,7 @@ img {
 }
 
 #root {
-  display: grid;
   min-height: 100vh;
-  place-items: center;
-  padding: 2rem;
 }
 
 .connection-status {

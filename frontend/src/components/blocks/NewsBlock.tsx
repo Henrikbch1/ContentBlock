@@ -44,14 +44,14 @@ export const NewsBlock = ({ item }: { item: BlockNews }): React.JSX.Element => {
       {!isLoading && !hasError && news.length > 0 && (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {news.map((article) => (
-            <article className="overflow-hidden border border-border bg-card" key={article.id}>
+            <a className="block overflow-hidden border border-border bg-card transition-colors hover:border-primary" href={`/news/${article.slug ?? article.id}`} key={article.id}>
               {article.cover_image && <DirectusImage asset={article.cover_image} alt={article.title ?? ""} className="aspect-16/10 w-full object-cover" />}
               <div className="p-6">
                 {article.published_date && <p className="text-sm text-muted-foreground">{formatDate(article.published_date)}</p>}
                 <h3 className="mt-2 text-xl font-semibold">{article.title ?? ""}</h3>
                 {article.teaser && <p className="mt-3 text-muted-foreground">{article.teaser}</p>}
               </div>
-            </article>
+            </a>
           ))}
         </div>
       )}

@@ -43,12 +43,12 @@ export const EventsBlock = ({ item }: { item: BlockEvents }): React.JSX.Element 
       {!isLoading && !hasError && events.length > 0 && (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {events.map((event) => (
-            <article className="border border-border bg-card p-6" key={event.id}>
+            <a className="block border border-border bg-card p-6 transition-colors hover:border-primary" href={`/events/${event.slug ?? event.id}`} key={event.id}>
               <p className="text-sm text-muted-foreground">{formatDate(event.start_date)}</p>
               <h3 className="mt-2 text-xl font-semibold">{event.title ?? ""}</h3>
               {event.location && <p className="mt-2 text-sm text-muted-foreground">{event.location}</p>}
               {event.description && <p className="mt-3 text-muted-foreground">{event.description}</p>}
-            </article>
+            </a>
           ))}
         </div>
       )}

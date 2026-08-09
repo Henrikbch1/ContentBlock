@@ -20,9 +20,17 @@ const ALLOWED_TAGS = new Set([
   "H4",
 ]);
 
+const escapeHtml = (content: string): string =>
+  content
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+
 const sanitizeHtml = (content: string): string => {
   if (typeof DOMParser === "undefined") {
-    return content.replace(/<[^>]*>/g, " ");
+    return escapeHtml(content.replace(/<[^>]*>/g, " "));
   }
 
   const document = new DOMParser().parseFromString(content, "text/html");
