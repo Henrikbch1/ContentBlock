@@ -1,0 +1,81 @@
+{
+  "flows": [
+    {
+      "id": "a3621891-e0ad-49ed-bb12-9283dd6f69cc",
+      "name": "Slugify (categories/pages/news/events)",
+      "icon": "link",
+      "color": "#2ECDA7",
+      "description": "Erzeugt slug aus name (categories) bzw. title (pages/news/events). Blocking Filter.",
+      "status": "active",
+      "accountability": "all",
+      "trigger": "event",
+      "options": {
+        "type": "filter",
+        "scope": [
+          "items.create",
+          "items.update"
+        ],
+        "collections": [
+          "categories",
+          "pages",
+          "news",
+          "events"
+        ],
+        "return": "$last"
+      },
+      "operation": "0b4aa52f-73bc-4b6c-b252-b4d7b7da0058"
+    },
+    {
+      "id": "25076483-f123-4e5c-a896-a4d63c8e32d6",
+      "name": "Events – visible_from",
+      "icon": "visibility",
+      "color": "#6644FF",
+      "description": "visible_from = start_date minus show_days_before Tage. Blocking Filter (keine Schleife).",
+      "status": "active",
+      "accountability": "all",
+      "trigger": "event",
+      "options": {
+        "type": "filter",
+        "scope": [
+          "items.create",
+          "items.update"
+        ],
+        "collections": [
+          "events"
+        ],
+        "return": "$last"
+      },
+      "operation": "7eff83be-638f-4dca-aae6-9e326d6bb945"
+    }
+  ],
+  "operations": [
+    {
+      "id": "0b4aa52f-73bc-4b6c-b252-b4d7b7da0058",
+      "name": "compute_slug",
+      "key": "compute_slug",
+      "type": "exec",
+      "position_x": 19,
+      "position_y": 1,
+      "options": {
+        "code": "module.exports = async function (data) {\n  const p = { ...(data.$trigger?.payload ?? {}) };\n  const coll = data.$trigger?.collection;\n  const source = coll === 'categories' ? p.name : p.title;\n  if (!source) return p;\n  p.slug = String(source)\n    .toLowerCase()\n    .replace(/ä/g,'ae').replace(/ö/g,'oe').replace(/ü/g,'ue').replace(/ß/g,'ss')\n    .normalize('NFKD').replace(/[\\u0300-\\u036f]/g,'')\n    .replace(/[^a-z0-9]+/g,'-')\n    .replace(/^-+|-+$/g,'');\n  return p;\n};"
+      },
+      "resolve": null,
+      "reject": null,
+      "flow": "a3621891-e0ad-49ed-bb12-9283dd6f69cc"
+    },
+    {
+      "id": "7eff83be-638f-4dca-aae6-9e326d6bb945",
+      "name": "compute_visible_from",
+      "key": "compute_visible_from",
+      "type": "exec",
+      "position_x": 19,
+      "position_y": 1,
+      "options": {
+        "code": "module.exports = async function (data) {\n  const p = { ...(data.$trigger?.payload ?? {}) };\n  const touches = 'start_date' in p || 'show_days_before' in p;\n  if (!touches) return p;\n  if ('start_date' in p && !p.start_date) { p.visible_from = null; return p; }\n  if (p.start_date) {\n    const days = Number(p.show_days_before ?? 0) || 0;\n    const dt = new Date(p.start_date);\n    dt.setDate(dt.getDate() - days);\n    p.visible_from = dt.toISOString();\n  }\n  return p;\n};"
+      },
+      "resolve": null,
+      "reject": null,
+      "flow": "25076483-f123-4e5c-a896-a4d63c8e32d6"
+    }
+  ]
+}
