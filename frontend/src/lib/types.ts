@@ -69,10 +69,6 @@ export interface Page {
   slug?: string | null;
   template?: string | null;
   blocks?: PageBlock[] | null;
-  user_created?: DirectusId | null;
-  date_created?: string | null;
-  user_updated?: DirectusId | null;
-  date_updated?: string | null;
 }
 
 export type BlockCollection =
@@ -178,7 +174,7 @@ export interface BlockContactsRole {
 export interface BlockTickerMessage {
   id?: DirectusId;
   text?: string | null;
-  link?: string | null;
+  link?: DirectusRelation<Page>;
   sort?: number | null;
 }
 

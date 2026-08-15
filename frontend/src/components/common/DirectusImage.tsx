@@ -1,12 +1,14 @@
 import type { DirectusAsset } from "../../lib/types";
 
 type DirectusImageProps = {
-  asset: DirectusAsset;
+  asset?: DirectusAsset;
   alt: string;
   className?: string;
 };
 
-const getAssetId = (asset: DirectusAsset): string | number | null => {
+const getAssetId = (
+  asset: DirectusAsset | undefined,
+): string | number | null => {
   if (typeof asset === "string" || typeof asset === "number") {
     return asset;
   }

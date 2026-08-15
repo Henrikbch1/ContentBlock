@@ -69,6 +69,7 @@ const PAGE_FIELDS = [
   "blocks.item:block_documents.docs.*",
   "blocks.item:block_ticker.*",
   "blocks.item:block_ticker.messages.*",
+  "blocks.item:block_ticker.messages.link.*",
   "blocks.item:block_news.*",
   "blocks.item:block_events.*",
 ] as const;
@@ -133,7 +134,7 @@ export const getSite = async (): Promise<Site | null> => {
   const [site, themes] = await Promise.all([
     directus.request(
       readSingleton("site", {
-        fields: SITE_FIELDS,
+        fields: SITE_FIELDS as never,
         _cb: Date.now(),
       }),
     ),
@@ -146,18 +147,18 @@ export const getSite = async (): Promise<Site | null> => {
     ) as Promise<Theme[]>,
   ]);
 
-  return site ? { ...site, theme: themes[0] ?? null } : null;
+  return site ? { ...(site as Site), theme: themes[0] ?? null } : null;
 };
 
 export const getPageBySlug = async (slug: string): Promise<Page | null> => {
   assertDirectusConfigured();
-  const pages = await directus.request(
+  const pages = (await directus.request(
     readItems("pages", {
       filter: { slug: { _eq: slug } },
-      fields: PAGE_FIELDS,
+      fields: PAGE_FIELDS as never,
       limit: 1,
     }),
-  );
+  )) as Page[];
   return pages[0] ?? null;
 };
 
@@ -181,36 +182,36 @@ export const getNewsForBlock = async (cfg: BlockNews): Promise<News[]> => {
     return [];
   }
 
-  return directus.request(
+  return (await directus.request(
     readItems("news", {
-      fields: NEWS_FIELDS,
+      fields: NEWS_FIELDS as never,
       filter:
         categoryId === null ? undefined : { category: { _eq: categoryId } },
       sort: ["-published_date"],
       limit: cfg.limit ?? -1,
     }),
-  );
+  )) as News[];
 };
 
 export const getNews = async (): Promise<News[]> => {
   assertDirectusConfigured();
-  return directus.request(
+  return (await directus.request(
     readItems("news", {
-      fields: NEWS_FIELDS,
+      fields: NEWS_FIELDS as never,
       sort: ["-published_date"],
     }),
-  );
+  )) as News[];
 };
 
 export const getNewsBySlug = async (slug: string): Promise<News | null> => {
   assertDirectusConfigured();
-  const news = await directus.request(
+  const news = (await directus.request(
     readItems("news", {
-      fields: NEWS_FIELDS,
+      fields: NEWS_FIELDS as never,
       filter: { slug: { _eq: slug } },
       limit: 1,
     }),
-  );
+  )) as News[];
   return news[0] ?? null;
 };
 
@@ -228,36 +229,36 @@ export const getEventsForBlock = async (cfg: BlockEvents): Promise<Event[]> => {
     ...(categoryId === null ? {} : { category: { _eq: categoryId } }),
   };
 
-  return directus.request(
+  return (await directus.request(
     readItems("events", {
-      fields: EVENT_FIELDS,
-      filter,
+      fields: EVENT_FIELDS as never,
+      filter: filter as never,
       sort: cfg.mode === "upcoming" ? ["start_date"] : ["-start_date"],
       limit: cfg.limit ?? -1,
     }),
-  );
+  )) as Event[];
 };
 
 export const getEvents = async (): Promise<Event[]> => {
   assertDirectusConfigured();
-  return directus.request(
+  return (await directus.request(
     readItems("events", {
-      fields: EVENT_FIELDS,
-      filter: { start_date: { _gte: new Date().toISOString() } },
+      fields: EVENT_FIELDS as never,
+      filter: { start_date: { _gte: new Date().toISOString() } } as never,
       sort: ["start_date"],
     }),
-  );
+  )) as Event[];
 };
 
 export const getEventBySlug = async (slug: string): Promise<Event | null> => {
   assertDirectusConfigured();
-  const events = await directus.request(
+  const events = (await directus.request(
     readItems("events", {
-      fields: EVENT_FIELDS,
+      fields: EVENT_FIELDS as never,
       filter: { slug: { _eq: slug } },
       limit: 1,
     }),
-  );
+  )) as Event[];
   return events[0] ?? null;
 };
 
@@ -274,15 +275,17 @@ export const getDocumentsForBlock = async (
     return [];
   }
 
-  return directus.request(
+  return (await directus.request(
     readItems("documents", {
-      fields: DOCUMENT_FIELDS,
+      fields: DOCUMENT_FIELDS as never,
       filter:
         cfg.mode === "manual"
           ? { id: { _in: documentIds } }
-          : { category: { _eq: categoryId } },
+          : cfg.mode === "by_category"
+            ? { category: { _eq: categoryId } }
+            : undefined,
     }),
-  );
+  )) as Document[];
 };
 
 export const getContactsForBlock = async (
@@ -299,14 +302,14 @@ export const getContactsForBlock = async (
   const fields = [
     ...PERSON_FIELDS,
     ...(cfg.show_photo ? ["photo"] : []),
-    ...(cfg.show_email ? ["email"] : []),
+    ...(cfg.show_email || cfg.layout === "form" ? ["email"] : []),
   ];
 
-  return directus.request(
+  return (await directus.request(
     readItems("people", {
-      fields,
+      fields: fields as never,
       filter: { role: { _in: roleIds } },
-      sort: ["role.sort"],
+      sort: ["role.sort"] as never,
     }),
-  );
+  )) as Array<Person & { phone?: string | null }>;
 };
