@@ -2,24 +2,45 @@ import { DirectusImage } from "../common/DirectusImage";
 import type { BlockHero } from "../../lib/types";
 
 export const HeroBlock = ({ item }: { item: BlockHero }): React.JSX.Element => (
-  <section className="relative overflow-hidden border-b border-border bg-muted">
-    <div className="mx-auto grid max-w-7xl gap-8 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:px-8 lg:py-24">
-      <div className="flex flex-col justify-center gap-6">
+  <section className="relative isolate flex min-h-125 items-end overflow-hidden bg-primary text-primary-foreground sm:min-h-150">
+    <DirectusImage
+      asset={item.image}
+      alt=""
+      className="absolute inset-0 -z-20 h-full w-full object-cover"
+    />
+    <div className="absolute inset-0 -z-10 bg-primary/80" />
+    <div className="mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
+      <div className="max-w-3xl">
         <div>
-          <h1 className="max-w-3xl text-4xl font-semibold tracking-tight sm:text-6xl">{item.title || "Willkommen"}</h1>
-          {item.subtitle && <p className="mt-5 max-w-2xl text-lg text-muted-foreground">{item.subtitle}</p>}
+          <h1 className="max-w-3xl text-5xl font-semibold leading-none tracking-tight sm:text-7xl">
+            {item.title || "Willkommen"}
+          </h1>
+          {item.subtitle && (
+            <p className="mt-6 max-w-2xl text-lg leading-8 text-primary-foreground/85">
+              {item.subtitle}
+            </p>
+          )}
         </div>
         {item.buttons?.length ? (
-          <div className="flex flex-wrap gap-3">
-            {item.buttons.filter((button) => button.label).map((button) => (
-              <a key={button.id ?? button.label} href={button.href || "#"} className={button.variant === "secondary" ? "border border-border px-5 py-3 text-sm font-medium hover:bg-background" : "bg-primary px-5 py-3 text-sm font-medium text-primary-foreground hover:opacity-90"}>
-                {button.label}
-              </a>
-            ))}
+          <div className="mt-8 flex flex-wrap gap-3">
+            {item.buttons
+              .filter((button) => button.label)
+              .map((button) => (
+                <a
+                  key={button.id ?? button.label}
+                  href={button.href || "#"}
+                  className={
+                    button.variant === "secondary"
+                      ? "border border-primary-foreground/70 px-5 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-foreground hover:text-primary"
+                      : "bg-secondary px-5 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-[#f3c972]"
+                  }
+                >
+                  {button.label}
+                </a>
+              ))}
           </div>
         ) : null}
       </div>
-      <DirectusImage asset={item.image} alt={item.title || ""} className="aspect-[4/3] h-full w-full object-cover" />
     </div>
   </section>
 );

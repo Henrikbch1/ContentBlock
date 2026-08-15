@@ -5,6 +5,7 @@ import { getContactsForBlock } from "../../lib/queries";
 import type { BlockContacts, Person } from "../../lib/types";
 import { EmptyState } from "../common/EmptyState";
 import { DirectusImage } from "../common/DirectusImage";
+import { ContactForm } from "./ContactForm";
 
 type Contact = Person & { phone?: string | null };
 
@@ -84,73 +85,87 @@ export const ContactsBlock = ({
           }
         />
       )}
-      {!isLoading && !hasError && contacts.length > 0 && (
-        <div
-          className={
-            item.layout === "list"
-              ? "flex flex-col gap-3"
-              : "grid gap-5 md:grid-cols-2 lg:grid-cols-3"
-          }
-        >
-          {contacts.map((contact) => {
-            const name = getContactName(contact);
-            const roleName = getRoleName(contact);
-            return (
-              <article
-                className={
-                  item.layout === "list"
-                    ? "flex gap-4 border border-border bg-card p-5 sm:items-center"
-                    : "border border-border bg-card p-6"
-                }
-                key={contact.id}
-              >
-                {item.show_photo &&
-                  (contact.photo ? (
-                    <DirectusImage
-                      asset={contact.photo}
-                      alt={name}
-                      className="size-16 shrink-0 rounded-full object-cover"
-                    />
-                  ) : (
-                    <div
-                      aria-hidden="true"
-                      className="flex size-16 shrink-0 items-center justify-center rounded-full bg-primary text-lg font-semibold text-primary-foreground"
-                    >
-                      {getInitials(name)}
-                    </div>
-                  ))}
-                <div className="min-w-0">
-                  <h3 className="text-xl font-semibold">{name}</h3>
-                  {roleName && (
-                    <p className="mt-1 flex items-center gap-2 text-sm text-muted-foreground">
-                      <BriefcaseBusiness aria-hidden="true" size={15} />
-                      {roleName}
-                    </p>
-                  )}
-                  {item.show_email && contact.email && (
-                    <a
-                      className="mt-3 flex items-center gap-2 text-sm text-primary underline underline-offset-4"
-                      href={`mailto:${contact.email}`}
-                    >
-                      <Mail aria-hidden="true" size={15} />
-                      {contact.email}
-                    </a>
-                  )}
-                  {item.show_phone && contact.phone && (
-                    <a
-                      className="mt-2 flex items-center gap-2 text-sm text-primary underline underline-offset-4"
-                      href={`tel:${contact.phone}`}
-                    >
-                      <Phone aria-hidden="true" size={15} />
-                      {contact.phone}
-                    </a>
-                  )}
-                </div>
-              </article>
-            );
-          })}
-        </div>
-      )}
+      {!isLoading &&
+        !hasError &&
+        item.layout === "form" &&
+        contacts.length > 0 && (
+          <ContactForm
+            recipientEmail={
+              contacts.find((contact) => contact.email)?.email ?? ""
+            }
+            recipientName={getContactName(contacts[0])}
+          />
+        )}
+      {!isLoading &&
+        !hasError &&
+        item.layout !== "form" &&
+        contacts.length > 0 && (
+          <div
+            className={
+              item.layout === "list"
+                ? "flex flex-col gap-3"
+                : "grid gap-5 md:grid-cols-2 lg:grid-cols-3"
+            }
+          >
+            {contacts.map((contact) => {
+              const name = getContactName(contact);
+              const roleName = getRoleName(contact);
+              return (
+                <article
+                  className={
+                    item.layout === "list"
+                      ? "flex gap-4 border border-border bg-card p-5 sm:items-center"
+                      : "border border-border bg-card p-6"
+                  }
+                  key={contact.id}
+                >
+                  {item.show_photo &&
+                    (contact.photo ? (
+                      <DirectusImage
+                        asset={contact.photo}
+                        alt={name}
+                        className="size-16 shrink-0 rounded-full object-cover"
+                      />
+                    ) : (
+                      <div
+                        aria-hidden="true"
+                        className="flex size-16 shrink-0 items-center justify-center rounded-full bg-primary text-lg font-semibold text-primary-foreground"
+                      >
+                        {getInitials(name)}
+                      </div>
+                    ))}
+                  <div className="min-w-0">
+                    <h3 className="text-xl font-semibold">{name}</h3>
+                    {roleName && (
+                      <p className="mt-1 flex items-center gap-2 text-sm text-muted-foreground">
+                        <BriefcaseBusiness aria-hidden="true" size={15} />
+                        {roleName}
+                      </p>
+                    )}
+                    {item.show_email && contact.email && (
+                      <a
+                        className="mt-3 flex items-center gap-2 text-sm text-primary underline underline-offset-4"
+                        href={`mailto:${contact.email}`}
+                      >
+                        <Mail aria-hidden="true" size={15} />
+                        {contact.email}
+                      </a>
+                    )}
+                    {item.show_phone && contact.phone && (
+                      <a
+                        className="mt-2 flex items-center gap-2 text-sm text-primary underline underline-offset-4"
+                        href={`tel:${contact.phone}`}
+                      >
+                        <Phone aria-hidden="true" size={15} />
+                        {contact.phone}
+                      </a>
+                    )}
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        )}
     </section>
   );
 };
