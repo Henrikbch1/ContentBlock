@@ -131,7 +131,7 @@ export const App = (): React.JSX.Element => {
   if (connectionStatus === "checking") {
     return (
       <main aria-live="polite" className="connection-status" role="status">
-        Directus-Verbindung wird geprueft ...
+        Directus-Verbindung wird geprüft ...
       </main>
     );
   }

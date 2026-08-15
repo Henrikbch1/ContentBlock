@@ -45,8 +45,7 @@ const EventsOverview = (): React.JSX.Element => {
           Termine
         </h1>
         <p className="mt-4 text-lg leading-8 text-muted-foreground">
-          Arbeitsdienste, Versammlungen und alles, was am Stoteler See gemeinsam
-          stattfindet.
+          Arbeitsdienste, Versammlungen und alles, was gemeinsam stattfindet.
         </p>
       </header>
       {isLoading && (

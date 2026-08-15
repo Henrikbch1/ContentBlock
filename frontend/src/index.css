@@ -1,26 +1,26 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #18181b;
+  --background: #f4f7f4;
+  --foreground: #17312e;
   --card: #ffffff;
-  --card-foreground: #18181b;
-  --primary: #18181b;
-  --primary-foreground: #fafafa;
-  --secondary: #f4f4f5;
-  --secondary-foreground: #27272a;
-  --muted: #f4f4f5;
-  --muted-foreground: #71717a;
-  --accent: #f4f4f5;
-  --accent-foreground: #27272a;
-  --border: #e4e4e7;
-  --input: #e4e4e7;
-  --ring: #a1a1aa;
-  --radius: 0.5rem;
-  --font-heading: "Avenir Next", Avenir, "Segoe UI", sans-serif;
+  --card-foreground: #17312e;
+  --primary: #005f62;
+  --primary-foreground: #ffffff;
+  --secondary: #d7e9e6;
+  --secondary-foreground: #17312e;
+  --muted: #e8efeb;
+  --muted-foreground: #4d6660;
+  --accent: #e7b552;
+  --accent-foreground: #17312e;
+  --border: #c8d8d2;
+  --input: #c8d8d2;
+  --ring: #e7b552;
+  --radius: 0.25rem;
+  --font-heading: "Fraunces", Georgia, serif;
   color: var(--foreground);
   background: var(--background);
-  font-family: "Avenir Next", Avenir, "Segoe UI", sans-serif;
+  font-family: "DM Sans", sans-serif;
 }
 
 h1,
@@ -66,6 +66,11 @@ body {
   margin: 0;
   min-width: 320px;
   overflow-x: hidden;
+  background-color: var(--background);
+  background-image:
+    linear-gradient(90deg, rgb(0 95 98 / 0.035) 1px, transparent 1px),
+    linear-gradient(rgb(0 95 98 / 0.035) 1px, transparent 1px);
+  background-size: 24px 24px;
 }
 
 img {
