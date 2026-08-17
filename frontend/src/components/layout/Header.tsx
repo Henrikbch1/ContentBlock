@@ -56,9 +56,11 @@ const getChildren = (items: NavItem[], parentId: string | null): NavItem[] =>
 const MobileNavItems = ({
   items,
   parentId = null,
+  onClose,
 }: {
   items: NavItem[];
   parentId?: string | null;
+  onClose?: () => void;
 }): React.JSX.Element => (
   <ul
     className={
@@ -75,6 +77,7 @@ const MobileNavItems = ({
             <a
               className="text-sm font-semibold text-foreground hover:text-primary"
               href={href}
+              onClick={onClose}
             >
               {label}
             </a>
@@ -84,7 +87,11 @@ const MobileNavItems = ({
             </span>
           )}
           {children.length > 0 && (
-            <MobileNavItems items={items} parentId={getItemId(item)} />
+            <MobileNavItems
+              items={items}
+              onClose={onClose}
+              parentId={getItemId(item)}
+            />
           )}
         </li>
       );
@@ -218,7 +225,7 @@ export const Header = ({ navigation }: HeaderProps): React.JSX.Element => {
           aria-label="Mobile Hauptnavigation"
           className="border-t border-border bg-background px-4 py-5 lg:hidden"
         >
-          <MobileNavItems items={items} />
+          <MobileNavItems items={items} onClose={() => setIsMenuOpen(false)} />
         </nav>
       )}
     </header>
