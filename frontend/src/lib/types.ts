@@ -36,6 +36,7 @@ export interface NavItem {
 export interface Navigation {
   id: DirectusId;
   logo?: DirectusAsset;
+  brand_text?: string | null;
   items?: NavItem[] | null;
 }
 

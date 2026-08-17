@@ -147,6 +147,7 @@ export const Header = ({ navigation }: HeaderProps): React.JSX.Element => {
   const directusUrl = import.meta.env.VITE_DIRECTUS_URL;
   const logoUrl =
     logoId && directusUrl ? `${directusUrl}/assets/${logoId}` : null;
+  const brandText = navigationData?.brand_text?.trim() || null;
 
   return (
     <header className="sticky top-0 z-30 border-b border-border bg-background/95 backdrop-blur">
@@ -156,12 +157,19 @@ export const Header = ({ navigation }: HeaderProps): React.JSX.Element => {
           href="/"
         >
           {logoUrl ? (
-            <img
-              alt="Website-Logo"
-              className="max-h-12 max-w-48 object-contain"
-              decoding="async"
-              src={logoUrl}
-            />
+            <>
+              <img
+                alt="Website-Logo"
+                className="max-h-12 max-w-48 object-contain"
+                decoding="async"
+                src={logoUrl}
+              />
+              {brandText && (
+                <span className="font-heading text-xl font-semibold">
+                  {brandText}
+                </span>
+              )}
+            </>
           ) : (
             <span className="font-heading text-xl font-semibold">
               ContentBlock
