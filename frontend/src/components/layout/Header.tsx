@@ -187,12 +187,12 @@ export const Header = ({ navigation }: HeaderProps): React.JSX.Element => {
             <>
               <img
                 alt="Website-Logo"
-                className="max-h-12 max-w-48 object-contain"
+                className="max-h-12 max-w-48 scale-125 object-contain"
                 decoding="async"
                 src={logoUrl}
               />
               {brandText && (
-                <span className="font-heading text-xl font-semibold">
+                <span className="font-heading text-lg font-semibold sm:text-xl">
                   {brandText}
                 </span>
               )}
