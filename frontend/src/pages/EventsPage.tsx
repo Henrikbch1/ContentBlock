@@ -5,7 +5,11 @@ import { RichText } from "../components/common/RichText";
 import { useAsyncResource } from "../lib/hooks/useAsyncResource";
 import { getEventBySlug, getEvents } from "../lib/queries";
 import { formatDateRange } from "../lib/format";
-import { EMPTY_MESSAGES, ERROR_MESSAGES, LOADING_MESSAGES } from "../lib/uiMessages";
+import {
+  EMPTY_MESSAGES,
+  ERROR_MESSAGES,
+  LOADING_MESSAGES,
+} from "../lib/uiMessages";
 import { NotFoundPage } from "./NotFoundPage";
 
 type EventsPageProps = {
@@ -108,10 +112,8 @@ const EventDetail = ({ slug }: { slug: string }): React.JSX.Element => {
         {LOADING_MESSAGES.eventDetail}
       </p>
     );
-  if (hasError)
-    return <EmptyState message={ERROR_MESSAGES.eventDetail} />;
-  if (!event)
-    return <NotFoundPage message={EMPTY_MESSAGES.eventNotFound} />;
+  if (hasError) return <EmptyState message={ERROR_MESSAGES.eventDetail} />;
+  if (!event) return <NotFoundPage message={EMPTY_MESSAGES.eventNotFound} />;
 
   return (
     <article className="mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-16">
@@ -137,4 +139,3 @@ const EventDetail = ({ slug }: { slug: string }): React.JSX.Element => {
 
 export const EventsPage = ({ slug }: EventsPageProps): React.JSX.Element =>
   slug ? <EventDetail slug={slug} /> : <EventsOverview />;
-

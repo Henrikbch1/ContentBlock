@@ -41,9 +41,7 @@ export const EventsBlock = ({
           {LOADING_MESSAGES.events}
         </p>
       )}
-      {!isLoading && hasError && (
-        <EmptyState message={ERROR_MESSAGES.events} />
-      )}
+      {!isLoading && hasError && <EmptyState message={ERROR_MESSAGES.events} />}
       {!isLoading && !hasError && eventList.length === 0 && (
         <EmptyState message={EMPTY_MESSAGES.events} />
       )}
@@ -83,4 +81,3 @@ export const EventsBlock = ({
     </Section>
   );
 };
-

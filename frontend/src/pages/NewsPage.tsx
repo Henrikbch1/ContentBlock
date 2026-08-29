@@ -5,7 +5,11 @@ import { EmptyState } from "../components/common/EmptyState";
 import { RichText } from "../components/common/RichText";
 import { useAsyncResource } from "../lib/hooks/useAsyncResource";
 import { formatDate } from "../lib/format";
-import { EMPTY_MESSAGES, ERROR_MESSAGES, LOADING_MESSAGES } from "../lib/uiMessages";
+import {
+  EMPTY_MESSAGES,
+  ERROR_MESSAGES,
+  LOADING_MESSAGES,
+} from "../lib/uiMessages";
 import { getNews, getNewsBySlug } from "../lib/queries";
 import type { News } from "../lib/types";
 import { NotFoundPage } from "./NotFoundPage";
@@ -122,10 +126,8 @@ const NewsDetail = ({ slug }: { slug: string }): React.JSX.Element => {
         {LOADING_MESSAGES.newsDetail}
       </p>
     );
-  if (hasError)
-    return <EmptyState message={ERROR_MESSAGES.newsDetail} />;
-  if (!article)
-    return <NotFoundPage message={EMPTY_MESSAGES.newsNotFound} />;
+  if (hasError) return <EmptyState message={ERROR_MESSAGES.newsDetail} />;
+  if (!article) return <NotFoundPage message={EMPTY_MESSAGES.newsNotFound} />;
 
   return (
     <article className="mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-16">

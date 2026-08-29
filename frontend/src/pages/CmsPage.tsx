@@ -24,7 +24,15 @@ export const CmsPage = ({ slug }: CmsPageProps): React.JSX.Element => {
   }, [page]);
 
   if (isLoading) {
-    return <p aria-live="polite" className="px-4 py-16 text-center text-sm text-muted-foreground" role="status">{LOADING_MESSAGES.page}</p>;
+    return (
+      <p
+        aria-live="polite"
+        className="px-4 py-16 text-center text-sm text-muted-foreground"
+        role="status"
+      >
+        {LOADING_MESSAGES.page}
+      </p>
+    );
   }
   if (hasError) {
     return <EmptyState message={ERROR_MESSAGES.page} />;
