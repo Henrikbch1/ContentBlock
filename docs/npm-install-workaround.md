@@ -1,8 +1,8 @@
-# npm install: Workaround für Firmenproxy (Zscaler + Lenze Root-CA)
+# npm install: Workaround für Proxy
 
 ## Problem
 
-Auf diesem PC läuft ein Firmen-TLS-Proxy (Zscaler) inkl. interner Lenze-Root-CA. `npm install`
+Auf diesem PC läuft ein Proxy .`npm install`
 im Ordner `frontend/` schlägt deshalb fehl:
 
 - **Ohne CA-Fix:** `UNABLE_TO_GET_ISSUER_CERT_LOCALLY`
