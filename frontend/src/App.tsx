@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getSite } from "./lib/queries";
-import type { Site } from "./lib/types";
+import { useAsyncResource } from "./lib/hooks/useAsyncResource";
+import { ERROR_MESSAGES, LOADING_MESSAGES } from "./lib/uiMessages";
 import { ThemeProvider } from "./components/common/ThemeProvider";
 import { Footer } from "./components/layout/Footer";
 import { Header } from "./components/layout/Header";
@@ -8,13 +9,8 @@ import { CmsPage } from "./pages/CmsPage";
 import { EventsPage } from "./pages/EventsPage";
 import { NewsPage } from "./pages/NewsPage";
 
-type ConnectionStatus = "checking" | "connected" | "failed";
-
-const DEFAULT_ERROR_MESSAGE =
-  "Die Verbindung zu Directus konnte nicht hergestellt werden.";
-
 const getErrorMessage = (error: unknown): string =>
-  error instanceof Error ? error.message : DEFAULT_ERROR_MESSAGE;
+  error instanceof Error ? error.message : ERROR_MESSAGES.connection;
 
 const getPathSegments = (pathname: string): string[] =>
   pathname
@@ -53,10 +49,7 @@ const RouteContent = ({
 };
 
 export const App = (): React.JSX.Element => {
-  const [connectionStatus, setConnectionStatus] =
-    useState<ConnectionStatus>("checking");
-  const [errorMessage, setErrorMessage] = useState<string>();
-  const [site, setSite] = useState<Site | null>(null);
+  const { data: site, isLoading, error } = useAsyncResource(getSite, []);
   const [pathname, setPathname] = useState(() => window.location.pathname);
 
   useEffect(() => {
@@ -103,40 +96,15 @@ export const App = (): React.JSX.Element => {
     };
   }, []);
 
-  useEffect(() => {
-    let isMounted = true;
-
-    const checkConnection = async (): Promise<void> => {
-      try {
-        const loadedSite = await getSite();
-        if (isMounted) {
-          setSite(loadedSite);
-          setConnectionStatus("connected");
-        }
-      } catch (error) {
-        if (isMounted) {
-          setConnectionStatus("failed");
-          setErrorMessage(getErrorMessage(error));
-        }
-      }
-    };
-
-    void checkConnection();
-
-    return () => {
-      isMounted = false;
-    };
-  }, []);
-
-  if (connectionStatus === "checking") {
+  if (isLoading) {
     return (
       <main aria-live="polite" className="connection-status" role="status">
-        Directus-Verbindung wird geprüft ...
+        {LOADING_MESSAGES.connection}
       </main>
     );
   }
 
-  if (connectionStatus === "failed") {
+  if (error) {
     return (
       <main
         aria-live="assertive"
@@ -144,7 +112,7 @@ export const App = (): React.JSX.Element => {
         role="alert"
       >
         <p>Directus nicht erreichbar.</p>
-        <p>{errorMessage}</p>
+        <p>{getErrorMessage(error)}</p>
       </main>
     );
   }

@@ -1,11 +1,13 @@
 import { ArrowLeft, ArrowUpRight, Newspaper, Tag } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { DirectusImage } from "../components/common/DirectusImage";
 import { EmptyState } from "../components/common/EmptyState";
 import { RichText } from "../components/common/RichText";
+import { useAsyncResource } from "../lib/hooks/useAsyncResource";
+import { formatDate } from "../lib/format";
+import { EMPTY_MESSAGES, ERROR_MESSAGES, LOADING_MESSAGES } from "../lib/uiMessages";
 import { getNews, getNewsBySlug } from "../lib/queries";
 import type { News } from "../lib/types";
-import { formatDate } from "./format";
 import { NotFoundPage } from "./NotFoundPage";
 
 type NewsPageProps = {
@@ -18,27 +20,11 @@ const getCategoryName = (article: News): string | null =>
     : null;
 
 const NewsOverview = (): React.JSX.Element => {
-  const [news, setNews] = useState<News[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [hasError, setHasError] = useState(false);
+  const { data: news, isLoading, hasError } = useAsyncResource(getNews, []);
+  const newsList = news ?? [];
 
   useEffect(() => {
     document.title = "Aktuelles | ContentBlock";
-    let isMounted = true;
-    void getNews()
-      .then((loadedNews) => {
-        if (isMounted) setNews(loadedNews);
-      })
-      .catch(() => {
-        if (isMounted) setHasError(true);
-      })
-      .finally(() => {
-        if (isMounted) setIsLoading(false);
-      });
-
-    return () => {
-      isMounted = false;
-    };
   }, []);
 
   return (
@@ -61,18 +47,16 @@ const NewsOverview = (): React.JSX.Element => {
           className="text-sm text-muted-foreground"
           role="status"
         >
-          Nachrichten werden geladen ...
+          {LOADING_MESSAGES.news}
         </p>
       )}
-      {!isLoading && hasError && (
-        <EmptyState message="Nachrichten konnten nicht geladen werden." />
+      {!isLoading && hasError && <EmptyState message={ERROR_MESSAGES.news} />}
+      {!isLoading && !hasError && newsList.length === 0 && (
+        <EmptyState message={EMPTY_MESSAGES.news} />
       )}
-      {!isLoading && !hasError && news.length === 0 && (
-        <EmptyState message="Keine Nachrichten vorhanden." />
-      )}
-      {!isLoading && !hasError && news.length > 0 && (
+      {!isLoading && !hasError && newsList.length > 0 && (
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {news.map((article) => (
+          {newsList.map((article) => (
             <a
               className="group flex min-h-80 flex-col overflow-hidden border border-border bg-card transition-colors hover:border-primary"
               href={`/news/${article.slug ?? article.id}`}
@@ -116,32 +100,17 @@ const NewsOverview = (): React.JSX.Element => {
 };
 
 const NewsDetail = ({ slug }: { slug: string }): React.JSX.Element => {
-  const [article, setArticle] = useState<News | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [hasError, setHasError] = useState(false);
+  const {
+    data: article,
+    isLoading,
+    hasError,
+  } = useAsyncResource(() => getNewsBySlug(slug), [slug]);
 
   useEffect(() => {
-    let isMounted = true;
-    void getNewsBySlug(slug)
-      .then((loadedArticle) => {
-        if (isMounted) {
-          setArticle(loadedArticle);
-          document.title = loadedArticle?.title
-            ? `${loadedArticle.title} | Aktuelles`
-            : "Aktuelles | ContentBlock";
-        }
-      })
-      .catch(() => {
-        if (isMounted) setHasError(true);
-      })
-      .finally(() => {
-        if (isMounted) setIsLoading(false);
-      });
-
-    return () => {
-      isMounted = false;
-    };
-  }, [slug]);
+    document.title = article?.title
+      ? `${article.title} | Aktuelles`
+      : "Aktuelles | ContentBlock";
+  }, [article]);
 
   if (isLoading)
     return (
@@ -150,13 +119,13 @@ const NewsDetail = ({ slug }: { slug: string }): React.JSX.Element => {
         className="px-4 py-16 text-center text-sm text-muted-foreground"
         role="status"
       >
-        Beitrag wird geladen ...
+        {LOADING_MESSAGES.newsDetail}
       </p>
     );
   if (hasError)
-    return <EmptyState message="Der Beitrag konnte nicht geladen werden." />;
+    return <EmptyState message={ERROR_MESSAGES.newsDetail} />;
   if (!article)
-    return <NotFoundPage message="Der Beitrag wurde nicht gefunden." />;
+    return <NotFoundPage message={EMPTY_MESSAGES.newsNotFound} />;
 
   return (
     <article className="mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-16">

@@ -1,6 +1,7 @@
 import { readItems, readSingleton } from "@directus/sdk";
 
 import { assertDirectusConfigured, directus } from "./directus";
+import { getRelationId, getRelationIds } from "./directusRelations";
 import type {
   BlockContacts,
   BlockContactsRole,
@@ -100,23 +101,6 @@ const EVENT_FIELDS = [
 const DOCUMENT_FIELDS = ["id", "title", "file", "category.*"] as const;
 
 const PERSON_FIELDS = ["id", "first_name", "last_name", "role.*"] as const;
-
-const getRelationId = <T extends { id: DirectusId }>(
-  relation: DirectusRelation<T> | undefined,
-): DirectusId | null => {
-  if (typeof relation === "string" || typeof relation === "number") {
-    return relation;
-  }
-
-  return relation?.id ?? null;
-};
-
-const getRelationIds = <T extends { id: DirectusId }>(
-  relations: Array<DirectusRelation<T>> | null | undefined,
-): DirectusId[] =>
-  (relations ?? [])
-    .map((relation) => getRelationId(relation))
-    .filter((id): id is DirectusId => id !== null);
 
 const getContactRoleIds = (
   relations: Array<DirectusRelation<BlockContactsRole>> | null | undefined,

@@ -22,8 +22,7 @@ ausschließenden Zuständen, **in dieser Reihenfolge geprüft**:
 ```tsx
 // Bereits so in CmsPage.tsx / NewsPage.tsx — als Muster beibehalten:
 if (isLoading) return <LoadingText message={LOADING_MESSAGES.page} />;
-if (hasError)
-  return <EmptyState message="Die Seite konnte nicht geladen werden." />;
+if (hasError) return <EmptyState message={ERROR_MESSAGES.page} />;
 if (!page) return <NotFoundPage />;
 return <BlockRenderer blocks={page.blocks} />;
 ```
@@ -32,10 +31,12 @@ Wichtig: **"leer" und "noch nicht geladen" nie verwechseln.** Ein leeres
 Array vor Abschluss des ersten Fetches darf nie als `EmptyState` gerendert
 werden — deshalb steht die `isLoading`-Prüfung vor der Leer-Prüfung.
 
-## Duplikat auflösen: `useAsyncResource`
+## Umgesetzt: `useAsyncResource`
 
-`CmsPage`, `NewsPage` (zweimal: Overview + Detail) und `App.tsx`
-implementieren denselben Ablauf manuell. Empfehlung — ein gemeinsamer Hook in
+`CmsPage`, `NewsPage` (Overview + Detail), `EventsPage` (Overview + Detail),
+`App.tsx` und alle datenladenden Blocks (`ContactsBlock`, `DocumentsBlock`,
+`NewsBlock`, `EventsBlock`) implementierten zuvor denselben Ablauf manuell.
+Das ist jetzt behoben — ein gemeinsamer Hook in
 `lib/hooks/useAsyncResource.ts`:
 
 ```ts
@@ -44,6 +45,7 @@ import { useEffect, useState } from "react";
 type AsyncResource<T> = {
   data: T | null;
   isLoading: boolean;
+  error: unknown;
   hasError: boolean;
 };
 
@@ -53,19 +55,19 @@ export function useAsyncResource<T>(
 ): AsyncResource<T> {
   const [data, setData] = useState<T | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [hasError, setHasError] = useState(false);
+  const [error, setError] = useState<unknown>(null);
 
   useEffect(() => {
     let isMounted = true;
     setIsLoading(true);
-    setHasError(false);
+    setError(null);
 
     fetcher()
       .then((result) => {
         if (isMounted) setData(result);
       })
-      .catch(() => {
-        if (isMounted) setHasError(true);
+      .catch((caughtError: unknown) => {
+        if (isMounted) setError(caughtError);
       })
       .finally(() => {
         if (isMounted) setIsLoading(false);
@@ -77,7 +79,7 @@ export function useAsyncResource<T>(
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);
 
-  return { data, isLoading, hasError };
+  return { data, isLoading, error, hasError: error !== null };
 }
 ```
 
@@ -94,7 +96,10 @@ const {
 Der Hook nimmt die `lib/queries.ts`-Funktion als Parameter entgegen, statt
 sie selbst zu kennen — er bleibt dadurch generisch und gehört in `lib/`,
 nicht in `components/`. **Das ist kein Store**: Er liefert bei jedem Mount
-frischen State, genau wie der jetzige, manuelle Code.
+frischen State, genau wie vorher der manuelle Code. Das zusätzliche `error`-
+Feld (statt nur `hasError`) erlaubt Stellen wie `App.tsx`, die konkrete
+Fehlermeldung anzuzeigen (`getErrorMessage(error)`), während die meisten
+Call-Sites einfach `hasError` als Boolean nutzen.
 
 ## Ephemere UI-State bleibt lokal
 

@@ -1,4 +1,5 @@
 import { DirectusImage } from "../common/DirectusImage";
+import { Section } from "../layout/Section";
 import type { BlockImage } from "../../lib/types";
 
 export const ImageBlock = ({
@@ -6,7 +7,7 @@ export const ImageBlock = ({
 }: {
   item: BlockImage;
 }): React.JSX.Element => (
-  <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16">
+  <Section>
     <div className="aspect-video overflow-hidden bg-muted">
       <DirectusImage
         asset={item.image}
@@ -14,5 +15,5 @@ export const ImageBlock = ({
         className="h-full w-full object-cover"
       />
     </div>
-  </section>
+  </Section>
 );

@@ -1,43 +1,28 @@
-import { useEffect, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 
 import { getNewsForBlock } from "../../lib/queries";
-import type { News, BlockNews } from "../../lib/types";
+import { formatDate } from "../../lib/format";
+import { useAsyncResource } from "../../lib/hooks/useAsyncResource";
+import {
+  EMPTY_MESSAGES,
+  ERROR_MESSAGES,
+  LOADING_MESSAGES,
+} from "../../lib/uiMessages";
+import type { BlockNews } from "../../lib/types";
 import { DirectusImage } from "../common/DirectusImage";
 import { EmptyState } from "../common/EmptyState";
-
-const formatDate = (date: string | null | undefined): string =>
-  date ? new Date(date).toLocaleDateString("de-DE") : "";
+import { Section } from "../layout/Section";
 
 export const NewsBlock = ({ item }: { item: BlockNews }): React.JSX.Element => {
-  const [news, setNews] = useState<News[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [hasError, setHasError] = useState(false);
-
-  useEffect(() => {
-    let isMounted = true;
-
-    const loadNews = async (): Promise<void> => {
-      setIsLoading(true);
-      setHasError(false);
-      try {
-        const loadedNews = await getNewsForBlock(item);
-        if (isMounted) setNews(loadedNews);
-      } catch {
-        if (isMounted) setHasError(true);
-      } finally {
-        if (isMounted) setIsLoading(false);
-      }
-    };
-
-    void loadNews();
-    return () => {
-      isMounted = false;
-    };
-  }, [item]);
+  const {
+    data: news,
+    isLoading,
+    hasError,
+  } = useAsyncResource(() => getNewsForBlock(item), [item]);
+  const newsList = news ?? [];
 
   return (
-    <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16">
+    <Section>
       {item.title && (
         <h2 className="mb-6 text-3xl font-semibold tracking-tight">
           {item.title}
@@ -49,18 +34,16 @@ export const NewsBlock = ({ item }: { item: BlockNews }): React.JSX.Element => {
           className="text-sm text-muted-foreground"
           role="status"
         >
-          Nachrichten werden geladen ...
+          {LOADING_MESSAGES.news}
         </p>
       )}
-      {!isLoading && hasError && (
-        <EmptyState message="Nachrichten konnten nicht geladen werden." />
+      {!isLoading && hasError && <EmptyState message={ERROR_MESSAGES.news} />}
+      {!isLoading && !hasError && newsList.length === 0 && (
+        <EmptyState message={EMPTY_MESSAGES.news} />
       )}
-      {!isLoading && !hasError && news.length === 0 && (
-        <EmptyState message="Keine Nachrichten vorhanden." />
-      )}
-      {!isLoading && !hasError && news.length > 0 && (
+      {!isLoading && !hasError && newsList.length > 0 && (
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {news.map((article) => (
+          {newsList.map((article) => (
             <a
               className="group flex min-h-64 flex-col overflow-hidden border border-border bg-card transition-colors hover:border-primary"
               href={`/news/${article.slug ?? article.id}`}
@@ -95,6 +78,6 @@ export const NewsBlock = ({ item }: { item: BlockNews }): React.JSX.Element => {
           ))}
         </div>
       )}
-    </section>
+    </Section>
   );
 };

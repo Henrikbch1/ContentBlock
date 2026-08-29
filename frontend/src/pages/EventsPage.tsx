@@ -1,10 +1,11 @@
 import { ArrowLeft, ArrowUpRight, CalendarDays, MapPin } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { EmptyState } from "../components/common/EmptyState";
 import { RichText } from "../components/common/RichText";
+import { useAsyncResource } from "../lib/hooks/useAsyncResource";
 import { getEventBySlug, getEvents } from "../lib/queries";
-import type { Event } from "../lib/types";
-import { formatDateRange } from "./format";
+import { formatDateRange } from "../lib/format";
+import { EMPTY_MESSAGES, ERROR_MESSAGES, LOADING_MESSAGES } from "../lib/uiMessages";
 import { NotFoundPage } from "./NotFoundPage";
 
 type EventsPageProps = {
@@ -12,27 +13,11 @@ type EventsPageProps = {
 };
 
 const EventsOverview = (): React.JSX.Element => {
-  const [events, setEvents] = useState<Event[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [hasError, setHasError] = useState(false);
+  const { data: events, isLoading, hasError } = useAsyncResource(getEvents, []);
+  const eventList = events ?? [];
 
   useEffect(() => {
     document.title = "Termine | ContentBlock";
-    let isMounted = true;
-    void getEvents()
-      .then((loadedEvents) => {
-        if (isMounted) setEvents(loadedEvents);
-      })
-      .catch(() => {
-        if (isMounted) setHasError(true);
-      })
-      .finally(() => {
-        if (isMounted) setIsLoading(false);
-      });
-
-    return () => {
-      isMounted = false;
-    };
   }, []);
 
   return (
@@ -54,18 +39,18 @@ const EventsOverview = (): React.JSX.Element => {
           className="text-sm text-muted-foreground"
           role="status"
         >
-          Termine werden geladen ...
+          {LOADING_MESSAGES.eventsPage}
         </p>
       )}
       {!isLoading && hasError && (
-        <EmptyState message="Termine konnten nicht geladen werden." />
+        <EmptyState message={ERROR_MESSAGES.eventsPage} />
       )}
-      {!isLoading && !hasError && events.length === 0 && (
-        <EmptyState message="Keine Termine vorhanden." />
+      {!isLoading && !hasError && eventList.length === 0 && (
+        <EmptyState message={EMPTY_MESSAGES.eventsPage} />
       )}
-      {!isLoading && !hasError && events.length > 0 && (
+      {!isLoading && !hasError && eventList.length > 0 && (
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {events.map((event) => (
+          {eventList.map((event) => (
             <a
               className="group flex min-h-56 flex-col border border-border bg-card p-6 transition-colors hover:border-primary"
               href={`/termine/${event.slug ?? event.id}`}
@@ -101,32 +86,17 @@ const EventsOverview = (): React.JSX.Element => {
 };
 
 const EventDetail = ({ slug }: { slug: string }): React.JSX.Element => {
-  const [event, setEvent] = useState<Event | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [hasError, setHasError] = useState(false);
+  const {
+    data: event,
+    isLoading,
+    hasError,
+  } = useAsyncResource(() => getEventBySlug(slug), [slug]);
 
   useEffect(() => {
-    let isMounted = true;
-    void getEventBySlug(slug)
-      .then((loadedEvent) => {
-        if (isMounted) {
-          setEvent(loadedEvent);
-          document.title = loadedEvent?.title
-            ? `${loadedEvent.title} | Termine`
-            : "Termine | ContentBlock";
-        }
-      })
-      .catch(() => {
-        if (isMounted) setHasError(true);
-      })
-      .finally(() => {
-        if (isMounted) setIsLoading(false);
-      });
-
-    return () => {
-      isMounted = false;
-    };
-  }, [slug]);
+    document.title = event?.title
+      ? `${event.title} | Termine`
+      : "Termine | ContentBlock";
+  }, [event]);
 
   if (isLoading)
     return (
@@ -135,13 +105,13 @@ const EventDetail = ({ slug }: { slug: string }): React.JSX.Element => {
         className="px-4 py-16 text-center text-sm text-muted-foreground"
         role="status"
       >
-        Termin wird geladen ...
+        {LOADING_MESSAGES.eventDetail}
       </p>
     );
   if (hasError)
-    return <EmptyState message="Der Termin konnte nicht geladen werden." />;
+    return <EmptyState message={ERROR_MESSAGES.eventDetail} />;
   if (!event)
-    return <NotFoundPage message="Der Termin wurde nicht gefunden." />;
+    return <NotFoundPage message={EMPTY_MESSAGES.eventNotFound} />;
 
   return (
     <article className="mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-16">
@@ -167,3 +137,4 @@ const EventDetail = ({ slug }: { slug: string }): React.JSX.Element => {
 
 export const EventsPage = ({ slug }: EventsPageProps): React.JSX.Element =>
   slug ? <EventDetail slug={slug} /> : <EventsOverview />;
+

@@ -1,9 +1,11 @@
+import { EMPTY_MESSAGES } from "../../lib/uiMessages";
+
 type EmptyStateProps = {
   message?: string;
 };
 
 export const EmptyState = ({
-  message = "Noch keine Inhalte vorhanden.",
+  message = EMPTY_MESSAGES.content,
 }: EmptyStateProps): React.JSX.Element => (
   <div
     aria-live="polite"

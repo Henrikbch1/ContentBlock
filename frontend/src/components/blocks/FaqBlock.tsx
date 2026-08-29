@@ -1,9 +1,11 @@
 import { CircleHelp, Plus } from "lucide-react";
 import type { BlockFaq } from "../../lib/types";
 import { RichText } from "../common/RichText";
+import { Section } from "../layout/Section";
+import { EMPTY_MESSAGES } from "../../lib/uiMessages";
 
 export const FaqBlock = ({ item }: { item: BlockFaq }): React.JSX.Element => (
-  <section className="mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-16">
+  <Section containerClassName="max-w-3xl">
     {item.title && (
       <div className="mb-8 flex items-center gap-3">
         <CircleHelp aria-hidden="true" className="text-primary" size={24} />
@@ -37,7 +39,7 @@ export const FaqBlock = ({ item }: { item: BlockFaq }): React.JSX.Element => (
           ))}
       </div>
     ) : (
-      <p className="text-sm text-muted-foreground">Keine Fragen vorhanden.</p>
+      <p className="text-sm text-muted-foreground">{EMPTY_MESSAGES.faq}</p>
     )}
-  </section>
+  </Section>
 );

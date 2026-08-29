@@ -1,3 +1,5 @@
+import { Section } from "../layout/Section";
+import { EMPTY_MESSAGES } from "../../lib/uiMessages";
 import type { BlockTable } from "../../lib/types";
 
 type TableRow = { cells?: Array<{ value?: unknown }> };
@@ -29,7 +31,7 @@ export const TableBlock = ({
   const rows = getRows(item.data);
   const [headerRow, ...bodyRows] = rows;
   return (
-    <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16">
+    <Section>
       {item.title && (
         <h2 className="mb-6 text-3xl font-semibold tracking-tight">
           {item.title}
@@ -84,10 +86,8 @@ export const TableBlock = ({
           </table>
         </div>
       ) : (
-        <p className="text-sm text-muted-foreground">
-          Keine Tabellendaten vorhanden.
-        </p>
+        <p className="text-sm text-muted-foreground">{EMPTY_MESSAGES.table}</p>
       )}
-    </section>
+    </Section>
   );
 };

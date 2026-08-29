@@ -1,23 +1,10 @@
+import { getAssetId } from "../../lib/directusRelations";
 import type { DirectusAsset } from "../../lib/types";
 
 type DirectusImageProps = {
   asset?: DirectusAsset;
   alt: string;
   className?: string;
-};
-
-const getAssetId = (
-  asset: DirectusAsset | undefined,
-): string | number | null => {
-  if (typeof asset === "string" || typeof asset === "number") {
-    return asset;
-  }
-
-  if (asset && typeof asset === "object") {
-    return asset.id;
-  }
-
-  return null;
 };
 
 export const DirectusImage = ({

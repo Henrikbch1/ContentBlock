@@ -1,49 +1,29 @@
-import { useEffect, useState } from "react";
-
 import { getDocumentsForBlock } from "../../lib/queries";
-import type { BlockDocuments, Document, DirectusAsset } from "../../lib/types";
+import { getAssetId } from "../../lib/directusRelations";
+import { useAsyncResource } from "../../lib/hooks/useAsyncResource";
+import {
+  EMPTY_MESSAGES,
+  ERROR_MESSAGES,
+  LOADING_MESSAGES,
+} from "../../lib/uiMessages";
+import type { BlockDocuments } from "../../lib/types";
 import { EmptyState } from "../common/EmptyState";
-
-const getAssetId = (
-  asset: DirectusAsset | undefined,
-): string | number | null => {
-  if (typeof asset === "string" || typeof asset === "number") return asset;
-  return asset?.id ?? null;
-};
+import { Section } from "../layout/Section";
 
 export const DocumentsBlock = ({
   item,
 }: {
   item: BlockDocuments;
 }): React.JSX.Element => {
-  const [documents, setDocuments] = useState<Document[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [hasError, setHasError] = useState(false);
-
-  useEffect(() => {
-    let isMounted = true;
-
-    const loadDocuments = async (): Promise<void> => {
-      setIsLoading(true);
-      setHasError(false);
-      try {
-        const loadedDocuments = await getDocumentsForBlock(item);
-        if (isMounted) setDocuments(loadedDocuments);
-      } catch {
-        if (isMounted) setHasError(true);
-      } finally {
-        if (isMounted) setIsLoading(false);
-      }
-    };
-
-    void loadDocuments();
-    return () => {
-      isMounted = false;
-    };
-  }, [item]);
+  const {
+    data: documents,
+    isLoading,
+    hasError,
+  } = useAsyncResource(() => getDocumentsForBlock(item), [item]);
+  const documentList = documents ?? [];
 
   return (
-    <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16">
+    <Section>
       {item.title && (
         <h2 className="mb-6 text-3xl font-semibold tracking-tight">
           {item.title}
@@ -55,18 +35,18 @@ export const DocumentsBlock = ({
           className="text-sm text-muted-foreground"
           role="status"
         >
-          Dokumente werden geladen ...
+          {LOADING_MESSAGES.documents}
         </p>
       )}
       {!isLoading && hasError && (
-        <EmptyState message="Dokumente konnten nicht geladen werden." />
+        <EmptyState message={ERROR_MESSAGES.documents} />
       )}
-      {!isLoading && !hasError && documents.length === 0 && (
-        <EmptyState message="Keine Dokumente vorhanden." />
+      {!isLoading && !hasError && documentList.length === 0 && (
+        <EmptyState message={EMPTY_MESSAGES.documents} />
       )}
-      {!isLoading && !hasError && documents.length > 0 && (
+      {!isLoading && !hasError && documentList.length > 0 && (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {documents.map((document) => {
+          {documentList.map((document) => {
             const fileId = getAssetId(document.file);
             const directusUrl = import.meta.env.VITE_DIRECTUS_URL?.replace(
               /\/$/,
@@ -95,6 +75,6 @@ export const DocumentsBlock = ({
           })}
         </div>
       )}
-    </section>
+    </Section>
   );
 };

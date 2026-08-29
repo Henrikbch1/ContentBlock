@@ -2,27 +2,33 @@
 
 [← zurück zu SKILL.md](../SKILL.md)
 
-Jeder Punkt ist an einer echten (oder unmittelbar drohenden) Fundstelle in
-diesem Repository festgemacht — keine abstrakten Beispiele.
+Jeder Punkt war eine echte Fundstelle in diesem Repository (Stand vor dem
+Refactoring auf dieses Skill) — die Beispiele sind mittlerweile behoben
+(siehe jeweiliger Verweis); die Regel bleibt gültig für neuen Code.
 
 - **Nicht** Relation-/Asset-Id-Hilfsfunktionen pro Datei neu erfinden.
-  `components/layout/Header.tsx` definiert aktuell ein eigenes,
-  fast identisches `getRelation`/`getAssetId` statt die existierenden
-  Helfer aus `lib/queries.ts` (`getRelationId`) bzw.
-  `components/common/DirectusImage.tsx` (`getAssetId`) zu nutzen/zu teilen.
-  → in `lib/queries.ts` bzw. eine gemeinsame `lib/directusRelations.ts`
-  konsolidieren.
-- **Nicht** Leer-/Lade-Texte pro Block hartkodieren. Aktuell elfmal
-  unabhängig als String-Literal vorhanden (`"Keine ... vorhanden."`,
-  `"... wird/werden geladen ..."`). → siehe
-  [`conventions/constants-and-strings.md`](conventions/constants-and-strings.md).
-- **Nicht** `mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16` inline
-  wiederholen, wenn `Section`/`Container` genau dafür existieren. →
-  siehe [`conventions/styling-and-components.md`](conventions/styling-and-components.md).
+  `components/layout/Header.tsx` definierte früher ein eigenes,
+  fast identisches `getRelation`/`getAssetId` statt die gemeinsamen Helfer zu
+  nutzen — jetzt zentral in `lib/directusRelations.ts`
+  (`getRelationId`/`getRelationIds`/`getRelation`/`getAssetId`), von
+  `lib/queries.ts`, `DirectusImage.tsx`, `Header.tsx` und `DocumentsBlock.tsx`
+  gemeinsam importiert.
+- **Nicht** Leer-/Lade-/Fehlertexte pro Block hartkodieren. Waren zuvor elfmal
+  unabhängig als String-Literal vorhanden — jetzt zentral in
+  `lib/uiMessages.ts` (`EMPTY_MESSAGES`/`LOADING_MESSAGES`/`ERROR_MESSAGES`),
+  siehe [`conventions/constants-and-strings.md`](conventions/constants-and-strings.md).
+- **Nicht** `mx-auto max-w-Nxl px-4 py-12 sm:px-6 sm:py-16` inline
+  wiederholen, wenn `Section`/`Container` genau dafür existieren. Alle Blocks
+  nutzen jetzt `<Section>` (optional mit `containerClassName`), siehe
+  [`conventions/styling-and-components.md`](conventions/styling-and-components.md).
 - **Nicht** Fetch-Boilerplate (`useState` × 3 + `useEffect` +
-  `isMounted`-Guard) in jeder Page erneut von Hand schreiben, sobald es sich
-  zum dritten Mal wiederholt. → `useAsyncResource`-Hook, siehe
+  `isMounted`-Guard) in jeder Page/jedem Block erneut von Hand schreiben,
+  sobald es sich zum dritten Mal wiederholt. Jetzt zentral im
+  `useAsyncResource`-Hook, siehe
   [`conventions/state-and-data-fetching.md`](conventions/state-and-data-fetching.md).
+- **Nicht** eigene `formatDate`-Implementierungen pro Datei anlegen. War in
+  `NewsBlock.tsx`, `EventsBlock.tsx` und `pages/format.ts` dreifach
+  vorhanden — jetzt zentral in `lib/format.ts`.
 - **Nicht** `as never`/`as unknown` außerhalb von `lib/directus.ts` und
   `lib/queries.ts` verwenden — jede Komponente bekommt bereits sauber
   typisierte Werte.

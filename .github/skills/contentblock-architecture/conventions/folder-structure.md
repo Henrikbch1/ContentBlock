@@ -2,7 +2,7 @@
 
 [← zurück zu SKILL.md](../SKILL.md)
 
-## Das Skelett (Ist-Zustand + eine empfohlene Ergänzung)
+## Das Skelett (Ist-Zustand)
 
 ```
 frontend/src/
@@ -37,16 +37,18 @@ frontend/src/
 ├── lib/
 │   ├── directus.ts                # Client + Schema
 │   ├── queries.ts                 # getX()-Funktionen + Feldlisten
+│   ├── directusRelations.ts       # geteilte Relation-/Asset-Id-Helfer
+│   ├── format.ts                  # geteilte Datum-Formatierung
+│   ├── uiMessages.ts              # zentrale Lade-/Leer-/Fehlertexte
 │   ├── types.ts                   # reine Domain-Typen
 │   ├── utils.ts                   # generische Helfer (cn)
-│   └── hooks/                     # NEU (empfohlen): geteilte Fetch-Hooks
+│   └── hooks/                     # geteilte Fetch-Hooks
 │       └── useAsyncResource.ts
 └── pages/
     ├── CmsPage.tsx
     ├── NewsPage.tsx
     ├── EventsPage.tsx
-    ├── NotFoundPage.tsx
-    └── format.ts                  # Datum-Formatierung (siehe Hinweis unten)
+    └── NotFoundPage.tsx
 ```
 
 ## Regeln
@@ -59,19 +61,16 @@ frontend/src/
    eigener Block-Typ, sondern eine von `ContactsBlock` genutzte
    Sub-Komponente — sie bleibt trotzdem im `blocks/`-Ordner, weil sie nur in
    diesem Kontext existiert (kohäsiv, nicht generisch genug für `common/`).
-3. **`lib/hooks/` ist neu und optional, aber empfohlen**, sobald mehr als
-   zwei Stellen dasselbe Fetch-Boilerplate duplizieren (siehe
-   [`state-and-data-fetching.md`](state-and-data-fetching.md)). Hooks hier
-   kapseln _wie_ `lib/queries.ts`-Funktionen in React-State landen; sie
+3. **`lib/hooks/` kapselt geteilte Fetch-Hooks** (aktuell `useAsyncResource`),
+   sobald mehr als zwei Stellen dasselbe Fetch-Boilerplate duplizieren
+   (siehe [`state-and-data-fetching.md`](state-and-data-fetching.md)). Hooks
+   hier kapseln _wie_ `lib/queries.ts`-Funktionen in React-State landen; sie
    rufen selbst keine Directus-Funktionen mit fest verdrahteten Namen auf,
    sondern nehmen die Query-Funktion als Parameter.
-4. **`pages/format.ts` ist eine generische Formatierungs-Utility, kein
-   Page-spezifischer Code** — sie wird von `NewsPage` _und_ `EventsPage`
-   genutzt. Verantwortlich wäre eigentlich `lib/format.ts` (analog zu
-   `lib/utils.ts`). Bestehenden Code deswegen nicht sofort verschieben, aber
-   **neue** generische Formatierungs-Helfer (Datum, Zahl, Währung) in
-   `lib/format.ts` statt in `pages/format.ts` anlegen, um die Aufteilung
-   nicht weiter zu vertiefen.
+4. **Generische Formatierung lebt in `lib/format.ts`**, nicht in `pages/`.
+   `formatDate`/`formatDateRange` werden von Blocks (`NewsBlock`,
+   `EventsBlock`) und Pages (`NewsPage`, `EventsPage`) gleichermaßen genutzt
+   — ein Page-lokales `format.ts` hätte diese Wiederverwendung erschwert.
 5. **Kein Block/keine Page importiert `@directus/sdk` direkt.** Jeder
    Directus-Zugriff läuft über `lib/queries.ts`.
 6. **Dateinamen**: Komponenten `PascalCase.tsx` (Dateiname = Exportname);

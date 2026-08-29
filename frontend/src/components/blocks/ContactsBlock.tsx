@@ -1,10 +1,16 @@
-import { useEffect, useState } from "react";
 import { BriefcaseBusiness, Mail, Phone } from "lucide-react";
 
 import { getContactsForBlock } from "../../lib/queries";
+import { useAsyncResource } from "../../lib/hooks/useAsyncResource";
+import {
+  EMPTY_MESSAGES,
+  ERROR_MESSAGES,
+  LOADING_MESSAGES,
+} from "../../lib/uiMessages";
 import type { BlockContacts, Person } from "../../lib/types";
 import { EmptyState } from "../common/EmptyState";
 import { DirectusImage } from "../common/DirectusImage";
+import { Section } from "../layout/Section";
 import { ContactForm } from "./ContactForm";
 
 type Contact = Person & { phone?: string | null };
@@ -31,34 +37,15 @@ export const ContactsBlock = ({
 }: {
   item: BlockContacts;
 }): React.JSX.Element => {
-  const [contacts, setContacts] = useState<Contact[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [hasError, setHasError] = useState(false);
-
-  useEffect(() => {
-    let isMounted = true;
-
-    const loadContacts = async (): Promise<void> => {
-      setIsLoading(true);
-      setHasError(false);
-      try {
-        const loadedContacts = await getContactsForBlock(item);
-        if (isMounted) setContacts(loadedContacts);
-      } catch {
-        if (isMounted) setHasError(true);
-      } finally {
-        if (isMounted) setIsLoading(false);
-      }
-    };
-
-    void loadContacts();
-    return () => {
-      isMounted = false;
-    };
-  }, [item]);
+  const {
+    data: contacts,
+    isLoading,
+    hasError,
+  } = useAsyncResource(() => getContactsForBlock(item), [item]);
+  const contactList = contacts ?? [];
 
   return (
-    <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16">
+    <Section>
       {item.title && (
         <h2 className="mb-6 text-3xl font-semibold tracking-tight">
           {item.title}
@@ -70,36 +57,36 @@ export const ContactsBlock = ({
           className="text-sm text-muted-foreground"
           role="status"
         >
-          Kontakte werden geladen ...
+          {LOADING_MESSAGES.contacts}
         </p>
       )}
       {!isLoading && hasError && (
-        <EmptyState message="Kontakte konnten nicht geladen werden." />
+        <EmptyState message={ERROR_MESSAGES.contacts} />
       )}
-      {!isLoading && !hasError && contacts.length === 0 && (
+      {!isLoading && !hasError && contactList.length === 0 && (
         <EmptyState
           message={
             item.mode === "by_role" && item.roles?.length
-              ? "Für die ausgewählten Rollen sind aktuell keine Personen hinterlegt."
-              : "Keine Kontakte vorhanden."
+              ? EMPTY_MESSAGES.contactsByRole
+              : EMPTY_MESSAGES.contacts
           }
         />
       )}
       {!isLoading &&
         !hasError &&
         item.layout === "form" &&
-        contacts.length > 0 && (
+        contactList.length > 0 && (
           <ContactForm
             recipientEmail={
-              contacts.find((contact) => contact.email)?.email ?? ""
+              contactList.find((contact) => contact.email)?.email ?? ""
             }
-            recipientName={getContactName(contacts[0])}
+            recipientName={getContactName(contactList[0])}
           />
         )}
       {!isLoading &&
         !hasError &&
         item.layout !== "form" &&
-        contacts.length > 0 && (
+        contactList.length > 0 && (
           <div
             className={
               item.layout === "list"
@@ -107,7 +94,7 @@ export const ContactsBlock = ({
                 : "grid gap-5 md:grid-cols-2 lg:grid-cols-3"
             }
           >
-            {contacts.map((contact) => {
+            {contactList.map((contact) => {
               const name = getContactName(contact);
               const roleName = getRoleName(contact);
               return (
@@ -166,6 +153,6 @@ export const ContactsBlock = ({
             })}
           </div>
         )}
-    </section>
+    </Section>
   );
 };

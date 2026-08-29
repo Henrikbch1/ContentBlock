@@ -1,5 +1,6 @@
 import { Send } from "lucide-react";
 import type { FormEvent } from "react";
+import { Section } from "../layout/Section";
 
 type ContactFormProps = {
   recipientEmail: string;
@@ -24,7 +25,7 @@ export const ContactForm = ({
   };
 
   return (
-    <section className="mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-16">
+    <Section containerClassName="max-w-3xl">
       <div className="border border-border bg-card p-6 shadow-sm sm:p-8">
         <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">
           Nachricht an {recipientName}
@@ -76,6 +77,6 @@ export const ContactForm = ({
           </button>
         </form>
       </div>
-    </section>
+    </Section>
   );
 };

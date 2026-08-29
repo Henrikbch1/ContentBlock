@@ -1,4 +1,5 @@
 import { DirectusImage } from "../common/DirectusImage";
+import { Container } from "../layout/Container";
 import type { BlockHero } from "../../lib/types";
 
 export const HeroBlock = ({ item }: { item: BlockHero }): React.JSX.Element => (
@@ -9,7 +10,7 @@ export const HeroBlock = ({ item }: { item: BlockHero }): React.JSX.Element => (
       className="absolute inset-0 -z-20 h-full w-full object-cover"
     />
     <div className="absolute inset-0 -z-10 bg-primary/80" />
-    <div className="mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
+    <Container className="py-16 lg:py-24">
       <div className="max-w-3xl">
         <div>
           <h1 className="max-w-3xl text-5xl font-semibold leading-none tracking-tight sm:text-7xl">
@@ -41,6 +42,6 @@ export const HeroBlock = ({ item }: { item: BlockHero }): React.JSX.Element => (
           </div>
         ) : null}
       </div>
-    </div>
+    </Container>
   </section>
 );

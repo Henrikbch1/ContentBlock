@@ -1,47 +1,32 @@
-import { useEffect, useState } from "react";
 import { ArrowUpRight, MapPin } from "lucide-react";
 
 import { getEventsForBlock } from "../../lib/queries";
-import type { BlockEvents, Event } from "../../lib/types";
+import { formatDate } from "../../lib/format";
+import { useAsyncResource } from "../../lib/hooks/useAsyncResource";
+import {
+  EMPTY_MESSAGES,
+  ERROR_MESSAGES,
+  LOADING_MESSAGES,
+} from "../../lib/uiMessages";
+import type { BlockEvents } from "../../lib/types";
 import { EmptyState } from "../common/EmptyState";
 import { RichText } from "../common/RichText";
-
-const formatDate = (date: string | null | undefined): string =>
-  date ? new Date(date).toLocaleDateString("de-DE") : "";
+import { Section } from "../layout/Section";
 
 export const EventsBlock = ({
   item,
 }: {
   item: BlockEvents;
 }): React.JSX.Element => {
-  const [events, setEvents] = useState<Event[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [hasError, setHasError] = useState(false);
-
-  useEffect(() => {
-    let isMounted = true;
-
-    const loadEvents = async (): Promise<void> => {
-      setIsLoading(true);
-      setHasError(false);
-      try {
-        const loadedEvents = await getEventsForBlock(item);
-        if (isMounted) setEvents(loadedEvents);
-      } catch {
-        if (isMounted) setHasError(true);
-      } finally {
-        if (isMounted) setIsLoading(false);
-      }
-    };
-
-    void loadEvents();
-    return () => {
-      isMounted = false;
-    };
-  }, [item]);
+  const {
+    data: events,
+    isLoading,
+    hasError,
+  } = useAsyncResource(() => getEventsForBlock(item), [item]);
+  const eventList = events ?? [];
 
   return (
-    <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16">
+    <Section>
       {item.title && (
         <h2 className="mb-6 text-3xl font-semibold tracking-tight">
           {item.title}
@@ -53,18 +38,18 @@ export const EventsBlock = ({
           className="text-sm text-muted-foreground"
           role="status"
         >
-          Veranstaltungen werden geladen ...
+          {LOADING_MESSAGES.events}
         </p>
       )}
       {!isLoading && hasError && (
-        <EmptyState message="Veranstaltungen konnten nicht geladen werden." />
+        <EmptyState message={ERROR_MESSAGES.events} />
       )}
-      {!isLoading && !hasError && events.length === 0 && (
-        <EmptyState message="Keine Veranstaltungen vorhanden." />
+      {!isLoading && !hasError && eventList.length === 0 && (
+        <EmptyState message={EMPTY_MESSAGES.events} />
       )}
-      {!isLoading && !hasError && events.length > 0 && (
+      {!isLoading && !hasError && eventList.length > 0 && (
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {events.map((event) => (
+          {eventList.map((event) => (
             <a
               className="group flex min-h-64 flex-col border border-border bg-card p-6 transition-colors hover:border-primary"
               href={`/termine/${event.slug ?? event.id}`}
@@ -95,6 +80,7 @@ export const EventsBlock = ({
           ))}
         </div>
       )}
-    </section>
+    </Section>
   );
 };
+

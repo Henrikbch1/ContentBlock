@@ -1,14 +1,21 @@
 import { useEffect } from "react";
 import { EmptyState } from "../components/common/EmptyState";
+import { EMPTY_MESSAGES } from "../lib/uiMessages";
 
-export const NotFoundPage = ({ message = "Die angeforderte Seite wurde nicht gefunden." }: { message?: string }): React.JSX.Element => {
+export const NotFoundPage = ({
+  message = EMPTY_MESSAGES.notFoundPage,
+}: {
+  message?: string;
+}): React.JSX.Element => {
   useEffect(() => {
     document.title = "Nicht gefunden | ContentBlock";
   }, []);
 
   return (
     <section className="mx-auto max-w-3xl px-4 py-16 sm:px-6 sm:py-24">
-      <h1 className="mb-6 text-4xl font-semibold tracking-tight">Nicht gefunden</h1>
+      <h1 className="mb-6 text-4xl font-semibold tracking-tight">
+        Nicht gefunden
+      </h1>
       <EmptyState message={message} />
     </section>
   );

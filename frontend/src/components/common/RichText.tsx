@@ -1,3 +1,5 @@
+import { EMPTY_MESSAGES } from "../../lib/uiMessages";
+
 type RichTextProps = {
   content?: string | null;
   className?: string;
@@ -66,7 +68,7 @@ export const RichText = ({
   className = "",
 }: RichTextProps): React.JSX.Element => {
   if (!content) {
-    return <p className={className}>Noch kein Text vorhanden.</p>;
+    return <p className={className}>{EMPTY_MESSAGES.richText}</p>;
   }
 
   return (

@@ -1,7 +1,11 @@
 import { ChevronDown, Menu, X } from "lucide-react";
 import { useState } from "react";
+import {
+  getAssetId,
+  getRelation,
+  getRelationId,
+} from "../../lib/directusRelations";
 import type {
-  DirectusAsset,
   DirectusRelation,
   NavItem,
   Navigation,
@@ -10,17 +14,6 @@ import type {
 
 type HeaderProps = {
   navigation?: DirectusRelation<Navigation>;
-};
-
-const getRelation = <T,>(
-  relation: DirectusRelation<T> | undefined,
-): T | null => (relation && typeof relation === "object" ? relation : null);
-
-const getAssetId = (asset: DirectusAsset | undefined): string | null => {
-  if (typeof asset === "string" || typeof asset === "number") {
-    return String(asset);
-  }
-  return asset && typeof asset === "object" ? String(asset.id) : null;
 };
 
 const getPageHref = (
@@ -40,12 +33,8 @@ const getNavHref = (item: NavItem): string | null => {
 const getItemId = (item: NavItem): string => String(item.id);
 
 const getParentId = (item: NavItem): string | null => {
-  const parent = item.parent;
-  return parent && typeof parent === "object"
-    ? String(parent.id)
-    : parent
-      ? String(parent)
-      : null;
+  const parentId = getRelationId(item.parent);
+  return parentId === null ? null : String(parentId);
 };
 
 const getChildren = (items: NavItem[], parentId: string | null): NavItem[] =>

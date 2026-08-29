@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { BlockRenderer } from "../components/blocks/BlockRenderer";
 import { EmptyState } from "../components/common/EmptyState";
+import { useAsyncResource } from "../lib/hooks/useAsyncResource";
+import { ERROR_MESSAGES, LOADING_MESSAGES } from "../lib/uiMessages";
 import { getPageBySlug } from "../lib/queries";
-import type { Page } from "../lib/types";
 import { NotFoundPage } from "./NotFoundPage";
 
 type CmsPageProps = {
@@ -10,46 +11,23 @@ type CmsPageProps = {
 };
 
 export const CmsPage = ({ slug }: CmsPageProps): React.JSX.Element => {
-  const [page, setPage] = useState<Page | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [hasError, setHasError] = useState(false);
+  const {
+    data: page,
+    isLoading,
+    hasError,
+  } = useAsyncResource(() => getPageBySlug(slug), [slug]);
 
   useEffect(() => {
-    let isMounted = true;
-    setIsLoading(true);
-    setHasError(false);
-
-    const loadPage = async (): Promise<void> => {
-      try {
-        const loadedPage = await getPageBySlug(slug);
-        if (isMounted) {
-          setPage(loadedPage);
-          if (loadedPage?.title) {
-            document.title = loadedPage.title;
-          }
-        }
-      } catch {
-        if (isMounted) {
-          setHasError(true);
-        }
-      } finally {
-        if (isMounted) {
-          setIsLoading(false);
-        }
-      }
-    };
-
-    void loadPage();
-    return () => {
-      isMounted = false;
-    };
-  }, [slug]);
+    if (page?.title) {
+      document.title = page.title;
+    }
+  }, [page]);
 
   if (isLoading) {
-    return <p aria-live="polite" className="px-4 py-16 text-center text-sm text-muted-foreground" role="status">Seite wird geladen ...</p>;
+    return <p aria-live="polite" className="px-4 py-16 text-center text-sm text-muted-foreground" role="status">{LOADING_MESSAGES.page}</p>;
   }
   if (hasError) {
-    return <EmptyState message="Die Seite konnte nicht geladen werden." />;
+    return <EmptyState message={ERROR_MESSAGES.page} />;
   }
   if (!page) {
     return <NotFoundPage />;
