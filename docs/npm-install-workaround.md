@@ -1,61 +1,59 @@
-# npm install: Workaround für Proxy
+# npm install: Workaround für gesperrten Registry-Zugriff
 
 ## Problem
 
-Auf diesem PC läuft ein Proxy .`npm install`
-im Ordner `frontend/` schlägt deshalb fehl:
-
-- **Ohne CA-Fix:** `UNABLE_TO_GET_ISSUER_CERT_LOCALLY`
-  (Node/npm kennt die im Windows-Zertifikatspeicher vertrauten Zscaler-/Lenze-Root-Zertifikate nicht,
-  da Node ein eigenes CA-Bundle mitbringt und nicht den Windows-Zertifikatspeicher nutzt.)
-- **Mit gesetztem `NODE_EXTRA_CA_CERTS`** (behebt nur das Zertifikatsproblem): `403 Forbidden`
-  beim Zugriff auf `registry.npmjs.org` – betrifft auch Standardpakete wie `react`. Der Firmenproxy
-  blockiert also den direkten Zugriff auf die öffentliche npm-Registry grundsätzlich.
-
-Ein Firmen-Artifactory-Mirror (`artifactory.encoway-services.de`) existiert zwar in der globalen
-`.npmrc`, wurde aber für dieses **private** Projekt bewusst **nicht** verwendet, da er
-Firmen-Zugangsdaten voraussetzt.
+Auf manchen PCs blockiert das Netzwerk den direkten Zugriff auf die öffentliche npm-Registry
+(`registry.npmjs.org`), sodass `npm install` im Ordner `frontend/` fehlschlägt – etwa mit
+`UNABLE_TO_GET_ISSUER_CERT_LOCALLY` oder `403 Forbidden`, auch bei Standardpaketen wie `react`.
 
 ## Lösung: `node_modules` auf einem anderen PC bauen und übertragen
 
-### Schritt 1 – Auf dem anderen PC (ohne Proxy-Sperre)
+### Schritt 1 – Auf einem PC ohne Netzwerksperre
 
-1. Aktuellen Stand holen: `git pull` (stellt sicher, dass `frontend/package.json` und
-   `frontend/package-lock.json` aktuell sind).
-2. In den Frontend-Ordner wechseln:
-   ```powershell
-   cd frontend
-   ```
-3. Abhängigkeiten exakt gemäß `package-lock.json` installieren:
-   ```powershell
-   npm install
-   ```
-4. `node_modules` zippen:
-   ```powershell
-   Compress-Archive -Path node_modules -DestinationPath node_modules.zip -Force
-   ```
-5. `node_modules.zip` auf diesen PC übertragen (USB-Stick, Netzwerkfreigabe, Cloud-Speicher o.ä.).
+Aktuellen Stand holen (stellt sicher, dass `frontend/package.json` und
+`frontend/package-lock.json` aktuell sind):
 
-### Schritt 2 – Auf diesem PC
+```powershell
+git pull
+```
 
-1. Vorhandenen Ordner löschen (falls vorhanden):
-   ```powershell
-   cd frontend
-   Remove-Item -Recurse -Force node_modules
-   ```
-2. Neues `node_modules.zip` nach `frontend/` kopieren (vorhandenes ersetzen).
-3. Entpacken:
-   ```powershell
-   Expand-Archive -Path node_modules.zip -DestinationPath . -Force
-   ```
-4. Build prüfen:
-   ```powershell
-   npm run build
-   ```
-5. Dev-Server starten:
-   ```powershell
-   npm run dev
-   ```
+In den Frontend-Ordner wechseln und Abhängigkeiten exakt gemäß `package-lock.json` installieren:
+
+```powershell
+cd frontend
+npm install
+```
+
+`node_modules` zippen:
+
+```powershell
+Compress-Archive -Path node_modules -DestinationPath node_modules.zip -Force
+```
+
+`node_modules.zip` auf den Ziel-PC übertragen (USB-Stick, Netzwerkfreigabe, Cloud-Speicher o. ä.).
+
+### Schritt 2 – Auf dem gesperrten PC
+
+Vorhandenen Ordner löschen (falls vorhanden) und neues `node_modules.zip` nach `frontend/`
+kopieren (vorhandenes ersetzen), dann entpacken:
+
+```powershell
+cd frontend
+Remove-Item -Recurse -Force node_modules
+Expand-Archive -Path node_modules.zip -DestinationPath . -Force
+```
+
+Build prüfen:
+
+```powershell
+npm run build
+```
+
+Dev-Server starten:
+
+```powershell
+npm run dev
+```
 
 ## Wichtig
 
@@ -64,6 +62,3 @@ Firmen-Zugangsdaten voraussetzt.
   übertragen → hier entpacken.
 - `frontend/package-lock.json` muss auf beiden PCs identisch sein, sonst installiert
   `npm install` auf dem anderen PC ggf. andere Versionen als erwartet.
-- Der CA-Zertifikats-Fix (`NODE_EXTRA_CA_CERTS`, User-Umgebungsvariable, zeigt auf
-  `%USERPROFILE%\.certs\corporate-ca-bundle.pem`) bleibt auf diesem PC bestehen und ist weiterhin
-  sinnvoll für andere Tools – er löst aber **nicht** die 403-Sperre der öffentlichen npm-Registry.
