@@ -52,7 +52,7 @@ export const Footer = ({ footer }: FooterProps): React.JSX.Element => {
     .slice()
     .sort((first, second) => (first.sort ?? 0) - (second.sort ?? 0));
   return (
-    <footer className="border-t-4 border-primary bg-[#17312e] text-white">
+    <footer className="border-t-4 border-primary bg-foreground text-white">
       <Container className="grid gap-10 py-12 sm:grid-cols-2 lg:grid-cols-3">
         <section>
           <h2 className="font-heading text-2xl font-semibold">Kontakt</h2>

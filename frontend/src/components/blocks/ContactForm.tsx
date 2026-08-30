@@ -70,7 +70,7 @@ export const ContactForm = ({
             Nachricht geöffnet wird.
           </label>
           <button
-            className="inline-flex min-h-11 w-fit items-center gap-2 bg-primary px-5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-[#004a4d]"
+            className="inline-flex min-h-11 w-fit items-center gap-2 bg-primary px-5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-hover"
             type="submit"
           >
             E-Mail vorbereiten <Send aria-hidden="true" size={16} />

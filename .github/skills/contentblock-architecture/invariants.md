@@ -58,11 +58,12 @@ Get-ChildItem frontend/src -Recurse -Include *.tsx |
   Select-String -Pattern '\[#[0-9a-fA-F]{3,8}\]'
 ```
 
-**Bekannte Ausnahmen (Refactor-Kandidaten, kein neuer Code darf dazukommen):**
-`HeroBlock.tsx` (`hover:bg-[#f3c972]`), `ContactForm.tsx`
-(`hover:bg-[#004a4d]`), `Footer.tsx` (`bg-[#17312e]`) — Ziel: semantische
-Tokens (`--accent-hover` o. Ä.) in `index.css` + `theme`-Collection.
-Wer eine dieser Dateien anfasst, zieht das Token mit.
+**Behoben:** `HeroBlock.tsx`/`ContactForm.tsx` nutzen jetzt die statischen
+Tokens `--accent-hover`/`--primary-hover` aus `index.css`
+(`hover:bg-accent-hover`/`hover:bg-primary-hover`), `Footer.tsx` nutzt
+`bg-foreground` (identischer Wert wie das vormalige Hex-Literal). Werden
+Hover-Farben künftig auch aus der Directus-`theme`-Collection steuerbar,
+zieht `ThemeProvider.tsx` diese Tokens nach.
 
 ## I-7: Keine duplizierten Helfer
 

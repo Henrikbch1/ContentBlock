@@ -33,7 +33,7 @@ export const HeroBlock = ({ item }: { item: BlockHero }): React.JSX.Element => (
                   className={
                     button.variant === "secondary"
                       ? "border border-primary-foreground/70 px-5 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-foreground hover:text-primary"
-                      : "bg-secondary px-5 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-[#f3c972]"
+                      : "bg-secondary px-5 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-accent-hover"
                   }
                 >
                   {button.label}

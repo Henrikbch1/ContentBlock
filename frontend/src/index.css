@@ -13,6 +13,8 @@
   --muted-foreground: #4d6660;
   --accent: #e7b552;
   --accent-foreground: #17312e;
+  --accent-hover: #f3c972;
+  --primary-hover: #004a4d;
   --border: #c8d8d2;
   --input: #c8d8d2;
   --ring: #e7b552;
@@ -45,6 +47,8 @@ h6 {
   --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
+  --color-accent-hover: var(--accent-hover);
+  --color-primary-hover: var(--primary-hover);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
