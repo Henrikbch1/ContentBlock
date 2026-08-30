@@ -10,6 +10,7 @@ import {
 import type { BlockContacts, Person } from "../../lib/types";
 import { EmptyState } from "../common/EmptyState";
 import { DirectusImage } from "../common/DirectusImage";
+import { LoadingState } from "../common/LoadingState";
 import { Section } from "../layout/Section";
 import { ContactForm } from "./ContactForm";
 
@@ -51,15 +52,7 @@ export const ContactsBlock = ({
           {item.title}
         </h2>
       )}
-      {isLoading && (
-        <p
-          aria-live="polite"
-          className="text-sm text-muted-foreground"
-          role="status"
-        >
-          {LOADING_MESSAGES.contacts}
-        </p>
-      )}
+      {isLoading && <LoadingState message={LOADING_MESSAGES.contacts} />}
       {!isLoading && hasError && (
         <EmptyState message={ERROR_MESSAGES.contacts} />
       )}

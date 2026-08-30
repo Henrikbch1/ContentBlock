@@ -8,6 +8,7 @@ import {
 } from "../../lib/uiMessages";
 import type { BlockDocuments } from "../../lib/types";
 import { EmptyState } from "../common/EmptyState";
+import { LoadingState } from "../common/LoadingState";
 import { Section } from "../layout/Section";
 
 export const DocumentsBlock = ({
@@ -29,15 +30,7 @@ export const DocumentsBlock = ({
           {item.title}
         </h2>
       )}
-      {isLoading && (
-        <p
-          aria-live="polite"
-          className="text-sm text-muted-foreground"
-          role="status"
-        >
-          {LOADING_MESSAGES.documents}
-        </p>
-      )}
+      {isLoading && <LoadingState message={LOADING_MESSAGES.documents} />}
       {!isLoading && hasError && (
         <EmptyState message={ERROR_MESSAGES.documents} />
       )}

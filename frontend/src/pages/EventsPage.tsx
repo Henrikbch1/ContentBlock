@@ -1,8 +1,11 @@
-import { ArrowLeft, ArrowUpRight, CalendarDays, MapPin } from "lucide-react";
-import { useEffect } from "react";
+import { ArrowUpRight, CalendarDays, MapPin } from "lucide-react";
+import { BackLink } from "../components/common/BackLink";
 import { EmptyState } from "../components/common/EmptyState";
+import { LoadingState } from "../components/common/LoadingState";
+import { PageHeader } from "../components/common/PageHeader";
 import { RichText } from "../components/common/RichText";
 import { useAsyncResource } from "../lib/hooks/useAsyncResource";
+import { usePageTitle } from "../lib/hooks/usePageTitle";
 import { getEventBySlug, getEvents } from "../lib/queries";
 import { formatDateRange } from "../lib/format";
 import {
@@ -20,32 +23,20 @@ const EventsOverview = (): React.JSX.Element => {
   const { data: events, isLoading, hasError } = useAsyncResource(getEvents, []);
   const eventList = events ?? [];
 
-  useEffect(() => {
-    document.title = "Termine | ContentBlock";
-  }, []);
+  usePageTitle("Termine | ContentBlock");
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16">
-      <header className="mb-10 max-w-2xl">
-        <p className="mb-3 flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-primary">
-          <CalendarDays aria-hidden="true" size={17} /> Vereinskalender
-        </p>
-        <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
-          Termine
-        </h1>
-        <p className="mt-4 text-lg leading-8 text-muted-foreground">
-          Arbeitsdienste, Versammlungen und alles, was gemeinsam stattfindet.
-        </p>
-      </header>
-      {isLoading && (
-        <p
-          aria-live="polite"
-          className="text-sm text-muted-foreground"
-          role="status"
-        >
-          {LOADING_MESSAGES.eventsPage}
-        </p>
-      )}
+      <PageHeader
+        eyebrow={
+          <>
+            <CalendarDays aria-hidden="true" size={17} /> Vereinskalender
+          </>
+        }
+        title="Termine"
+        intro="Arbeitsdienste, Versammlungen und alles, was gemeinsam stattfindet."
+      />
+      {isLoading && <LoadingState message={LOADING_MESSAGES.eventsPage} />}
       {!isLoading && hasError && (
         <EmptyState message={ERROR_MESSAGES.eventsPage} />
       )}
@@ -64,7 +55,7 @@ const EventsOverview = (): React.JSX.Element => {
                 {formatDateRange(event.start_date, event.end_date)}
               </p>
               <h2 className="mt-3 text-xl font-semibold tracking-tight group-hover:text-primary">
-                {event.title ?? "Ohne Titel"}
+                {event.title ?? EMPTY_MESSAGES.untitled}
               </h2>
               {event.location && (
                 <p className="mt-3 flex items-start gap-2 text-sm text-muted-foreground">
@@ -96,38 +87,23 @@ const EventDetail = ({ slug }: { slug: string }): React.JSX.Element => {
     hasError,
   } = useAsyncResource(() => getEventBySlug(slug), [slug]);
 
-  useEffect(() => {
-    document.title = event?.title
-      ? `${event.title} | Termine`
-      : "Termine | ContentBlock";
-  }, [event]);
+  usePageTitle(
+    event?.title ? `${event.title} | Termine` : "Termine | ContentBlock",
+  );
 
   if (isLoading)
-    return (
-      <p
-        aria-live="polite"
-        className="px-4 py-16 text-center text-sm text-muted-foreground"
-        role="status"
-      >
-        {LOADING_MESSAGES.eventDetail}
-      </p>
-    );
+    return <LoadingState centered message={LOADING_MESSAGES.eventDetail} />;
   if (hasError) return <EmptyState message={ERROR_MESSAGES.eventDetail} />;
   if (!event) return <NotFoundPage message={EMPTY_MESSAGES.eventNotFound} />;
 
   return (
     <article className="mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-16">
-      <a
-        className="mb-10 inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground"
-        href="/termine"
-      >
-        <ArrowLeft aria-hidden="true" size={16} /> Alle Termine
-      </a>
+      <BackLink href="/termine" label="Alle Termine" />
       <p className="text-sm text-muted-foreground">
         {formatDateRange(event.start_date, event.end_date)}
       </p>
       <h1 className="mt-3 text-4xl font-semibold tracking-tight">
-        {event.title ?? "Ohne Titel"}
+        {event.title ?? EMPTY_MESSAGES.untitled}
       </h1>
       {event.location && (
         <p className="mt-4 text-lg text-muted-foreground">{event.location}</p>

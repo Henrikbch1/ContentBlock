@@ -10,6 +10,7 @@ import {
 } from "../../lib/uiMessages";
 import type { BlockEvents } from "../../lib/types";
 import { EmptyState } from "../common/EmptyState";
+import { LoadingState } from "../common/LoadingState";
 import { RichText } from "../common/RichText";
 import { Section } from "../layout/Section";
 
@@ -32,15 +33,7 @@ export const EventsBlock = ({
           {item.title}
         </h2>
       )}
-      {isLoading && (
-        <p
-          aria-live="polite"
-          className="text-sm text-muted-foreground"
-          role="status"
-        >
-          {LOADING_MESSAGES.events}
-        </p>
-      )}
+      {isLoading && <LoadingState message={LOADING_MESSAGES.events} />}
       {!isLoading && hasError && <EmptyState message={ERROR_MESSAGES.events} />}
       {!isLoading && !hasError && eventList.length === 0 && (
         <EmptyState message={EMPTY_MESSAGES.events} />

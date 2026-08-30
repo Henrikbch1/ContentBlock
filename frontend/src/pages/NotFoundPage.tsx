@@ -1,5 +1,5 @@
-import { useEffect } from "react";
 import { EmptyState } from "../components/common/EmptyState";
+import { usePageTitle } from "../lib/hooks/usePageTitle";
 import { EMPTY_MESSAGES } from "../lib/uiMessages";
 
 export const NotFoundPage = ({
@@ -7,9 +7,7 @@ export const NotFoundPage = ({
 }: {
   message?: string;
 }): React.JSX.Element => {
-  useEffect(() => {
-    document.title = "Nicht gefunden | ContentBlock";
-  }, []);
+  usePageTitle("Nicht gefunden | ContentBlock");
 
   return (
     <section className="mx-auto max-w-3xl px-4 py-16 sm:px-6 sm:py-24">

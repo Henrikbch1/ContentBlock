@@ -11,6 +11,7 @@ import {
 import type { BlockNews } from "../../lib/types";
 import { DirectusImage } from "../common/DirectusImage";
 import { EmptyState } from "../common/EmptyState";
+import { LoadingState } from "../common/LoadingState";
 import { Section } from "../layout/Section";
 
 export const NewsBlock = ({ item }: { item: BlockNews }): React.JSX.Element => {
@@ -28,15 +29,7 @@ export const NewsBlock = ({ item }: { item: BlockNews }): React.JSX.Element => {
           {item.title}
         </h2>
       )}
-      {isLoading && (
-        <p
-          aria-live="polite"
-          className="text-sm text-muted-foreground"
-          role="status"
-        >
-          {LOADING_MESSAGES.news}
-        </p>
-      )}
+      {isLoading && <LoadingState message={LOADING_MESSAGES.news} />}
       {!isLoading && hasError && <EmptyState message={ERROR_MESSAGES.news} />}
       {!isLoading && !hasError && newsList.length === 0 && (
         <EmptyState message={EMPTY_MESSAGES.news} />

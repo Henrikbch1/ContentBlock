@@ -1,9 +1,12 @@
-import { ArrowLeft, ArrowUpRight, Newspaper, Tag } from "lucide-react";
-import { useEffect } from "react";
+import { ArrowUpRight, Newspaper, Tag } from "lucide-react";
+import { BackLink } from "../components/common/BackLink";
 import { DirectusImage } from "../components/common/DirectusImage";
 import { EmptyState } from "../components/common/EmptyState";
+import { LoadingState } from "../components/common/LoadingState";
+import { PageHeader } from "../components/common/PageHeader";
 import { RichText } from "../components/common/RichText";
 import { useAsyncResource } from "../lib/hooks/useAsyncResource";
+import { usePageTitle } from "../lib/hooks/usePageTitle";
 import { formatDate } from "../lib/format";
 import {
   EMPTY_MESSAGES,
@@ -27,33 +30,20 @@ const NewsOverview = (): React.JSX.Element => {
   const { data: news, isLoading, hasError } = useAsyncResource(getNews, []);
   const newsList = news ?? [];
 
-  useEffect(() => {
-    document.title = "Aktuelles | ContentBlock";
-  }, []);
+  usePageTitle("Aktuelles | ContentBlock");
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16">
-      <header className="mb-10 max-w-2xl">
-        <p className="mb-3 flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-primary">
-          <Newspaper aria-hidden="true" size={17} /> Aus dem Verein
-        </p>
-        <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
-          Aktuelles
-        </h1>
-        <p className="mt-4 text-lg leading-8 text-muted-foreground">
-          Neuigkeiten, Berichte und wichtige Informationen rund um den
-          Angelsportverein.
-        </p>
-      </header>
-      {isLoading && (
-        <p
-          aria-live="polite"
-          className="text-sm text-muted-foreground"
-          role="status"
-        >
-          {LOADING_MESSAGES.news}
-        </p>
-      )}
+      <PageHeader
+        eyebrow={
+          <>
+            <Newspaper aria-hidden="true" size={17} /> Aus dem Verein
+          </>
+        }
+        title="Aktuelles"
+        intro="Neuigkeiten, Berichte und wichtige Informationen rund um den Angelsportverein."
+      />
+      {isLoading && <LoadingState message={LOADING_MESSAGES.news} />}
       {!isLoading && hasError && <EmptyState message={ERROR_MESSAGES.news} />}
       {!isLoading && !hasError && newsList.length === 0 && (
         <EmptyState message={EMPTY_MESSAGES.news} />
@@ -84,7 +74,7 @@ const NewsOverview = (): React.JSX.Element => {
                   )}
                 </div>
                 <h2 className="mt-3 text-xl font-semibold tracking-tight group-hover:text-primary">
-                  {article.title ?? "Ohne Titel"}
+                  {article.title ?? EMPTY_MESSAGES.untitled}
                 </h2>
                 {article.teaser && (
                   <p className="mt-3 line-clamp-3 text-sm leading-6 text-muted-foreground">
@@ -110,33 +100,20 @@ const NewsDetail = ({ slug }: { slug: string }): React.JSX.Element => {
     hasError,
   } = useAsyncResource(() => getNewsBySlug(slug), [slug]);
 
-  useEffect(() => {
-    document.title = article?.title
+  usePageTitle(
+    article?.title
       ? `${article.title} | Aktuelles`
-      : "Aktuelles | ContentBlock";
-  }, [article]);
+      : "Aktuelles | ContentBlock",
+  );
 
   if (isLoading)
-    return (
-      <p
-        aria-live="polite"
-        className="px-4 py-16 text-center text-sm text-muted-foreground"
-        role="status"
-      >
-        {LOADING_MESSAGES.newsDetail}
-      </p>
-    );
+    return <LoadingState centered message={LOADING_MESSAGES.newsDetail} />;
   if (hasError) return <EmptyState message={ERROR_MESSAGES.newsDetail} />;
   if (!article) return <NotFoundPage message={EMPTY_MESSAGES.newsNotFound} />;
 
   return (
     <article className="mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-16">
-      <a
-        className="mb-10 inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground"
-        href="/news"
-      >
-        <ArrowLeft aria-hidden="true" size={16} /> Alle Beiträge
-      </a>
+      <BackLink href="/news" label="Alle Beiträge" />
       {article.cover_image && (
         <DirectusImage
           asset={article.cover_image}
@@ -149,7 +126,7 @@ const NewsDetail = ({ slug }: { slug: string }): React.JSX.Element => {
         {getCategoryName(article) ? ` | ${getCategoryName(article)}` : ""}
       </p>
       <h1 className="mt-3 text-4xl font-semibold tracking-tight">
-        {article.title ?? "Ohne Titel"}
+        {article.title ?? EMPTY_MESSAGES.untitled}
       </h1>
       {article.teaser && (
         <p className="mt-6 text-lg text-muted-foreground">{article.teaser}</p>
