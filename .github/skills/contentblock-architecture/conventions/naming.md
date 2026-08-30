@@ -35,7 +35,8 @@ explizit, damit es bei jedem neuen Block/jeder neuen Page erhalten bleibt.
   einzige etablierte Ausnahme (Parametername für ein Konfigurationsobjekt);
   neue Funktionen führen keine weiteren kryptischen Kürzel ein.
 - **Relation-Helfer nicht pro Datei neu erfinden**: `getRelationId`,
-  `getAssetId` u. Ä. existieren bereits in `lib/queries.ts` bzw.
-  `components/common/DirectusImage.tsx`. Eine neue, lokal duplizierte
-  Variante (wie aktuell in `components/layout/Header.tsx`) ist ein
-  Namens-_und_-Kohäsionsproblem — siehe [`../anti-patterns.md`](../anti-patterns.md).
+  `getRelationIds`, `getRelation` und `getAssetId` leben zentral in
+  `lib/directusRelations.ts` und werden von dort importiert. Eine neue,
+  lokal duplizierte Variante ist ein Namens-_und_-Kohäsionsproblem — siehe
+  [`../anti-patterns.md`](../anti-patterns.md) und Invariante I-7 in
+  [`../invariants.md`](../invariants.md).

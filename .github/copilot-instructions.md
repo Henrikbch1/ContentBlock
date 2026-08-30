@@ -22,6 +22,11 @@
 - Für Architektur, Ordnerstruktur, Kohäsion/Kapselung, Naming und State-Handling
   im Frontend `.github/skills/contentblock-architecture/SKILL.md` verwenden —
   insbesondere beim Anlegen eines neuen Blocks oder beim Clean-Code-Review.
+  Vor Abschluss die Grep-Invarianten aus
+  `.github/skills/contentblock-architecture/invariants.md` prüfen;
+  Refactorings nach `checklists/refactoring-playbook.md` durchführen.
+- Für delegierbare Frontend-Aufgaben steht der Agent
+  `.github/agents/contentblock-frontend.agent.md` bereit.
 - Für visuelle/UI-Änderungen `.github/skills/frontend-design/SKILL.md` verwenden; responsive Darstellung, sichtbaren Tastaturfokus und reduzierte Bewegung berücksichtigen.
 - `components.json` beschreibt shadcn im Stil `new-york`, Tailwind-Datei `src/index.css`, Alias `@/*` und Lucide-Icons. Es beweist nicht, dass eine UI-Komponente installiert ist.
 - Vor dem Hinzufügen oder Ändern einer shadcn-Komponente `.github/skills/shadcn/SKILL.md` und deren Docs-Workflow verwenden. Zuerst installierte Komponenten prüfen und keine APIs oder Registry-Komponenten erraten.

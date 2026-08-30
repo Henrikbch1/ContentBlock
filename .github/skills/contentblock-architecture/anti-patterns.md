@@ -4,7 +4,10 @@
 
 Jeder Punkt war eine echte Fundstelle in diesem Repository (Stand vor dem
 Refactoring auf dieses Skill) — die Beispiele sind mittlerweile behoben
-(siehe jeweiliger Verweis); die Regel bleibt gültig für neuen Code.
+(siehe jeweiliger Verweis); die Regel bleibt gültig für neuen Code. Die
+meisten Punkte sind mechanisch prüfbar — siehe
+[`invariants.md`](invariants.md); Behebung immer nach
+[`checklists/refactoring-playbook.md`](checklists/refactoring-playbook.md).
 
 - **Nicht** Relation-/Asset-Id-Hilfsfunktionen pro Datei neu erfinden.
   `components/layout/Header.tsx` definierte früher ein eigenes,
@@ -45,6 +48,12 @@ Refactoring auf dieses Skill) — die Beispiele sind mittlerweile behoben
   siehe [`checklists/new-block-checklist.md`](checklists/new-block-checklist.md).
 - **Nicht** `any` verwenden, wenn `unknown` + Narrowing (wie bereits bei
   `BlockTable.data`) ausreicht.
+- **Nicht** eine Datei über ihr hartes Zeilen-Budget wachsen lassen, "weil
+  der Split später kommt" — Budgets und Split-Rezepte in
+  [`conventions/file-size-and-splitting.md`](conventions/file-size-and-splitting.md).
+- **Nicht** ein Refactoring mit einer Verhaltensänderung im selben Schritt
+  mischen — siehe die eisernen Regeln im
+  [`checklists/refactoring-playbook.md`](checklists/refactoring-playbook.md).
 - **Nicht** eine neue Formularsteuerung von Hand mit Tailwind nachbauen, ohne
   vorher zu prüfen, ob eine shadcn-Komponente (`Button`, `Input`, ...) das
   bereits abdeckt.

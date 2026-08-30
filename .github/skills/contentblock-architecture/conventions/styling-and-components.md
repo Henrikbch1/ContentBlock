@@ -9,19 +9,22 @@ Responsiveness, A11y) übersetzt sich in diesem Projekt auf Tailwind + shadcn.
 
 Immer `bg-primary`, `text-foreground`, `border-border`,
 `text-muted-foreground` — nie `bg-blue-500` oder ein hex-Wert direkt in der
-`className`. Die einzige zulässige Ausnahme ist ein bewusst
-Theme-unabhängiger Hover-Akzent, und auch der sollte, wenn er mehrfach
-vorkommt, als Token diskutiert werden statt als Hex-Literal in mehreren
-Dateien zu landen (siehe `hover:bg-[#f3c972]` / `hover:bg-[#004a4d]` in
-`HeroBlock.tsx`/`ContactForm.tsx` — Kandidat für ein `--accent-hover`-Token,
-falls der Farbton wiederverwendet werden soll).
+`className` (mechanisch prüfbar: Invarianten I-5/I-6 in
+[`../invariants.md`](../invariants.md)). Drei Altlasten existieren noch als
+dokumentierte Ausnahmen (`hover:bg-[#f3c972]` in `HeroBlock.tsx`,
+`hover:bg-[#004a4d]` in `ContactForm.tsx`, `bg-[#17312e]` in `Footer.tsx`)
+— wer eine dieser Dateien anfasst, ersetzt den Hex-Wert durch ein
+semantisches Token (z. B. `--accent-hover`) in `index.css` +
+`theme`-Collection statt einen weiteren hinzuzufügen.
 
 ## `Section`/`Container` wiederverwenden statt Wrapper-Markup zu duplizieren
 
 `components/layout/Section.tsx` und `Container.tsx` existieren genau für das
 wiederkehrende `mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16`-Muster.
-Aktuell duplizieren `CardsBlock.tsx`, `HeroBlock.tsx` und `ContactForm.tsx`
-dieses Muster **inline** statt `<Section>`/`<Container>` zu nutzen.
+**Alle Blocks nutzen `<Section>`** (schmalere Blocks wie
+`TextBlock`/`FaqBlock`/`ContactForm` mit `containerClassName="max-w-3xl"`).
+Bewusste Ausnahmen sind nur die Full-Bleed-Blocks `HeroBlock` und
+`TickerBlock`, die über die volle Breite gehen.
 
 ```tsx
 // Vermeiden — dupliziert das Section/Container-Muster:
@@ -29,11 +32,12 @@ dieses Muster **inline** statt `<Section>`/`<Container>` zu nutzen.
 
 // Bevorzugt:
 <Section>...</Section>
+<Section containerClassName="max-w-3xl">...</Section>
 ```
 
-Neue Blocks nutzen `Section`/`Container` von Anfang an; bestehende Blocks
-sind Refactor-Kandidaten (kein Blocker, aber bei nächster Berührung
-mitziehen).
+Neue Blocks nutzen `Section`/`Container` von Anfang an; ein neuer
+Full-Bleed-Block ist die einzige zulässige Ausnahme und wird im PR kurz
+begründet.
 
 ## shadcn/ui statt handgebauter Formularelemente
 

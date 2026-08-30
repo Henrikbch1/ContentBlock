@@ -16,7 +16,7 @@ geladen (`T`) oder `null`. Jeder Zugriff auf eine Relation geht durch eine
 Guard-Funktion — nie durch einen direkten Feldzugriff:
 
 ```ts
-// Richtig — wie in lib/queries.ts
+// Richtig — zentral in lib/directusRelations.ts
 const getRelationId = <T extends { id: DirectusId }>(
   relation: DirectusRelation<T> | undefined,
 ): DirectusId | null =>
@@ -25,8 +25,9 @@ const getRelationId = <T extends { id: DirectusId }>(
     : (relation?.id ?? null);
 ```
 
-Neue Relation-Zugriffe verwenden diese vorhandene Funktion (oder erweitern
-sie), statt sie erneut zu schreiben (siehe [`naming.md`](naming.md)).
+Neue Relation-Zugriffe importieren die vorhandenen Guards aus
+`lib/directusRelations.ts` (oder erweitern sie dort), statt sie erneut zu
+schreiben (siehe [`naming.md`](naming.md), Invariante I-7).
 
 ## `as never` / SDK-Typumgehungen nur an der Directus-Grenze
 

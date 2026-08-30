@@ -26,7 +26,7 @@ Nicht bei `components/` anfangen, bevor Typ und Query stehen.
       `"blocks.item:block_<name>.<relation>.*"`) ergänzt.
 - [ ] Falls der Block eine eigene Datenquelle mit `mode` hat (wie
       `News`/`Events`/`Documents`): eine `get<Name>ForBlock(cfg:
-    Block<Name>)`-Funktion nach demselben Muster wie
+  Block<Name>)`-Funktion nach demselben Muster wie
       `getNewsForBlock`/`getEventsForBlock`/`getDocumentsForBlock`.
 - [ ] Keine neue Relation-Hilfsfunktion, wenn `getRelationId`/`getRelationIds`
       bereits ausreicht.
@@ -34,15 +34,19 @@ Nicht bei `components/` anfangen, bevor Typ und Query stehen.
 ## 4. Komponente (`components/blocks/<Name>Block.tsx`)
 
 - [ ] Eine Datei, eine Komponente, Suffix `Block` (siehe
-      [`../conventions/naming.md`](../conventions/naming.md)).
+      [`../conventions/naming.md`](../conventions/naming.md)); Budget ≤ 120
+      Zeilen (siehe [`../conventions/file-size-and-splitting.md`](../conventions/file-size-and-splitting.md)).
 - [ ] Props-Typ `Readonly<{ item: Block<Name> }>`.
-- [ ] `Section`/`Container` statt eigenem Wrapper-Markup (siehe
+- [ ] **Statischer Block**: kein Import aus `lib/queries.ts`/`@directus/sdk`.
+      **Datenladender Block** (eigene Datenquelle mit `mode`):
+      `useAsyncResource(() => get<Name>ForBlock(item), [item])` + Tri-State
+      (Error → Loading → Empty → Content) — Vorbild `NewsBlock.tsx`.
+- [ ] `Section`/`Container` statt eigenem Wrapper-Markup (Ausnahme nur
+      Full-Bleed, siehe
       [`../conventions/styling-and-components.md`](../conventions/styling-and-components.md)).
 - [ ] Nur semantische Tailwind-Tokens, keine rohen Farben.
-- [ ] Leer-/Ladetext aus der zentralen Textquelle statt neu hartkodiert
+- [ ] Leer-/Lade-/Fehlertexte aus `lib/uiMessages.ts` statt neu hartkodiert
       (siehe [`../conventions/constants-and-strings.md`](../conventions/constants-and-strings.md)).
-- [ ] Kein direkter Import aus `lib/queries.ts`/`@directus/sdk` in der
-      Komponente.
 - [ ] Bilder über `DirectusImage`, Rich-Text über `RichText`,
       Leerzustand über `EmptyState` (nicht neu nachbauen).
 
@@ -53,10 +57,10 @@ Nicht bei `components/` anfangen, bevor Typ und Query stehen.
 
 ## 6. Qualitätsgates
 
+- [ ] Invarianten I-1 bis I-9 aus [`../invariants.md`](../invariants.md)
+      geprüft (Grep-Checks, keine Treffer).
 - [ ] `cd frontend && npm run build` läuft fehlerfrei (`tsc --noEmit` +
       `vite build`).
-- [ ] Kein `any`, kein `as never`/`as unknown` außerhalb von
-      `lib/directus.ts`/`lib/queries.ts`.
 - [ ] Responsive Darstellung und sichtbarer Tastaturfokus manuell geprüft
       (Projektregel bei UI-Änderungen).
 - [ ] [`review-checklist.md`](review-checklist.md) durchgegangen.

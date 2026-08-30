@@ -19,18 +19,22 @@ App.tsx
 
 ## Verantwortlichkeit pro Ordner/Datei
 
-| Ort                                   | Verantwortung                                                                                                                  | Darf NICHT enthalten                                                                      |
-| ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------- |
-| `App.tsx`                             | Site-weite Daten (Theme/Navigation/Footer), clientseitiges Routing, Verbindungsstatus                                          | Block- oder Seiteninhalte, Directus-Feldlisten                                            |
-| `pages/*Page.tsx`                     | Eine Route orchestrieren: Slug/Parameter entgegennehmen, genau eine `lib/queries.ts`-Funktion aufrufen, Tri-State-Gate rendern | Eigene Directus-Feldlisten, Tailwind-Markup für Blockinhalte (das ist Aufgabe der Blocks) |
-| `components/blocks/BlockRenderer.tsx` | `collection` → Block-Komponente auflösen (Registry/Adapter)                                                                    | Fetching, Geschäftslogik, eigenes Styling                                                 |
-| `components/blocks/*Block.tsx`        | Ein Directus-Block-Typ rendern: `item`-Prop → Markup                                                                           | Fetching, globaler State, Directus-SDK-Importe                                            |
-| `components/common/*`                 | Blockübergreifende, dumme UI-Bausteine (Bild, Leerzustand, Rich-Text, Theme-CSS-Variablen)                                     | Block- oder seitenspezifische Logik                                                       |
-| `components/layout/*`                 | Seitenrahmen (Header/Footer/Container/Section)                                                                                 | Fetching, Block-Rendering-Logik                                                           |
-| `lib/directus.ts`                     | SDK-Client + `Schema`-Typ instanziieren, Konfigurationsprüfung                                                                 | Feldlisten, fachliche Query-Logik                                                         |
-| `lib/queries.ts`                      | Alle `getX()`-Funktionen, Feldlisten (`as const`), Relation-Hilfsfunktionen                                                    | JSX, React-Hooks, Komponenten-State                                                       |
-| `lib/types.ts`                        | Reine Domain-Typen (Directus-Collections gespiegelt)                                                                           | Funktionen mit Seiteneffekten, JSX                                                        |
-| `lib/utils.ts`                        | Generische, domänenfreie Helfer (`cn`)                                                                                         | Directus- oder Block-spezifische Logik                                                    |
+| Ort                                   | Verantwortung                                                                                                                                  | Darf NICHT enthalten                                                                      |
+| ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `App.tsx`                             | Site-weite Daten (Theme/Navigation/Footer), clientseitiges Routing, Verbindungsstatus                                                          | Block- oder Seiteninhalte, Directus-Feldlisten                                            |
+| `pages/*Page.tsx`                     | Eine Route orchestrieren: Slug/Parameter entgegennehmen, genau eine `lib/queries.ts`-Funktion aufrufen, Tri-State-Gate rendern                 | Eigene Directus-Feldlisten, Tailwind-Markup für Blockinhalte (das ist Aufgabe der Blocks) |
+| `components/blocks/BlockRenderer.tsx` | `collection` → Block-Komponente auflösen (Registry/Adapter)                                                                                    | Fetching, Geschäftslogik, eigenes Styling                                                 |
+| `components/blocks/*Block.tsx`        | Ein Directus-Block-Typ rendern: `item`-Prop → Markup; datenladende Blocks zusätzlich: genau eine `get<X>ForBlock`-Query via `useAsyncResource` | Fremde Queries, globaler State, Directus-SDK-/`lib/directus.ts`-Importe                   |
+| `components/common/*`                 | Blockübergreifende, dumme UI-Bausteine (Bild, Leerzustand, Rich-Text, Theme-CSS-Variablen)                                                     | Block- oder seitenspezifische Logik                                                       |
+| `components/layout/*`                 | Seitenrahmen (Header/Footer/Container/Section)                                                                                                 | Fetching, Block-Rendering-Logik                                                           |
+| `lib/directus.ts`                     | SDK-Client + `Schema`-Typ instanziieren, Konfigurationsprüfung                                                                                 | Feldlisten, fachliche Query-Logik                                                         |
+| `lib/queries.ts`                      | Alle `getX()`-Funktionen, Feldlisten (`as const`)                                                                                              | JSX, React-Hooks, Komponenten-State                                                       |
+| `lib/directusRelations.ts`            | Geteilte Relation-/Asset-Id-Guards (`getRelationId`, `getRelationIds`, `getRelation`, `getAssetId`)                                            | Ressourcen-spezifische Logik, JSX                                                         |
+| `lib/types.ts`                        | Reine Domain-Typen (Directus-Collections gespiegelt)                                                                                           | Funktionen mit Seiteneffekten, JSX                                                        |
+| `lib/format.ts`                       | Geteilte Datums-/Wertformatierung (`formatDate`, `formatDateRange`)                                                                            | Directus-Zugriffe, JSX                                                                    |
+| `lib/uiMessages.ts`                   | Zentrale Lade-/Leer-/Fehlertexte (`LOADING_MESSAGES`/`EMPTY_MESSAGES`/`ERROR_MESSAGES`)                                                        | Logik jeglicher Art                                                                       |
+| `lib/hooks/`                          | Geteilte React-Hooks (`useAsyncResource`); Query-Funktion immer als Parameter                                                                  | Fest verdrahtete Directus-Aufrufe, JSX                                                    |
+| `lib/utils.ts`                        | Generische, domänenfreie Helfer (`cn`)                                                                                                         | Directus- oder Block-spezifische Logik                                                    |
 
 Jeder Ordner beantwortet genau eine Frage:
 
@@ -42,9 +46,9 @@ Jeder Ordner beantwortet genau eine Frage:
 
 ## Warum diese Trennung sich lohnt
 
-- **Testbarkeit**: `lib/types.ts` und die reinen Helfer in `lib/queries.ts`
-  (`getRelationId`, `getRelationIds`, `getContactRoleIds`) sind pure
-  Funktionen ohne Rendering — ideal für spätere Unit-Tests, ganz ohne DOM.
+- **Testbarkeit**: `lib/types.ts` und die reinen Helfer in
+  `lib/directusRelations.ts` und `lib/format.ts` sind pure Funktionen ohne
+  Rendering — ideal für spätere Unit-Tests, ganz ohne DOM.
 - **Austauschbarkeit**: Ändert sich die Directus-API oder ein Feldname, ist
   ausschließlich `lib/queries.ts` betroffen — keine Komponente muss angefasst
   werden.

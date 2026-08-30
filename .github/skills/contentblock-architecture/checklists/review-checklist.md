@@ -7,13 +7,20 @@ globalen `clean-code`-Skill (dessen Sonar-/Checkstyle-/Java-Abschnitte hier
 nicht gelten; ESLint/Prettier sind in diesem Projekt aktuell **nicht**
 konfiguriert, daher ersetzt `tsc --noEmit` + manuelles Review diese Gates).
 
+**Zuerst mechanisch prüfen:** alle Grep-Checks aus
+[`../invariants.md`](../invariants.md) ausführen (I-1 bis I-10) — erst
+danach die inhaltlichen Punkte unten.
+
 ## Struktur & Schichtung
 
 - [ ] Datei liegt im richtigen Verantwortungs-Ordner (`components/blocks` /
       `common` / `layout`, `lib/`, `pages/`) — siehe
       [`../architecture/overview.md`](../architecture/overview.md).
-- [ ] Kein Block/keine Page importiert `@directus/sdk` oder `lib/directus.ts`
-      direkt.
+- [ ] Statischer Block ohne Query-Import; datenladender Block ruft genau
+      seine eine `get<X>ForBlock`-Funktion über `useAsyncResource`.
+- [ ] Keine Datei über ihrem Zeilen-Budget — sonst Split-Rezept aus
+      [`../conventions/file-size-and-splitting.md`](../conventions/file-size-and-splitting.md)
+      anwenden bzw. einfordern.
 - [ ] `BlockRenderer.tsx` enthält weiterhin nur Registry-Logik, keine
       Fetch- oder Rendering-Details eines einzelnen Blocks.
 
@@ -21,6 +28,8 @@ konfiguriert, daher ersetzt `tsc --noEmit` + manuelles Review diese Gates).
 
 - [ ] Kein neuer globaler Store/Context ohne echten Remount-übergreifenden
       Bedarf (siehe [`../architecture/data-flow.md`](../architecture/data-flow.md)).
+- [ ] Fetching läuft über `useAsyncResource`, kein handgeschriebenes
+      `useState`×3 + `useEffect`-Boilerplate.
 - [ ] Tri-State-Reihenfolge (Error > Loading > Empty > Content) eingehalten
       und gegenseitig ausschließend.
 - [ ] Bei mehr als einem unabhängig änderbaren Fetch-Parameter: Race-Schutz

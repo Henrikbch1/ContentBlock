@@ -72,6 +72,14 @@ frontend/src/
    `EventsBlock`) und Pages (`NewsPage`, `EventsPage`) gleichermaßen genutzt
    — ein Page-lokales `format.ts` hätte diese Wiederverwendung erschwert.
 5. **Kein Block/keine Page importiert `@directus/sdk` direkt.** Jeder
-   Directus-Zugriff läuft über `lib/queries.ts`.
+   Directus-Zugriff läuft über `lib/queries.ts` (statische Blocks: gar
+   keiner; datenladende Blocks: genau ihre eine `get<X>ForBlock`-Funktion —
+   siehe [`../architecture/data-flow.md`](../architecture/data-flow.md)).
 6. **Dateinamen**: Komponenten `PascalCase.tsx` (Dateiname = Exportname);
    alles andere `camelCase.ts` (siehe [`naming.md`](naming.md)).
+7. **Zeilen-Budgets einhalten**: Wächst eine Datei über ihr Budget, greifen
+   die festen Split-Rezepte R-A bis R-E — siehe
+   [`file-size-and-splitting.md`](file-size-and-splitting.md). Insbesondere:
+   `lib/queries.ts` → `lib/queries/` pro Ressource, `lib/types.ts` →
+   `lib/types/` pro Domäne, jeweils mit Re-Export-`index.ts`, damit
+   bestehende Importpfade stabil bleiben.

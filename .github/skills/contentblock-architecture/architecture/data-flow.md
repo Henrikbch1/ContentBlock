@@ -11,8 +11,8 @@ lib/directus.ts                  Client-Instanz (einmal erzeugt, importiert)
 lib/queries.ts     getPageBySlug(slug) / getSite() / getNewsForBlock(cfg) / ...
         │  Promise<T>
         ▼
-pages/<X>Page.tsx (oder App.tsx)   useEffect ruft genau eine Query-Funktion auf,
-        │                          hält { data, isLoading, hasError } in useState
+pages/<X>Page.tsx (oder App.tsx)   useAsyncResource(() => query(...), [deps])
+        │                          liefert { data, isLoading, error, hasError }
         │  Props
         ▼
 BlockRenderer.tsx   sortiert blocks, mappt collection → Komponente
@@ -23,11 +23,18 @@ BlockRenderer.tsx   sortiert blocks, mappt collection → Komponente
 
 Regeln:
 
-- Ein Block **liest** ausschließlich über seine `item`-Prop. Er importiert
-  nie `lib/queries.ts` oder `lib/directus.ts` — sonst entsteht ein zweiter,
-  unkontrollierter Fetch-Pfad neben dem der Seite.
-- Nur die orchestrierende `pages/*Page.tsx` (bzw. `App.tsx` für
-  Site-/Theme-Daten) ruft `lib/queries.ts` auf.
+- **Zwei Block-Arten, keine dritte:**
+  1. _Statische Blocks_ (`HeroBlock`, `TextBlock`, `CardsBlock`, ...) lesen
+     ausschließlich über ihre `item`-Prop und importieren nie
+     `lib/queries.ts` oder `lib/directus.ts`.
+  2. _Datenladende Blocks_ (`NewsBlock`, `EventsBlock`, `ContactsBlock`,
+     `DocumentsBlock`) haben eine eigene Datenquelle mit `mode`-Feld: sie
+     rufen **genau ihre eine** `get<X>ForBlock(item)`-Funktion aus
+     `lib/queries.ts` über `useAsyncResource` auf — nie mehrere Queries,
+     nie `lib/directus.ts` direkt.
+- Pages (bzw. `App.tsx` für Site-/Theme-Daten) rufen `lib/queries.ts`
+  ausschließlich über `useAsyncResource` auf — kein manuelles
+  `useState`×3 + `useEffect`-Boilerplate mehr schreiben.
 - Es gibt aktuell **keine Schreiboperationen** außer `ContactForm`, das
   bewusst _keinen_ Directus-Call macht, sondern einen `mailto:`-Link baut —
   dafür ist kein State-Layer nötig, ein lokaler `onSubmit`-Handler reicht.
@@ -40,11 +47,12 @@ Navigation die **gesamte Seite neu gemountet** (kein Router mit
 Keep-Alive/Tabs, kein Dialog-Stack). Es gibt keinen Anwendungsfall, der
 State über ein Unmount hinweg erhalten müsste. Deshalb:
 
-- **Kein Modul-Store, kein Context nötig** für Seiteninhalte — lokaler
-  `useState` in der jeweiligen `*Page.tsx` ist die richtige, einfachste
-  Lösung. Einen Store einzuführen wäre Over-Engineering.
-- Der bestehende **`isMounted`-Guard-Pattern** (siehe `CmsPage.tsx`,
-  `NewsPage.tsx`) reicht als Race-Schutz aus, **solange** genau ein
+- **Kein Modul-Store, kein Context nötig** für Seiteninhalte — der
+  gemeinsame `useAsyncResource`-Hook (lokaler State pro Mount) in der
+  jeweiligen `*Page.tsx` ist die richtige, einfachste Lösung. Einen Store
+  einzuführen wäre Over-Engineering.
+- Der **`isMounted`-Guard** (in `useAsyncResource` gekapselt)
+  reicht als Race-Schutz aus, **solange** genau ein
   Fetch-Parameter (z. B. `slug`) den Effekt triggert: Ändert sich `slug`,
   läuft die Cleanup-Funktion des _alten_ Effekts und setzt dessen
   `isMounted` auf `false`, bevor der neue Effekt startet. Ein
@@ -72,14 +80,14 @@ verschachtelt ist) Zugriff auf `Site` brauchen, wäre React Context (nicht
 zwingend ein Modul-Store) die nächste sinnvolle Eskalationsstufe — nicht
 vorher einführen ("Rule of three").
 
-## Wiederkehrendes Duplikat: Fetch-Boilerplate
+## Behobenes Duplikat: Fetch-Boilerplate → `useAsyncResource`
 
-`CmsPage`, `NewsPage` (Overview + Detail) und `App.tsx` implementieren
-denselben Ablauf manuell:
-`useState(data) + useState(isLoading) + useState(hasError) + useEffect` mit
-`isMounted`-Guard. Das ist die Definition von duplizierter Logik (Clean-Code
-Abschnitt 4 „Extract everything that can be extracted"). Empfehlung: ein
-gemeinsamer Hook `useAsyncResource<T>(fetcher, deps)` in `lib/hooks/` (siehe
-[`../conventions/state-and-data-fetching.md`](../conventions/state-and-data-fetching.md)),
-der genau dieses Muster kapselt und `{ data, isLoading, hasError }`
-zurückgibt — ohne einen Store einzuführen.
+`CmsPage`, `NewsPage`, `EventsPage`, `App.tsx` und die vier datenladenden
+Blocks implementierten denselben Ablauf früher manuell
+(`useState(data) + useState(isLoading) + useState(hasError) + useEffect` mit
+`isMounted`-Guard). Das ist behoben: `lib/hooks/useAsyncResource.ts` kapselt
+genau dieses Muster und gibt `{ data, isLoading, error, hasError }` zurück
+(siehe [`../conventions/state-and-data-fetching.md`](../conventions/state-and-data-fetching.md)).
+**Neuer Fetch-Code schreibt dieses Boilerplate nie wieder von Hand** — wer
+es irgendwo findet, wendet Rezept 1 aus
+[`../checklists/refactoring-playbook.md`](../checklists/refactoring-playbook.md) an.

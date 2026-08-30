@@ -1,3 +1,4 @@
+import { getRelation } from "../../lib/directusRelations";
 import type {
   DirectusRelation,
   Footer as FooterData,
@@ -9,10 +10,6 @@ import { Container } from "./Container";
 type FooterProps = {
   footer?: DirectusRelation<FooterData>;
 };
-
-const getRelation = <T,>(
-  relation: DirectusRelation<T> | undefined,
-): T | null => (relation && typeof relation === "object" ? relation : null);
 
 const getHref = (link: FooterLink): string | null => {
   if (link.external_url) {
