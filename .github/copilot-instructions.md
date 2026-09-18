@@ -2,7 +2,7 @@
 
 ## Projekt und Architektur
 
-- Das Repository ist ein leichtes Monorepo: `cms/` enthält Directus 12.2.0 mit PostgreSQL 17 und Redis; `frontend/` ist eine React-19-/TypeScript-/Vite-8-SPA mit Tailwind CSS v4 und `@directus/sdk`.
+- Das Repository ist ein leichtes Monorepo: `cms/` enthält Directus mit PostgreSQL und Redis; die verbindlichen Image-Versionen stehen in `cms/docker-compose.yml`. `frontend/` ist eine React-19-/TypeScript-/Vite-8-SPA mit Tailwind CSS v4 und `@directus/sdk`.
 - Die aktuelle Architektur ist die implementierte Vite-SPA. `src/App.tsx` behandelt die Client-seitigen Pfade für CMS-Seiten, News und Events. Ohne ausdrücklichen Auftrag keinen Router und kein Next.js einführen.
 - Bei Widersprüchen sind der aktuelle Code und die aktuelle Konfiguration maßgeblich, nicht historische Vorschläge in `frontend/frontend-architektur.md` oder `frontend/PLAN.md`.
 - Relevante Orientierung: `README.md`, `cms/README.md`, `docs/architecture/DB.md` und `cms/snapshots/snapshot.json`.
@@ -33,6 +33,8 @@
 
 ## CMS, Konfiguration und Sicherheit
 
+- Für CMS-Betrieb und Erweiterungen den Agenten [.github/agents/contentblock-directus.agent.md](agents/contentblock-directus.agent.md) beachten.
+- Für Directus-Upgrades auf eine Wunschversion oder die neueste stabile Version den Skill [.github/skills/contentblock-directus-upgrade/SKILL.md](skills/contentblock-directus-upgrade/SKILL.md) laden. Runtime-Upgrade und Inhaltsmigration getrennt prüfen; keine pauschalen Updates weiterer Dienste.
 - Die Frontend-Umgebung verwendet `VITE_DIRECTUS_URL` und optional `VITE_DIRECTUS_TOKEN`.
 - Niemals `.env*`, Secrets, `cms/database/` oder `cms/uploads/` committen.
 - CMS-Modelländerungen mit dem Directus-Snapshot und der Datenbankdokumentation abgleichen.
