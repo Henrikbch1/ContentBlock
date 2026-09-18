@@ -1,34 +1,14 @@
 import { Section } from "../layout/Section";
 import { EMPTY_MESSAGES } from "../../lib/uiMessages";
+import { getTableRows, getTableCellText } from "../../lib/tableData";
 import type { BlockTable } from "../../lib/types";
-
-type TableRow = { cells?: Array<{ value?: unknown }> };
-
-const getRows = (data: unknown): TableRow[] => {
-  if (!Array.isArray(data)) return [];
-  return data.filter((row): row is TableRow =>
-    Boolean(row && typeof row === "object"),
-  );
-};
-
-const getCellText = (value: unknown): string => {
-  if (value === null || value === undefined) return "";
-  if (
-    typeof value === "string" ||
-    typeof value === "number" ||
-    typeof value === "boolean"
-  ) {
-    return String(value);
-  }
-  return JSON.stringify(value);
-};
 
 export const TableBlock = ({
   item,
 }: {
   item: BlockTable;
 }): React.JSX.Element => {
-  const rows = getRows(item.data);
+  const rows = getTableRows(item.data);
   const [headerRow, ...bodyRows] = rows;
   return (
     <Section>
@@ -50,7 +30,7 @@ export const TableBlock = ({
                       key={cellIndex}
                       scope="col"
                     >
-                      {getCellText(cell.value)}
+                      {getTableCellText(cell.value)}
                     </th>
                   ))}
                 </tr>
@@ -69,14 +49,14 @@ export const TableBlock = ({
                         key={cellIndex}
                         scope="row"
                       >
-                        {getCellText(cell.value)}
+                        {getTableCellText(cell.value)}
                       </th>
                     ) : (
                       <td
                         className="px-5 py-4 font-semibold text-foreground"
                         key={cellIndex}
                       >
-                        {getCellText(cell.value)}
+                        {getTableCellText(cell.value)}
                       </td>
                     ),
                   )}

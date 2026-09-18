@@ -1,5 +1,59 @@
 # Directus v12 - Datenmodell aus `cms/snapshots/snapshot.json`
 
+## AG Grid fuer block_table
+
+Die lokale Instanz verwendet Directus 12.3.1. `block_table.data` wird mit der
+bestehenden AG-Grid-Erweiterung 1.0.2 bearbeitet; das Feld bleibt `json` mit
+`cast-json`. Die M2A-Verknuepfungen und Block-IDs bleiben unveraendert.
+
+### Umsetzung
+
+| Aspekt         | Festlegung                                                     |
+| -------------- | -------------------------------------------------------------- |
+| Interface      | `veryphatic-ag-grid`                                           |
+| Spalten        | Vier gemeinsame Textspalten `col_1` bis `col_4`                |
+| Ueberschriften | Erste Datenzeile, individuell je Tabelle                       |
+| Reihenfolge    | Sortieren/Filtern deaktiviert, damit die Kopfzeile oben bleibt |
+| Migration      | Vier Tabellen, 30 vorhandene Zeilen; alle Zellwerte erhalten   |
+
+```json
+[
+  { "col_1": "Art", "col_2": "Aufnahme", "col_3": "Jahresbeitrag" },
+  { "col_1": "Erwachsene", "col_2": "120 EUR", "col_3": "75 EUR" }
+]
+```
+
+> **Bewusste Entscheidung:** Das native Zeilenformat der installierten
+> Erweiterung wird verwendet, nicht `{ columns, rows }`. Spaltenoptionen
+> gelten fuer alle Tabellen. Zusaetzliche Spalten brauchen fortlaufende
+> `col_N`-IDs und gleichnamige `field`-Werte. Die Erweiterung bietet keine
+> Schaltflaeche zum Loeschen von Zeilen und ignoriert das `disabled`-Prop;
+> serverseitige Berechtigungen bleiben massgeblich. Eingebautes mehrzelliges
+> Excel-Paste ist eine AG-Grid-Enterprise-Funktion, nicht Teil dieser Loesung.
+
+### Frontend
+
+[tableData.ts](../../frontend/src/lib/tableData.ts) normalisiert flache Grid-Zeilen
+und das alte `cells[].value`-Format fuer
+[TableBlock.tsx](../../frontend/src/components/blocks/TableBlock.tsx).
+Leere nachfolgende Grid-Spalten werden ausgeblendet; die erste Zeile bleibt
+`thead`. Die Website verwendet weiterhin eine semantische HTML-Tabelle.
+
+Manuelle Pruefung:
+
+1. Einen Tabellenblock in Studio oeffnen, Zelle bearbeiten, speichern und neu laden.
+2. Mitgliedschaft, Gastkarten und beide Gewaesserseiten im Frontend pruefen.
+3. Mobile Darstellung sowie Tastaturbedienung des Grid-Editors pruefen.
+
+### Backend
+
+Die Umstellung betrifft nur `block_table.data` und seine Interface-Metadaten.
+Der [Schema-Snapshot](../../cms/snapshots/snapshot.json) enthaelt die Konfiguration,
+aber weder Inhalte noch Erweiterungspakete. Backup und Betriebsdetails stehen
+in der [CMS-Dokumentation](../../cms/README.md#directus-1231-und-ag-grid).
+
+## Relationen
+
 ```mermaid
 erDiagram
     %% ===== GLOBALE KONFIGURATION =====

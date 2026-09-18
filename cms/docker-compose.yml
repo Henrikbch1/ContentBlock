@@ -21,7 +21,7 @@ services:
     restart: unless-stopped
 
   directus:
-    image: directus/directus:12.2.0
+    image: directus/directus:12.3.1
     restart: unless-stopped
     ports:
       - "8055:8055"
