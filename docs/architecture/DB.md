@@ -2,19 +2,22 @@
 
 ## AG Grid fuer block_table
 
-Die lokale Instanz verwendet Directus 12.3.1. `block_table.data` wird mit der
-bestehenden AG-Grid-Erweiterung 1.0.2 bearbeitet; das Feld bleibt `json` mit
-`cast-json`. Die M2A-Verknuepfungen und Block-IDs bleiben unveraendert.
+Die lokale Instanz verwendet Directus 12.3.1. `block_table.data` verwendet das
+lokale Interface `contentblock-table`, das die installierte AG-Grid-Erweiterung
+1.0.2 wiederverwendet. Das Feld bleibt `json` mit `cast-json`; M2A-Verknuepfungen
+und Block-IDs bleiben unveraendert. Build und Bedienung stehen in der
+[Erweiterungsdokumentation](../../cms/extensions/directus-extension-contentblock-table/README.md).
 
 ### Umsetzung
 
 | Aspekt         | Festlegung                                                     |
 | -------------- | -------------------------------------------------------------- |
-| Interface      | `veryphatic-ag-grid`                                           |
-| Spalten        | Vier gemeinsame Textspalten `col_1` bis `col_4`                |
+| Interface      | `contentblock-table`                                          |
+| Spalten        | Je Tabelle aus `col_N`-Schluesseln; neue Tabellen: zwei       |
 | Ueberschriften | Erste Datenzeile, individuell je Tabelle                       |
 | Reihenfolge    | Sortieren/Filtern deaktiviert, damit die Kopfzeile oben bleibt |
-| Migration      | Vier Tabellen, 30 vorhandene Zeilen; alle Zellwerte erhalten   |
+| Struktur       | Spalten/Zeilen hinzufuegen und mit Bestaetigung entfernen; Undo |
+| Migration      | Interface-Wechsel ohne Inhaltsmigration                      |
 
 ```json
 [
@@ -23,13 +26,13 @@ bestehenden AG-Grid-Erweiterung 1.0.2 bearbeitet; das Feld bleibt `json` mit
 ]
 ```
 
-> **Bewusste Entscheidung:** Das native Zeilenformat der installierten
-> Erweiterung wird verwendet, nicht `{ columns, rows }`. Spaltenoptionen
-> gelten fuer alle Tabellen. Zusaetzliche Spalten brauchen fortlaufende
-> `col_N`-IDs und gleichnamige `field`-Werte. Die Erweiterung bietet keine
-> Schaltflaeche zum Loeschen von Zeilen und ignoriert das `disabled`-Prop;
-> serverseitige Berechtigungen bleiben massgeblich. Eingebautes mehrzelliges
-> Excel-Paste ist eine AG-Grid-Enterprise-Funktion, nicht Teil dieser Loesung.
+> **Bewusste Entscheidung:** Das flache Zeilenformat bleibt erhalten, nicht
+> `{ columns, rows }`. Leere Zellen erhalten ebenfalls einen `col_N`-Schluessel,
+> damit leere Spalten nach Neuladen bestehen bleiben. Spaltenentfernung loescht
+> die betroffenen Werte in allen Zeilen und nummeriert verbleibende Spalten
+> konsistent neu. Die Kopfzeile und die letzte Spalte sind geschuetzt.
+> Der Wrapper beruecksichtigt `disabled` und `nonEditable`; serverseitige
+> Berechtigungen bleiben massgeblich. Mehrzelliges Excel-Paste ist nicht enthalten.
 
 ### Frontend
 

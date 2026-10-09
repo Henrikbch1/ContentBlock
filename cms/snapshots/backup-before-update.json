@@ -1,0 +1,927 @@
+{
+  "block_text": [
+    {
+      "id": "2b661ce6-b818-54ea-8bec-dfba39736680",
+      "headline": "Datenschutz",
+      "content": "<p>Verantwortliche Stelle für diese Website ist der Angelsportverein Loxstedt \"Stoteler See\" e.V. unter den im Impressum genannten Kontaktdaten.</p><p>Beim Aufruf der Website verarbeitet der technische Hosting-Anbieter Server-Logdaten, um die Verbindung bereitzustellen und die Sicherheit des Angebots zu gewährleisten. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO.</p><p>Sie haben insbesondere das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung und Widerspruch. Für Datenschutzanfragen schreiben Sie bitte an <a href=\"mailto:1.Vorsitzender@asv-loxstedt.de\">1.Vorsitzender@asv-loxstedt.de</a>.</p><p>Externe Karten oder Videos werden nicht ohne vorherige Einwilligung geladen.</p>",
+      "user_created": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_created": "2026-08-15T14:33:14.618Z",
+      "user_updated": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_updated": "2026-08-15T17:43:55.588Z"
+    },
+    {
+      "id": "2efbec71-62d3-5098-8807-b5afdddb0fc9",
+      "headline": "Gastangeln am Stoteler See",
+      "content": "<p>Gastkarten gelten ausschließlich für den Stoteler See. Voraussetzung ist ein gültiger Bundesfischereischein. Bitte beachtet die Regeln auf dem Gastschein und hinterlasst euren Platz sauber.</p>",
+      "user_created": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_created": "2026-08-15T14:33:13.173Z",
+      "user_updated": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_updated": "2026-08-15T17:43:54.779Z"
+    },
+    {
+      "id": "53bdd6d2-6a4c-599c-8b52-c0d712448969",
+      "headline": "Jugend beim ASV Loxstedt",
+      "content": "<p>Unsere Jugendgruppe umfasst seit vielen Jahren mehr als 35 junge Mitglieder. Für Einsteiger hält der Verein hochwertiges Leihgerät bereit. Workshops vermitteln Zielfische, Montagen und Methoden in Theorie und Praxis; in den Sommermonaten stehen gemeinsame Hegefischen auf dem Programm.</p><p>Ab dem 14. Geburtstag können Jugendliche die Sportfischerprüfung ablegen. Vorbereitungskurs und Prüfung bietet der Verein an. Ansprechpartner sind unsere Jugendwarte.</p>",
+      "user_created": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_created": "2026-08-15T14:33:12.401Z",
+      "user_updated": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_updated": "2026-08-15T17:43:54.344Z"
+    },
+    {
+      "id": "558842c2-3e66-57e7-8796-8556eab0c29f",
+      "headline": "Ein See mit Charakter",
+      "content": "<p>Der während des Baus der A27 entstandene See ist von Bäumen, Schilfgürteln und Seerosen umgeben. Auf rund 30 Hektar Wasserfläche reichen die Tiefen bis 15 Meter. Rotaugen, Brassen, Karpfen, Hechte, Barsche, Zander, Aale und Welse gehören zum sich selbst reproduzierenden Bestand.</p><p>Bitte beachtet die aktuellen Verhaltens- und Angelregeln sowie die Tiefenkarte vor dem Ansitz.</p>",
+      "user_created": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_created": "2026-08-15T14:33:12.952Z",
+      "user_updated": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_updated": "2026-08-15T17:43:54.624Z"
+    },
+    {
+      "id": "6b3b9f4a-1ed0-581c-812e-f1a1920edc0e",
+      "headline": "Impressum",
+      "content": "<p><strong>Angelsportverein Loxstedt \"Stoteler See\" e.V.</strong><br>Vertreten durch den 1. Vorsitzenden Dominick Bohling<br>Vereinsregister: Amtsgericht Tostedt, VR 110074</p><p>Telefon: <a href=\"tel:+4917680832246\">0176 80832246</a><br>E-Mail: <a href=\"mailto:1.Vorsitzender@asv-loxstedt.de\">1.Vorsitzender@asv-loxstedt.de</a></p><p>Bankverbindung: Volksbank Elbe-Weser-Dreieck eG<br>IBAN: DE31 2926 5747 3600 3395 00<br>BIC: GENODEF1BEV</p>",
+      "user_created": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_created": "2026-08-15T14:33:14.559Z",
+      "user_updated": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_updated": "2026-08-15T17:43:55.557Z"
+    },
+    {
+      "id": "6d81ba95-a77a-54db-8662-e5b638780cb2",
+      "headline": "Wasserstand und Strömung im Blick behalten",
+      "content": "<p>Der ASV ist Mitpächter der Neuen Lune sowie der Lune III und IV. Die Abschnitte bieten Chancen auf heimische Fried- und Raubfische, besonders Zander, Brassen und Güster.</p><p>Durch Zu- und Abwässerung können Wasserstand und Strömung, vor allem an der Neuen Lune, deutlich schwanken. Gut erreichbare Plätze finden sich an der Lune; abgelegene Stellen liegen in Neuenlande und an den Windrädern. Beachtet vor dem Angeln die Schaukästen: einzelne Abschnitte können für Pflege oder Vereinsveranstaltungen gesperrt sein.</p>",
+      "user_created": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_created": "2026-08-15T14:33:13.108Z",
+      "user_updated": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_updated": "2026-08-15T17:43:54.735Z"
+    },
+    {
+      "id": "747b011c-1be0-5b76-8910-5b90d63eedd8",
+      "headline": "Der Verein",
+      "content": "<p>Der Angelsportverein Loxstedt \"Stoteler See\" e.V. wurde 1975 gegründet. Mit rund 420 Mitgliedern und einer starken Jugendgruppe engagieren wir uns für naturnahes Angeln, Gewässerpflege und ein aktives Vereinsleben.</p><p>Der historische Vortrag zum 25-jährigen Bestehen bleibt als Teil der Vereinschronik erhalten, bekommt aber keine eigene Unterseite mehr.</p>",
+      "user_created": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_created": "2026-08-15T14:33:11.393Z",
+      "user_updated": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_updated": "2026-08-15T17:43:53.797Z"
+    },
+    {
+      "id": "7756c64f-8f71-5f77-88f9-0d7c85e82964",
+      "headline": "Kontakt",
+      "content": "<p>Die Vorstandssitzung findet jeden dritten Dienstag im Monat ab 18:30 Uhr im Vereinsheim statt. Dort könnt ihr Fragen stellen und Unterlagen abgeben. Für direkte Anfragen erreicht ihr die zuständigen Personen per E-Mail.</p><p>Das Kontaktformular öffnet euer E-Mail-Programm; es werden keine Formulardaten auf dieser Website gespeichert.</p>",
+      "user_created": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_created": "2026-08-15T14:33:14.119Z",
+      "user_updated": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_updated": "2026-08-15T17:43:55.264Z"
+    },
+    {
+      "id": "a25849b1-23cd-5461-8d5d-271d31e2f2a0",
+      "headline": "Willkommen beim ASV Loxstedt",
+      "content": "<p>Seit 1975 verbindet unser Verein Menschen, die verantwortungsvoll angeln und unsere Gewässer pflegen. Hier finden Mitglieder und Gäste schnell die Informationen, die sie am Wasser brauchen.</p>",
+      "user_created": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_created": "2026-08-15T14:33:11.024Z",
+      "user_updated": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_updated": "2026-08-15T17:43:53.603Z"
+    },
+    {
+      "id": "d9f308c5-fa77-57b4-842e-313c69ad320b",
+      "headline": "Mitglied werden",
+      "content": "<p>Für die Aufnahme benötigen wir zwei Passbilder, den Nachweis der bestandenen Fischerprüfung (falls vorhanden) sowie den vollständig ausgefüllten Aufnahmeantrag mit Einzugsermächtigung. Bitte gebt die Unterlagen in der Geschäftsstelle ab.</p><p>Mitglieder leisten Arbeitsdienste. Ausgenommen sind Mitglieder ab 60 Jahren, Amtsinhaber, Menschen mit nachgewiesener Schwerbehinderung ab 50 Prozent und passive Mitglieder.</p>",
+      "user_created": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_created": "2026-08-15T14:33:12.671Z",
+      "user_updated": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_updated": "2026-08-15T17:43:54.479Z"
+    },
+    {
+      "id": "dc3609d9-751b-52c0-8dc5-2eecc6f6c459",
+      "headline": "Aktuelle Unterlagen",
+      "content": "<p>Aufnahmeantrag, Vereinsregeln und Fangmeldungen sind hier direkt verfügbar. Eine aktuelle Datei zu Schonzeiten und Mindestmaßen kann in der Kategorie <strong>Regeln</strong> ergänzt werden, sobald sie vorliegt.</p>",
+      "user_created": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_created": "2026-08-15T14:33:14.487Z",
+      "user_updated": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_updated": "2026-08-15T17:43:55.525Z"
+    },
+    {
+      "id": "f6db6ef1-2732-5b70-854d-5bb4dabc95b2",
+      "headline": "Aktuelles und Termine",
+      "content": "<p>Arbeitsdienste, Königsangeln und weitere Vereinsveranstaltungen werden hier veröffentlicht. Termine werden erst ab ihrem festgelegten Sichtbarkeitsdatum angezeigt.</p>",
+      "user_created": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_created": "2026-08-15T14:33:13.726Z",
+      "user_updated": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_updated": "2026-08-15T17:43:55.062Z"
+    }
+  ],
+  "block_table": [
+    {
+      "id": "6a5ad970-7ebf-5cfa-8717-8d0662e09ad3",
+      "title": "Beiträge und Gebühren",
+      "data": [
+        {
+          "cells": [
+            {
+              "value": "Art"
+            },
+            {
+              "value": "Aufnahme"
+            },
+            {
+              "value": "Jahresbeitrag"
+            }
+          ]
+        },
+        {
+          "cells": [
+            {
+              "value": "Erwachsene"
+            },
+            {
+              "value": "120 EUR"
+            },
+            {
+              "value": "75 EUR"
+            }
+          ]
+        },
+        {
+          "cells": [
+            {
+              "value": "Jugendliche"
+            },
+            {
+              "value": "keine Gebühr"
+            },
+            {
+              "value": "28 EUR"
+            }
+          ]
+        },
+        {
+          "cells": [
+            {
+              "value": "Partnerschaft gemeinsam"
+            },
+            {
+              "value": "180 EUR"
+            },
+            {
+              "value": "112,50 EUR"
+            }
+          ]
+        },
+        {
+          "cells": [
+            {
+              "value": "Passiv"
+            },
+            {
+              "value": "-"
+            },
+            {
+              "value": "37,50 EUR"
+            }
+          ]
+        }
+      ],
+      "user_created": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_created": "2026-08-15T14:33:12.723Z",
+      "user_updated": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_updated": "2026-08-15T17:43:54.516Z"
+    },
+    {
+      "id": "e98a80ef-549b-5acc-86a4-82486d144307",
+      "title": "Gastkarte",
+      "data": [
+        {
+          "cells": [
+            {
+              "value": "Leistung"
+            },
+            {
+              "value": "Information"
+            }
+          ]
+        },
+        {
+          "cells": [
+            {
+              "value": "Preis"
+            },
+            {
+              "value": "15 EUR"
+            }
+          ]
+        },
+        {
+          "cells": [
+            {
+              "value": "Gültigkeit"
+            },
+            {
+              "value": "06:00 bis 22:00 Uhr"
+            }
+          ]
+        },
+        {
+          "cells": [
+            {
+              "value": "Nachtangeln"
+            },
+            {
+              "value": "Mit Gastkarten nicht erlaubt"
+            }
+          ]
+        },
+        {
+          "cells": [
+            {
+              "value": "Boote"
+            },
+            {
+              "value": "Nicht erlaubt, auch kein Futterboot oder Bellyboot"
+            }
+          ]
+        }
+      ],
+      "user_created": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_created": "2026-08-15T14:33:13.245Z",
+      "user_updated": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_updated": "2026-08-15T17:43:54.810Z"
+    }
+  ],
+  "block_cards_items": [
+    {
+      "id": "e7762a15-d7fd-5452-8565-84de77bc3369",
+      "card": "cf1fbf1f-0e70-575d-8fbf-afd6161604fb",
+      "title": "Stoteler See",
+      "text": "Rund 30 Hektar Wasserfläche, Strukturen bis 15 Meter Tiefe und ein vielfältiger Fischbestand.",
+      "image": "e12da4c9-bc45-558d-84e7-d335d90bcf84",
+      "sort": 1,
+      "user_created": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_created": "2026-08-15T14:33:11.193Z",
+      "user_updated": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_updated": "2026-08-15T17:43:53.689Z"
+    },
+    {
+      "id": "705287ac-fdf1-5f5b-8b07-2c4e37c8cc5c",
+      "card": "7b1209cd-a090-5e83-8c19-28cb15474c6d",
+      "title": "Stoteler See",
+      "text": "Natur und Angeln am Hausgewässer.",
+      "image": "00580e0b-01f7-5f87-8900-da5733ddb77b",
+      "sort": 1,
+      "user_created": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_created": "2026-08-15T14:33:13.921Z",
+      "user_updated": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_updated": "2026-08-15T17:43:55.169Z"
+    },
+    {
+      "id": "0200fb9d-4212-50b8-89de-c33f175254d7",
+      "card": "21e0bcc0-508c-592e-8377-fa9fbdaf9582",
+      "title": "Fisherman's Partner",
+      "text": "Zur hohen Lieth 11, 27619 Schiffdorf-Spaden",
+      "image": null,
+      "sort": 1,
+      "user_created": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_created": "2026-08-15T14:33:13.387Z",
+      "user_updated": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_updated": "2026-08-15T17:43:54.872Z"
+    },
+    {
+      "id": "9a453fce-7e88-50ee-85a7-aff5e9ad2b82",
+      "card": "21e0bcc0-508c-592e-8377-fa9fbdaf9582",
+      "title": "Autoteile-Becker",
+      "text": "Helmut-Neynaber-Straße 10, 27612 Loxstedt",
+      "image": null,
+      "sort": 2,
+      "user_created": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_created": "2026-08-15T14:33:13.446Z",
+      "user_updated": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_updated": "2026-08-15T17:43:54.906Z"
+    },
+    {
+      "id": "412dbcd4-6740-5d63-8bfc-d75931c92b05",
+      "card": "cf1fbf1f-0e70-575d-8fbf-afd6161604fb",
+      "title": "Lune und Neue Lune",
+      "text": "Fließgewässer mit ruhigen und gut erreichbaren Angelstellen sowie wechselnden Bedingungen.",
+      "image": "6c229b57-ed8c-5e56-8159-f66918372d14",
+      "sort": 2,
+      "user_created": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_created": "2026-08-15T14:33:11.257Z",
+      "user_updated": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_updated": "2026-08-15T17:43:53.734Z"
+    },
+    {
+      "id": "b4b7db05-c8bd-55c8-8add-193b807cfe4b",
+      "card": "7b1209cd-a090-5e83-8c19-28cb15474c6d",
+      "title": "Neue Lune",
+      "text": "Abwechslungsreiche Fließgewässer.",
+      "image": "6c229b57-ed8c-5e56-8159-f66918372d14",
+      "sort": 2,
+      "user_created": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_created": "2026-08-15T14:33:13.984Z",
+      "user_updated": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_updated": "2026-08-15T17:43:55.200Z"
+    },
+    {
+      "id": "cfd9c888-7451-56c7-8fdd-769cb8a594c2",
+      "card": "7b1209cd-a090-5e83-8c19-28cb15474c6d",
+      "title": "Am Wasser",
+      "text": "Gemeinschaft und Gewässerpflege.",
+      "image": "e12da4c9-bc45-558d-84e7-d335d90bcf84",
+      "sort": 3,
+      "user_created": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_created": "2026-08-15T14:33:14.048Z",
+      "user_updated": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_updated": "2026-08-15T17:43:55.231Z"
+    }
+  ],
+  "block_faq": [
+    {
+      "id": "26ac57bf-c3eb-5f4d-8768-c24a8a0169a7",
+      "title": "Häufige Fragen",
+      "user_created": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_created": "2026-08-15T14:33:13.507Z",
+      "user_updated": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_updated": "2026-08-15T17:43:54.951Z",
+      "faqs": [
+        "e9c1b5ff-7930-55bf-879a-77697068459f",
+        "5b853bcd-c943-5c36-84db-4fe8aaf57dee"
+      ]
+    }
+  ],
+  "block_faq_items": [
+    {
+      "id": "e9c1b5ff-7930-55bf-879a-77697068459f",
+      "faq": "26ac57bf-c3eb-5f4d-8768-c24a8a0169a7",
+      "question": "Darf ich nachts angeln?",
+      "answer": "<p>Nein. Die Gastkarte gilt von 06:00 bis 22:00 Uhr. Danach muss der Platz abgebaut und der See zeitnah verlassen werden.</p>",
+      "sort": 1,
+      "user_created": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_created": "2026-08-15T14:33:13.588Z",
+      "user_updated": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_updated": "2026-08-15T17:43:54.990Z"
+    },
+    {
+      "id": "5b853bcd-c943-5c36-84db-4fe8aaf57dee",
+      "faq": "26ac57bf-c3eb-5f4d-8768-c24a8a0169a7",
+      "question": "Brauche ich einen Fischereischein?",
+      "answer": "<p>Ja. Ein gültiger Bundesfischereischein ist Voraussetzung für die Gastkarte.</p>",
+      "sort": 2,
+      "user_created": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_created": "2026-08-15T14:33:13.666Z",
+      "user_updated": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_updated": "2026-08-15T17:43:55.029Z"
+    }
+  ],
+  "pages": [
+    {
+      "id": "18e335e9-88eb-540d-851d-919025f328c3",
+      "title": "Stoteler See",
+      "slug": "gewaesser/stoteler-see",
+      "template": null,
+      "user_created": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_created": "2026-08-15T14:33:10.260Z",
+      "user_updated": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_updated": "2026-08-18T17:55:50.756Z",
+      "blocks": [
+        "e2d0d088-f50b-5d14-8489-03514b12b506",
+        "ad8af4b2-9db3-5836-8bd0-b9f920158635",
+        "6fec0c1c-c582-52c1-875e-ed5db49a03c5"
+      ]
+    },
+    {
+      "id": "24da1749-f2df-59c0-8741-f2bacd67dbf3",
+      "title": "Impressum",
+      "slug": "impressum",
+      "template": null,
+      "user_created": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_created": "2026-08-15T14:33:10.713Z",
+      "user_updated": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_updated": "2026-08-15T17:43:53.362Z",
+      "blocks": [
+        "47234584-28f7-51c4-89ac-b7a277d0447a"
+      ]
+    },
+    {
+      "id": "341d225b-f106-5c56-8a80-49bd6f3cb5d0",
+      "title": "ASV Loxstedt Stoteler See e.V.",
+      "slug": "home",
+      "template": null,
+      "user_created": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_created": "2026-08-15T14:33:09.977Z",
+      "user_updated": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_updated": "2026-08-15T17:43:52.957Z",
+      "blocks": [
+        "bdcd0fbc-910f-58b4-855a-27d1d12f778a",
+        "f473bf13-f74c-5cc3-8098-923afc077466",
+        "ebf7e189-4ac4-5cf0-83fb-4d6400dfaff9",
+        "4572ea40-7f1f-534f-89b3-aa43c433d19b",
+        "aa527810-6b3a-531e-86d8-e19dc84e437c"
+      ]
+    },
+    {
+      "id": "3bdf5694-e98e-59d3-8ed1-caf863bd16c6",
+      "title": "Datenschutz",
+      "slug": "datenschutz",
+      "template": null,
+      "user_created": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_created": "2026-08-15T14:33:10.773Z",
+      "user_updated": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_updated": "2026-08-15T17:43:53.393Z",
+      "blocks": [
+        "3355ca98-f304-53f9-8f70-f4cc99bffbcd"
+      ]
+    },
+    {
+      "id": "5c160b3e-0427-56aa-811d-d61b0cd94ef8",
+      "title": "Mitgliedschaft",
+      "slug": "mitgliedschaft",
+      "template": null,
+      "user_created": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_created": "2026-08-15T14:33:10.201Z",
+      "user_updated": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_updated": "2026-08-15T17:43:53.066Z",
+      "blocks": [
+        "4bbc38f4-ba7a-5d5c-8cb7-41b520c11277",
+        "a7b96386-2675-5dc3-8a36-70eeb31bd9b4",
+        "4f79d4d8-dce9-5679-83a9-2e7041066ec1"
+      ]
+    },
+    {
+      "id": "61bb1e49-cde8-5b98-81fa-fbaba039f849",
+      "title": "Jugend",
+      "slug": "jugend",
+      "template": null,
+      "user_created": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_created": "2026-08-15T14:33:10.127Z",
+      "user_updated": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_updated": "2026-08-15T17:43:53.031Z",
+      "blocks": [
+        "7ef82eeb-a559-5cc0-889a-8798d4498e79",
+        "b80446a0-2745-507b-8bb5-4a1fe99ea8c9"
+      ]
+    },
+    {
+      "id": "6417dad0-d4d1-58cb-86b3-980048cb13c7",
+      "title": "Lune und Neue Lune",
+      "slug": "gewaesser/lune-neue-lune",
+      "template": null,
+      "user_created": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_created": "2026-08-15T14:33:10.340Z",
+      "user_updated": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_updated": "2026-08-15T17:43:53.121Z",
+      "blocks": [
+        "917dddd0-d6b4-5b6c-8225-78b710dca3c0",
+        "f7cdd346-a557-59b4-8729-3a7e66054adc"
+      ]
+    },
+    {
+      "id": "7f0cb5e9-f0ee-58a4-8064-584c7af359d8",
+      "title": "Der Verein",
+      "slug": "verein",
+      "template": null,
+      "user_created": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_created": "2026-08-15T14:33:10.041Z",
+      "user_updated": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_updated": "2026-08-15T17:43:52.989Z",
+      "blocks": [
+        "44c698f8-c2a4-51a7-8264-613c9f5aa0f7",
+        "b3f8b550-f855-57f7-8793-ee962caf7d67"
+      ]
+    },
+    {
+      "id": "814a86d2-2cf0-578d-8566-cd0ea6542a31",
+      "title": "Kontakt",
+      "slug": "kontakt",
+      "template": null,
+      "user_created": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_created": "2026-08-15T14:33:10.587Z",
+      "user_updated": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_updated": "2026-08-15T17:43:53.272Z",
+      "blocks": [
+        "e37256e6-d1a6-5d55-813e-4a0d83c16c24",
+        "d179988f-2280-57e2-8b5c-644c3ff32141",
+        "3a91da26-3f21-58db-8fc6-ba2678a2dad7"
+      ]
+    },
+    {
+      "id": "9a0f4365-5423-50aa-825f-a7a1cc10250d",
+      "title": "Aktuelles und Termine",
+      "slug": "aktuelles-termine",
+      "template": null,
+      "user_created": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_created": "2026-08-15T14:33:10.470Z",
+      "user_updated": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_updated": "2026-08-15T17:43:53.187Z",
+      "blocks": [
+        "424aaf73-f0ec-598a-8648-0b097f0ec57d",
+        "f8442d6e-c043-58ef-8307-6107cffe1920"
+      ]
+    },
+    {
+      "id": "b2801b77-ea68-5d68-8847-3fb2192aad54",
+      "title": "Impressionen",
+      "slug": "galerie",
+      "template": null,
+      "user_created": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_created": "2026-08-15T14:33:10.522Z",
+      "user_updated": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_updated": "2026-08-15T17:43:53.223Z",
+      "blocks": [
+        "2aa1c889-b2f1-5c31-8238-21c719ae5da5"
+      ]
+    },
+    {
+      "id": "dfe746c5-87a2-5af9-8bc9-385306b14dfe",
+      "title": "Downloads",
+      "slug": "downloads",
+      "template": null,
+      "user_created": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_created": "2026-08-15T14:33:10.651Z",
+      "user_updated": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_updated": "2026-08-15T17:43:53.321Z",
+      "blocks": [
+        "56d5cdc7-33be-5c07-843f-503b38e9acd7",
+        "8a59d47f-b968-591f-876e-3057c81e3a43"
+      ]
+    },
+    {
+      "id": "e54aa72d-5580-59f4-8fec-dbf8148b7521",
+      "title": "Gastkarten",
+      "slug": "gastkarten",
+      "template": null,
+      "user_created": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_created": "2026-08-15T14:33:10.415Z",
+      "user_updated": "cead7e19-8211-44c8-acc0-6424dc798460",
+      "date_updated": "2026-08-15T17:43:53.162Z",
+      "blocks": [
+        "2c5ac9d1-b154-5a17-8c9e-8e4edaca9552",
+        "adc8e7e6-c3a8-55f9-8c9e-eceb48576841",
+        "e76ec93e-9ad3-5548-8bee-6605289a252c",
+        "8249070e-befb-5707-8829-8d2d1303613f"
+      ]
+    }
+  ],
+  "pages_blocks": [
+    {
+      "id": "bdcd0fbc-910f-58b4-855a-27d1d12f778a",
+      "pages_id": "341d225b-f106-5c56-8a80-49bd6f3cb5d0",
+      "collection": "block_hero",
+      "item": "f24305d4-21e3-5853-84e0-e69b71444aff",
+      "sort": 1
+    },
+    {
+      "id": "47234584-28f7-51c4-89ac-b7a277d0447a",
+      "pages_id": "24da1749-f2df-59c0-8741-f2bacd67dbf3",
+      "collection": "block_text",
+      "item": "6b3b9f4a-1ed0-581c-812e-f1a1920edc0e",
+      "sort": 1
+    },
+    {
+      "id": "44c698f8-c2a4-51a7-8264-613c9f5aa0f7",
+      "pages_id": "7f0cb5e9-f0ee-58a4-8064-584c7af359d8",
+      "collection": "block_text",
+      "item": "747b011c-1be0-5b76-8910-5b90d63eedd8",
+      "sort": 1
+    },
+    {
+      "id": "3355ca98-f304-53f9-8f70-f4cc99bffbcd",
+      "pages_id": "3bdf5694-e98e-59d3-8ed1-caf863bd16c6",
+      "collection": "block_text",
+      "item": "2b661ce6-b818-54ea-8bec-dfba39736680",
+      "sort": 1
+    },
+    {
+      "id": "7ef82eeb-a559-5cc0-889a-8798d4498e79",
+      "pages_id": "61bb1e49-cde8-5b98-81fa-fbaba039f849",
+      "collection": "block_text",
+      "item": "53bdd6d2-6a4c-599c-8b52-c0d712448969",
+      "sort": 1
+    },
+    {
+      "id": "4bbc38f4-ba7a-5d5c-8cb7-41b520c11277",
+      "pages_id": "5c160b3e-0427-56aa-811d-d61b0cd94ef8",
+      "collection": "block_text",
+      "item": "d9f308c5-fa77-57b4-842e-313c69ad320b",
+      "sort": 1
+    },
+    {
+      "id": "e2d0d088-f50b-5d14-8489-03514b12b506",
+      "pages_id": "18e335e9-88eb-540d-851d-919025f328c3",
+      "collection": "block_hero",
+      "item": "542b04e1-d742-5a2f-8d2a-e40de3994dc7",
+      "sort": 1
+    },
+    {
+      "id": "917dddd0-d6b4-5b6c-8225-78b710dca3c0",
+      "pages_id": "6417dad0-d4d1-58cb-86b3-980048cb13c7",
+      "collection": "block_hero",
+      "item": "755cb35a-2d8c-52ff-85e7-9fee7403f8cf",
+      "sort": 1
+    },
+    {
+      "id": "2c5ac9d1-b154-5a17-8c9e-8e4edaca9552",
+      "pages_id": "e54aa72d-5580-59f4-8fec-dbf8148b7521",
+      "collection": "block_text",
+      "item": "2efbec71-62d3-5098-8807-b5afdddb0fc9",
+      "sort": 1
+    },
+    {
+      "id": "424aaf73-f0ec-598a-8648-0b097f0ec57d",
+      "pages_id": "9a0f4365-5423-50aa-825f-a7a1cc10250d",
+      "collection": "block_text",
+      "item": "f6db6ef1-2732-5b70-854d-5bb4dabc95b2",
+      "sort": 1
+    },
+    {
+      "id": "2aa1c889-b2f1-5c31-8238-21c719ae5da5",
+      "pages_id": "b2801b77-ea68-5d68-8847-3fb2192aad54",
+      "collection": "block_cards",
+      "item": "7b1209cd-a090-5e83-8c19-28cb15474c6d",
+      "sort": 1
+    },
+    {
+      "id": "e37256e6-d1a6-5d55-813e-4a0d83c16c24",
+      "pages_id": "814a86d2-2cf0-578d-8566-cd0ea6542a31",
+      "collection": "block_text",
+      "item": "7756c64f-8f71-5f77-88f9-0d7c85e82964",
+      "sort": 1
+    },
+    {
+      "id": "56d5cdc7-33be-5c07-843f-503b38e9acd7",
+      "pages_id": "dfe746c5-87a2-5af9-8bc9-385306b14dfe",
+      "collection": "block_documents",
+      "item": "9ce77f2d-8b7f-5b53-8944-9622eefea25a",
+      "sort": 1
+    },
+    {
+      "id": "8a59d47f-b968-591f-876e-3057c81e3a43",
+      "pages_id": "dfe746c5-87a2-5af9-8bc9-385306b14dfe",
+      "collection": "block_text",
+      "item": "dc3609d9-751b-52c0-8dc5-2eecc6f6c459",
+      "sort": 2
+    },
+    {
+      "id": "b80446a0-2745-507b-8bb5-4a1fe99ea8c9",
+      "pages_id": "61bb1e49-cde8-5b98-81fa-fbaba039f849",
+      "collection": "block_contacts",
+      "item": "5cf20654-8359-5506-8c3d-bbb5ff3dc2b8",
+      "sort": 2
+    },
+    {
+      "id": "ad8af4b2-9db3-5836-8bd0-b9f920158635",
+      "pages_id": "18e335e9-88eb-540d-851d-919025f328c3",
+      "collection": "block_documents",
+      "item": "f36752c6-cfdf-5743-86e0-692195914dce",
+      "sort": 2
+    },
+    {
+      "id": "b3f8b550-f855-57f7-8793-ee962caf7d67",
+      "pages_id": "7f0cb5e9-f0ee-58a4-8064-584c7af359d8",
+      "collection": "block_contacts",
+      "item": "4d55c18c-c2e9-5373-8c4c-cb4e28a81d9c",
+      "sort": 2
+    },
+    {
+      "id": "f8442d6e-c043-58ef-8307-6107cffe1920",
+      "pages_id": "9a0f4365-5423-50aa-825f-a7a1cc10250d",
+      "collection": "block_events",
+      "item": "ce135ef7-2471-54ad-8278-8772eebf9e49",
+      "sort": 2
+    },
+    {
+      "id": "adc8e7e6-c3a8-55f9-8c9e-eceb48576841",
+      "pages_id": "e54aa72d-5580-59f4-8fec-dbf8148b7521",
+      "collection": "block_table",
+      "item": "e98a80ef-549b-5acc-86a4-82486d144307",
+      "sort": 2
+    },
+    {
+      "id": "f473bf13-f74c-5cc3-8098-923afc077466",
+      "pages_id": "341d225b-f106-5c56-8a80-49bd6f3cb5d0",
+      "collection": "block_ticker",
+      "item": "39320ff7-113b-5b58-8da3-94c2465c4490",
+      "sort": 2
+    },
+    {
+      "id": "d179988f-2280-57e2-8b5c-644c3ff32141",
+      "pages_id": "814a86d2-2cf0-578d-8566-cd0ea6542a31",
+      "collection": "block_contacts",
+      "item": "651ad0a0-9658-5e16-8689-80b236eaf4b6",
+      "sort": 2
+    },
+    {
+      "id": "f7cdd346-a557-59b4-8729-3a7e66054adc",
+      "pages_id": "6417dad0-d4d1-58cb-86b3-980048cb13c7",
+      "collection": "block_text",
+      "item": "6d81ba95-a77a-54db-8662-e5b638780cb2",
+      "sort": 2
+    },
+    {
+      "id": "a7b96386-2675-5dc3-8a36-70eeb31bd9b4",
+      "pages_id": "5c160b3e-0427-56aa-811d-d61b0cd94ef8",
+      "collection": "block_table",
+      "item": "6a5ad970-7ebf-5cfa-8717-8d0662e09ad3",
+      "sort": 2
+    },
+    {
+      "id": "4f79d4d8-dce9-5679-83a9-2e7041066ec1",
+      "pages_id": "5c160b3e-0427-56aa-811d-d61b0cd94ef8",
+      "collection": "block_documents",
+      "item": "3230647d-1a47-572e-8957-01e2a68f6b29",
+      "sort": 3
+    },
+    {
+      "id": "3a91da26-3f21-58db-8fc6-ba2678a2dad7",
+      "pages_id": "814a86d2-2cf0-578d-8566-cd0ea6542a31",
+      "collection": "block_contacts",
+      "item": "f329ccdb-2bd2-5ab7-851f-0352c91498ca",
+      "sort": 3
+    },
+    {
+      "id": "ebf7e189-4ac4-5cf0-83fb-4d6400dfaff9",
+      "pages_id": "341d225b-f106-5c56-8a80-49bd6f3cb5d0",
+      "collection": "block_text",
+      "item": "a25849b1-23cd-5461-8d5d-271d31e2f2a0",
+      "sort": 3
+    },
+    {
+      "id": "e76ec93e-9ad3-5548-8bee-6605289a252c",
+      "pages_id": "e54aa72d-5580-59f4-8fec-dbf8148b7521",
+      "collection": "block_cards",
+      "item": "21e0bcc0-508c-592e-8377-fa9fbdaf9582",
+      "sort": 3
+    },
+    {
+      "id": "6fec0c1c-c582-52c1-875e-ed5db49a03c5",
+      "pages_id": "18e335e9-88eb-540d-851d-919025f328c3",
+      "collection": "block_text",
+      "item": "558842c2-3e66-57e7-8796-8556eab0c29f",
+      "sort": 3
+    },
+    {
+      "id": "8249070e-befb-5707-8829-8d2d1303613f",
+      "pages_id": "e54aa72d-5580-59f4-8fec-dbf8148b7521",
+      "collection": "block_faq",
+      "item": "26ac57bf-c3eb-5f4d-8768-c24a8a0169a7",
+      "sort": 4
+    },
+    {
+      "id": "4572ea40-7f1f-534f-89b3-aa43c433d19b",
+      "pages_id": "341d225b-f106-5c56-8a80-49bd6f3cb5d0",
+      "collection": "block_cards",
+      "item": "cf1fbf1f-0e70-575d-8fbf-afd6161604fb",
+      "sort": 4
+    },
+    {
+      "id": "aa527810-6b3a-531e-86d8-e19dc84e437c",
+      "pages_id": "341d225b-f106-5c56-8a80-49bd6f3cb5d0",
+      "collection": "block_events",
+      "item": "f393b768-c6cb-5b35-8604-aeef005d1a83",
+      "sort": 5
+    }
+  ],
+  "news": [],
+  "block_news": [],
+  "nav_items": [
+    {
+      "id": "0ce807ab-8392-5e2d-8a7d-b455bc50c747",
+      "navigation": "927a75c8-ee39-5149-82b6-9ffa2c3d7857",
+      "label": "Der Verein",
+      "parent": null,
+      "type": "group",
+      "page": null,
+      "external_url": null,
+      "sort": 1,
+      "children": [
+        "1dbdcec2-0ca9-5bc6-8256-6256dc0c5dd7",
+        "3cd79bfa-e6f7-5151-8f76-6ab5e0d263c5",
+        "7e9ebcb8-14d9-5c9d-8765-be3e79aa4adf"
+      ]
+    },
+    {
+      "id": "1dbdcec2-0ca9-5bc6-8256-6256dc0c5dd7",
+      "navigation": "927a75c8-ee39-5149-82b6-9ffa2c3d7857",
+      "label": "Über uns",
+      "parent": "0ce807ab-8392-5e2d-8a7d-b455bc50c747",
+      "type": "page",
+      "page": "7f0cb5e9-f0ee-58a4-8064-584c7af359d8",
+      "external_url": null,
+      "sort": 2,
+      "children": []
+    },
+    {
+      "id": "3cd79bfa-e6f7-5151-8f76-6ab5e0d263c5",
+      "navigation": "927a75c8-ee39-5149-82b6-9ffa2c3d7857",
+      "label": "Jugend",
+      "parent": "0ce807ab-8392-5e2d-8a7d-b455bc50c747",
+      "type": "page",
+      "page": "61bb1e49-cde8-5b98-81fa-fbaba039f849",
+      "external_url": null,
+      "sort": 3,
+      "children": []
+    },
+    {
+      "id": "7e9ebcb8-14d9-5c9d-8765-be3e79aa4adf",
+      "navigation": "927a75c8-ee39-5149-82b6-9ffa2c3d7857",
+      "label": "Mitgliedschaft",
+      "parent": "0ce807ab-8392-5e2d-8a7d-b455bc50c747",
+      "type": "page",
+      "page": "5c160b3e-0427-56aa-811d-d61b0cd94ef8",
+      "external_url": null,
+      "sort": 4,
+      "children": []
+    },
+    {
+      "id": "a7f42045-1873-50cd-8362-8ba1aeb6b55e",
+      "navigation": "927a75c8-ee39-5149-82b6-9ffa2c3d7857",
+      "label": "Gewässer",
+      "parent": null,
+      "type": "group",
+      "page": null,
+      "external_url": null,
+      "sort": 5,
+      "children": [
+        "5f3eeb7f-fffc-5afc-8003-14c7f292c24c",
+        "7c27311d-1eb6-5d7a-842b-fb3d3ba482d4"
+      ]
+    },
+    {
+      "id": "5f3eeb7f-fffc-5afc-8003-14c7f292c24c",
+      "navigation": "927a75c8-ee39-5149-82b6-9ffa2c3d7857",
+      "label": "Stoteler See",
+      "parent": "a7f42045-1873-50cd-8362-8ba1aeb6b55e",
+      "type": "page",
+      "page": "18e335e9-88eb-540d-851d-919025f328c3",
+      "external_url": null,
+      "sort": 6,
+      "children": []
+    },
+    {
+      "id": "7c27311d-1eb6-5d7a-842b-fb3d3ba482d4",
+      "navigation": "927a75c8-ee39-5149-82b6-9ffa2c3d7857",
+      "label": "Lune und Neue Lune",
+      "parent": "a7f42045-1873-50cd-8362-8ba1aeb6b55e",
+      "type": "page",
+      "page": "6417dad0-d4d1-58cb-86b3-980048cb13c7",
+      "external_url": null,
+      "sort": 7,
+      "children": []
+    },
+    {
+      "id": "a67da19e-4ef2-5488-8886-081bf6a096a5",
+      "navigation": "927a75c8-ee39-5149-82b6-9ffa2c3d7857",
+      "label": "Gastkarten",
+      "parent": null,
+      "type": "page",
+      "page": "e54aa72d-5580-59f4-8fec-dbf8148b7521",
+      "external_url": null,
+      "sort": 8,
+      "children": []
+    },
+    {
+      "id": "cf613f2b-9d74-5e5b-85bf-0e6fae3c7e9f",
+      "navigation": "927a75c8-ee39-5149-82b6-9ffa2c3d7857",
+      "label": "Aktuelles",
+      "parent": null,
+      "type": "page",
+      "page": "9a0f4365-5423-50aa-825f-a7a1cc10250d",
+      "external_url": null,
+      "sort": 9,
+      "children": [
+        "bec3fde4-0c34-5bce-828e-a3a79ebdaac2",
+        "e5b7e5bf-0ca6-525b-8ad2-721e1f724169"
+      ]
+    },
+    {
+      "id": "bec3fde4-0c34-5bce-828e-a3a79ebdaac2",
+      "navigation": "927a75c8-ee39-5149-82b6-9ffa2c3d7857",
+      "label": "Terminkalender",
+      "parent": "cf613f2b-9d74-5e5b-85bf-0e6fae3c7e9f",
+      "type": "page",
+      "page": "9a0f4365-5423-50aa-825f-a7a1cc10250d",
+      "external_url": null,
+      "sort": 10,
+      "children": []
+    },
+    {
+      "id": "e5b7e5bf-0ca6-525b-8ad2-721e1f724169",
+      "navigation": "927a75c8-ee39-5149-82b6-9ffa2c3d7857",
+      "label": "Impressionen",
+      "parent": "cf613f2b-9d74-5e5b-85bf-0e6fae3c7e9f",
+      "type": "page",
+      "page": "b2801b77-ea68-5d68-8847-3fb2192aad54",
+      "external_url": null,
+      "sort": 11,
+      "children": []
+    },
+    {
+      "id": "eac31ba0-17c6-5f66-8536-9eeb3164fae4",
+      "navigation": "927a75c8-ee39-5149-82b6-9ffa2c3d7857",
+      "label": "Kontakt",
+      "parent": null,
+      "type": "page",
+      "page": "814a86d2-2cf0-578d-8566-cd0ea6542a31",
+      "external_url": null,
+      "sort": 12,
+      "children": []
+    }
+  ]
+}

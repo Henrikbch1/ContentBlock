@@ -1,0 +1,15 @@
+{
+  "name": "directus-extension-contentblock-table",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs"
+  },
+  "directus:extension": {
+    "type": "interface",
+    "path": "dist/index.js",
+    "source": "src/index.js",
+    "host": "^12.3.1"
+  }
+}

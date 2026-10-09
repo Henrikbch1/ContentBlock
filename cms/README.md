@@ -1,8 +1,8 @@
 # CMS-Konfiguration
 
 Hier liegt kein Directus-Core-Code. Directus laeuft als Container-Image.
-Dieser Ordner enthaelt nur Konfiguration: `snapshots/` fuer die
-Schema-Versionierung sowie spaeter `seeds/` und `flows/`.
+Dieser Ordner enthaelt Konfiguration, `snapshots/` fuer die Schema-Versionierung
+und lokale Interface-Erweiterungen unter `extensions/`.
 
 Die Datenbank liegt lokal in `database/`. Uploads und Marketplace-Erweiterungen
 liegen in persistenten Docker-Volumes und werden nicht eingecheckt.
@@ -19,10 +19,14 @@ in einer separaten Staging-Instanz wurde nicht durchgefuehrt.
 Ein Rollback erfordert die Wiederherstellung der Datenbank und Erweiterungen
 zusammen mit dem alten Image, nicht nur einen Image-Downgrade.
 
-`block_table.data` verwendet die bereits installierte Marketplace-Erweiterung
-`directus-extension-ag-grid-interface@1.0.2` (`veryphatic-ag-grid`).
-Sie liegt im bestehenden Extensions-Volume; ein Schema-Import installiert
-sie nicht automatisch. Die inkompatible Erweiterung
+`block_table.data` verwendet jetzt das lokale Interface `contentblock-table`.
+Es ergaenzt die installierte Marketplace-Erweiterung
+`directus-extension-ag-grid-interface@1.0.2` um tabellenspezifische Spalten,
+Loeschaktionen und Undo. Neue Tabellen starten mit zwei Spalten.
+Build, Deployment und Rollback stehen in der
+[Erweiterungsdokumentation](extensions/directus-extension-contentblock-table/README.md).
+Beide Erweiterungen liegen im bestehenden Extensions-Volume; ein Schema-Import
+installiert sie nicht automatisch. Die inkompatible Erweiterung
 `@directus-labs/tree-view-table-layout@1.0.2` wurde deaktiviert, nicht geloescht:
 ihr unaufgeloester Import von `@directus/system-data` verhinderte das Laden
 aller Studio-Erweiterungen.

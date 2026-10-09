@@ -7040,80 +7040,9 @@
         "field": "data",
         "group": null,
         "hidden": false,
-        "interface": "veryphatic-ag-grid",
-        "note": "Erste Zeile: Spaltenüberschriften. Weitere Zeilen: Tabelleninhalt. Spaltenkonfiguration gilt für alle Tabellen.",
-        "options": {
-          "columnDefinitions": [
-            {
-              "autoHeight": true,
-              "cellDataType": "text",
-              "cellEditor": "agTextCellEditor",
-              "colId": "col_1",
-              "editable": "true",
-              "field": "col_1",
-              "flex": 1,
-              "headerName": "Spalte 1",
-              "maxWidth": 500,
-              "minWidth": 150,
-              "singleClickEdit": true,
-              "wrapText": true
-            },
-            {
-              "autoHeight": true,
-              "cellDataType": "text",
-              "cellEditor": "agTextCellEditor",
-              "colId": "col_2",
-              "editable": "true",
-              "field": "col_2",
-              "flex": 1,
-              "headerName": "Spalte 2",
-              "maxWidth": 500,
-              "minWidth": 150,
-              "singleClickEdit": true,
-              "wrapText": true
-            },
-            {
-              "autoHeight": true,
-              "cellDataType": "text",
-              "cellEditor": "agTextCellEditor",
-              "colId": "col_3",
-              "editable": "true",
-              "field": "col_3",
-              "flex": 1,
-              "headerName": "Spalte 3",
-              "maxWidth": 500,
-              "minWidth": 150,
-              "singleClickEdit": true,
-              "wrapText": true
-            },
-            {
-              "autoHeight": true,
-              "cellDataType": "text",
-              "cellEditor": "agTextCellEditor",
-              "colId": "col_4",
-              "editable": "true",
-              "field": "col_4",
-              "flex": 1,
-              "headerName": "Spalte 4",
-              "maxWidth": 500,
-              "minWidth": 150,
-              "singleClickEdit": true,
-              "wrapText": true
-            }
-          ],
-          "gridOptions": {
-            "defaultColDef": {
-              "filter": false,
-              "resizable": true,
-              "sortable": false,
-              "suppressMovable": true
-            },
-            "enableCellTextSelection": true,
-            "ensureDomOrder": true,
-            "headerHeight": 40,
-            "stopEditingWhenCellsLoseFocus": true
-          }
-        },
+        "interface": "contentblock-table",
+        "note": "Erste Zeile: Spaltenüberschriften. Spalten und Zeilen gelten nur für diese Tabelle. Neue Tabellen starten mit zwei Spalten.",
+        "options": null,
         "readonly": false,
         "required": false,
         "searchable": true,
