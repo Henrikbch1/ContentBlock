@@ -1,5 +1,6 @@
-import { createDirectus, rest, serverPing, staticToken } from "@directus/sdk";
+import { createDirectus, rest, staticToken } from "@directus/sdk";
 
+import { getAssetId } from "./directusRelations";
 import type {
   BlockCards,
   BlockContacts,
@@ -14,6 +15,7 @@ import type {
   BlockText,
   BlockTicker,
   Category,
+  DirectusAsset,
   Document,
   Event,
   Footer,
@@ -58,7 +60,7 @@ export type Schema = {
   block_events: BlockEvents[];
 };
 
-const directusUrl = import.meta.env.VITE_DIRECTUS_URL;
+const directusUrl = import.meta.env.VITE_DIRECTUS_URL?.replace(/\/$/, "");
 const directusToken = import.meta.env.VITE_DIRECTUS_TOKEN;
 
 const missingUrlMessage = "VITE_DIRECTUS_URL is not configured.";
@@ -82,7 +84,11 @@ export const assertDirectusConfigured = (): void => {
   }
 };
 
-export const pingDirectus = (): Promise<string> => {
-  assertDirectusConfigured();
-  return directus.request(serverPing());
+export const getAssetUrl = (
+  asset: DirectusAsset | undefined,
+): string | null => {
+  const assetId = getAssetId(asset);
+  return assetId !== null && directusUrl
+    ? `${directusUrl}/assets/${assetId}`
+    : null;
 };

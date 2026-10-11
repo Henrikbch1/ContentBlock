@@ -4,16 +4,16 @@
 
 - Das Repository ist ein leichtes Monorepo: `cms/` enthält Directus mit PostgreSQL und Redis; die verbindlichen Image-Versionen stehen in `cms/docker-compose.yml`. `frontend/` ist eine React-19-/TypeScript-/Vite-8-SPA mit Tailwind CSS v4 und `@directus/sdk`.
 - Die aktuelle Architektur ist die implementierte Vite-SPA. `src/App.tsx` behandelt die Client-seitigen Pfade für CMS-Seiten, News und Events. Ohne ausdrücklichen Auftrag keinen Router und kein Next.js einführen.
-- Bei Widersprüchen sind der aktuelle Code und die aktuelle Konfiguration maßgeblich, nicht historische Vorschläge in `frontend/frontend-architektur.md` oder `frontend/PLAN.md`.
+- Die Vite-SPA ist rein clientseitig (kein SSR/SSG). Bei Widersprüchen sind der aktuelle Code und die aktuelle Konfiguration maßgeblich; `frontend/frontend-architektur.md` und `frontend/PLAN.md` beschreiben den Ist-Stand und sind bei Strukturänderungen mitzupflegen.
 - Relevante Orientierung: `README.md`, `cms/README.md`, `docs/architecture/DB.md` und `cms/snapshots/snapshot.json`.
 
 ## Frontend und Directus
 
-- `src/lib/directus.ts` ist die Directus-Schema-Grenze. `src/lib/types.ts` definiert nullable `DirectusRelation<T>`-Typen; Relationen immer null-sicher behandeln.
-- `src/lib/queries.ts` besitzt die typisierten Directus-Queries und expliziten Feldlisten. Neue Daten dort typisieren und die benötigten Felder ausdrücklich aufnehmen.
+- `src/lib/directus.ts` ist die Directus-Schema-Grenze und besitzt `getAssetUrl` als einzige Stelle für Asset-URLs. `src/lib/types/` definiert nullable `DirectusRelation<T>`-Typen; Relationen immer null-sicher behandeln.
+- `src/lib/queries/` (je Domäne eine Datei, Re-Export über `index.ts`) besitzt die typisierten Directus-Queries und expliziten Feldlisten. Neue Daten dort typisieren, die benötigten Felder ausdrücklich aufnehmen und sie auch in `cms/snapshots/apply-public-permissions.mjs` freigeben.
 - CMS-Inhalte werden als Blocks gerendert. `src/components/blocks/BlockRenderer.tsx` ordnet die elf implementierten `block_*`-Collections jeweils einer Komponente zu.
 - Einen neuen Block vollständig ergänzen: Typ, Directus-Schema, Query-Felder, Komponente und Registry-Eintrag. Das Directus-Schema nur ändern, wenn sich das CMS-Modell ändert.
-- Theme-Daten kommen aus der Directus-`theme`-Collection. `src/components/common/ThemeProvider.tsx` überführt sie in CSS-Variablen; die semantischen Tailwind-v4-Tokens liegen in `src/index.css`.
+- Theme-Daten kommen über die Relation `site.theme` (Directus-Collection `theme`). `src/components/common/ThemeProvider.tsx` überführt sie in CSS-Variablen; die semantischen Tailwind-v4-Tokens liegen in `src/index.css`.
 - Für Farben semantische Tokens wie `bg-primary` und `text-foreground` verwenden, keine rohen Tailwind-Farben oder hart codierten Theme-Farben.
 
 ## UI und Skills
@@ -37,7 +37,8 @@
 - Für Directus-Upgrades auf eine Wunschversion oder die neueste stabile Version den Skill [.github/skills/contentblock-directus-upgrade/SKILL.md](skills/contentblock-directus-upgrade/SKILL.md) laden. Runtime-Upgrade und Inhaltsmigration getrennt prüfen; keine pauschalen Updates weiterer Dienste.
 - Die Frontend-Umgebung verwendet `VITE_DIRECTUS_URL` und optional `VITE_DIRECTUS_TOKEN`.
 - Niemals `.env*`, Secrets, `cms/database/` oder `cms/uploads/` committen.
-- CMS-Modelländerungen mit dem Directus-Snapshot und der Datenbankdokumentation abgleichen.
+- Die Public-Policy darf nur lesen; Sollzustand und Rechte-Tabelle stehen in `cms/snapshots/apply-public-permissions.mjs` und `cms/README.md`. Flows liegen in `cms/snapshots/flows.seed.json` (Import mit `import-flows.mjs`).
+- CMS-Modelländerungen mit dem Directus-Snapshot und der Datenbankdokumentation abgleichen. `block_table.data` behält das flache `col_N`-Format.
 
 ## Befehle und Validierung
 
@@ -46,5 +47,6 @@
 - Frontend installieren: `cd frontend && npm install`
 - Entwicklungsserver starten: `cd frontend && npm run dev`
 - Frontend bauen: `cd frontend && npm run build` (`tsc --noEmit && vite build`)
-- Nach jeder Frontend-Änderung `npm run build` aus dem Verzeichnis `frontend/` ausführen.
+- Linten, formatieren, testen: `npm run lint`, `npm run format` (Prettier), `npm run test` (Vitest + Testing Library; Testdateien `*.test.ts(x)` neben dem Code)
+- Nach jeder Frontend-Änderung `npm run lint`, `npm run test` und `npm run build` aus dem Verzeichnis `frontend/` ausführen.
 - Bei UI- oder Navigationsänderungen zusätzlich responsive Darstellung und Tastaturbedienung manuell prüfen.

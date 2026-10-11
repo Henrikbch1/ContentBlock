@@ -1,4 +1,4 @@
-import { getAssetId } from "../../lib/directusRelations";
+import { getAssetUrl } from "../../lib/directus";
 import type { DirectusAsset } from "../../lib/types";
 
 type DirectusImageProps = {
@@ -12,16 +12,15 @@ export const DirectusImage = ({
   alt,
   className = "",
 }: DirectusImageProps): React.JSX.Element | null => {
-  const assetId = getAssetId(asset);
-  const directusUrl = import.meta.env.VITE_DIRECTUS_URL?.replace(/\/$/, "");
+  const src = getAssetUrl(asset);
 
-  if (!assetId || !directusUrl) {
+  if (!src) {
     return null;
   }
 
   return (
     <img
-      src={`${directusUrl}/assets/${assetId}`}
+      src={src}
       alt={alt}
       className={className}
       decoding="async"

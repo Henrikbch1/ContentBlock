@@ -55,6 +55,6 @@ const getThemeStyle = (theme: Theme | null | undefined): CSSProperties => {
 export const ThemeProvider = ({
   theme,
   children,
-}: PropsWithChildren<{ theme: Theme | null | undefined }>): React.JSX.Element => (
-  <div style={getThemeStyle(theme)}>{children}</div>
-);
+}: PropsWithChildren<{
+  theme: Theme | null | undefined;
+}>): React.JSX.Element => <div style={getThemeStyle(theme)}>{children}</div>;

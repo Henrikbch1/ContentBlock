@@ -30,11 +30,13 @@ Get-ChildItem frontend/src -Recurse -Include *.ts,*.tsx |
 
 Blocks lesen nur ihre `item`-Prop; datenladende Blocks (`NewsBlock` u. a.)
 erhalten ihre Query-Funktion trotzdem aus `lib/queries` — deshalb prüft
-diese Invariante nur `lib/directus`-Importe:
+diese Invariante nur `lib/directus`-Importe. Einzige Ausnahme ist der
+reine Helfer `getAssetUrl` (`import { getAssetUrl } from ".../lib/directus"`):
 
 ```powershell
 Get-ChildItem frontend/src/components -Recurse -Include *.tsx |
-  Select-String -Pattern 'from ".*lib/directus"'
+  Select-String -Pattern 'from ".*lib/directus"' |
+  Where-Object { $_.Line -notmatch 'import \{ getAssetUrl \} from' }
 ```
 
 ## I-4: Kein `any`
@@ -93,15 +95,22 @@ Get-ChildItem frontend/src -Recurse -Include *.ts,*.tsx |
   Select-String -Pattern '\benum\s'
 ```
 
-## I-10: Build ist grün
+## I-10: Lint, Tests und Build sind grün
 
 ```powershell
-cd frontend; npm run build
+cd frontend; npm run lint; npm run test; npm run build
 ```
 
-`tsc --noEmit` + `vite build` sind das einzige automatische Qualitätsgate
-des Projekts (kein ESLint/Prettier konfiguriert) — deshalb sind I-1 bis I-9
-Pflicht, nicht optional.
+`eslint`, `vitest` und `tsc --noEmit` + `vite build` sind die automatischen
+Qualitätsgates des Projekts; I-1 bis I-9 und I-11 ergänzen sie als Grep-Checks.
+
+## I-11: Asset-URLs nur über `getAssetUrl`
+
+```powershell
+Get-ChildItem frontend/src -Recurse -Include *.ts,*.tsx |
+  Where-Object { $_.Name -ne 'directus.ts' -and $_.Name -notmatch '\.test\.' } |
+  Select-String -Pattern '/assets/'
+```
 
 ## Datei-Budgets
 

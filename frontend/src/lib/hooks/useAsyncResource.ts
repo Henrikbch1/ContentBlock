@@ -18,6 +18,8 @@ export function useAsyncResource<T>(
 
   useEffect(() => {
     let isMounted = true;
+    // Loading-Zustand muss bei jedem Dep-Wechsel synchron zurückgesetzt werden.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsLoading(true);
     setError(null);
 

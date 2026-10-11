@@ -13,8 +13,26 @@ const EVENT_FIELDS = [
   "location",
   "description",
   "show_days_before",
+  "visible_from",
   "category.*",
 ] as const;
+
+/** Sichtbar: visible_from erreicht (oder leer) und Termin noch nicht vorbei. */
+export const buildVisibleEventsFilter = (now: string) => ({
+  _and: [
+    {
+      _or: [{ visible_from: { _null: true } }, { visible_from: { _lte: now } }],
+    },
+    {
+      _or: [
+        { end_date: { _gte: now } },
+        {
+          _and: [{ end_date: { _null: true } }, { start_date: { _gte: now } }],
+        },
+      ],
+    },
+  ],
+});
 
 export const getEventsForBlock = async (cfg: BlockEvents): Promise<Event[]> => {
   assertDirectusConfigured();
@@ -24,10 +42,10 @@ export const getEventsForBlock = async (cfg: BlockEvents): Promise<Event[]> => {
   }
 
   const filter = {
-    ...(cfg.mode === "upcoming"
-      ? { start_date: { _gte: new Date().toISOString() } }
-      : {}),
-    ...(categoryId === null ? {} : { category: { _eq: categoryId } }),
+    _and: [
+      buildVisibleEventsFilter(new Date().toISOString()),
+      ...(categoryId === null ? [] : [{ category: { _eq: categoryId } }]),
+    ],
   };
 
   return (await directus.request(
@@ -45,7 +63,7 @@ export const getEvents = async (): Promise<Event[]> => {
   return (await directus.request(
     readItems("events", {
       fields: EVENT_FIELDS as never,
-      filter: { start_date: { _gte: new Date().toISOString() } } as never,
+      filter: buildVisibleEventsFilter(new Date().toISOString()) as never,
       sort: ["start_date"],
     }),
   )) as Event[];

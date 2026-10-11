@@ -13,20 +13,22 @@
  * - Der Token muss ein Admin-Token sein (Flows sind admin-only).
  */
 
-import { readFile } from 'node:fs/promises';
+import { readFile } from "node:fs/promises";
 
-const URL   = process.env.DIRECTUS_URL?.replace(/\/+$/, '');
+const URL = process.env.DIRECTUS_URL?.replace(/\/+$/, "");
 const TOKEN = process.env.DIRECTUS_TOKEN;
-const FILE  = process.argv[2] || './flows.seed.json';
+const FILE = process.argv[2] || "./flows.seed.json";
 
 if (!URL || !TOKEN) {
-  console.error('❌ Bitte DIRECTUS_URL und DIRECTUS_TOKEN als Env-Variablen setzen.');
+  console.error(
+    "❌ Bitte DIRECTUS_URL und DIRECTUS_TOKEN als Env-Variablen setzen.",
+  );
   process.exit(1);
 }
 
 const headers = {
-  'Authorization': `Bearer ${TOKEN}`,
-  'Content-Type': 'application/json',
+  Authorization: `Bearer ${TOKEN}`,
+  "Content-Type": "application/json",
 };
 
 async function api(method, path, body) {
@@ -43,44 +45,58 @@ async function api(method, path, body) {
 }
 
 async function findFlowByName(name) {
-  const q = new URLSearchParams({ 'filter[name][_eq]': name, 'fields': 'id,name' });
-  const out = await api('GET', `/flows?${q.toString()}`);
+  const q = new URLSearchParams({
+    "filter[name][_eq]": name,
+    fields: "id,name",
+  });
+  const out = await api("GET", `/flows?${q.toString()}`);
   return out?.data?.[0] ?? null;
 }
 
 async function run() {
-  const seed = JSON.parse(await readFile(FILE, 'utf8'));
+  const seed = JSON.parse(await readFile(FILE, "utf8"));
   const { flows, operations } = seed;
 
   for (const flow of flows) {
     // 1) vorhandenen Flow gleichen Namens entfernen (idempotent)
     const existing = await findFlowByName(flow.name);
     if (existing) {
-      console.log(`♻️  Ersetze bestehenden Flow "${flow.name}" (${existing.id})`);
-      await api('DELETE', `/flows/${existing.id}`); // löscht auch zugehörige Operationen
+      console.log(
+        `♻️  Ersetze bestehenden Flow "${flow.name}" (${existing.id})`,
+      );
+      await api("DELETE", `/flows/${existing.id}`); // löscht auch zugehörige Operationen
     }
 
     // 2) Flow ohne operation-Verweis anlegen (Operation existiert noch nicht)
     const { operation, ...flowNoOp } = flow;
-    await api('POST', '/flows', flowNoOp);
+    await api("POST", "/flows", flowNoOp);
 
-    // 3) zugehörige Operation(en) anlegen
+    // 3) zugehörige Operation(en) ohne resolve/reject anlegen (Ziele existieren noch nicht)
     const ops = operations.filter((o) => o.flow === flow.id);
-    for (const op of ops) {
-      await api('POST', '/operations', op);
+    for (const { resolve, reject, ...op } of ops) {
+      await api("POST", "/operations", op);
     }
 
-    // 4) Flow mit erster Operation verknüpfen (Trigger -> Operation)
-    if (operation) {
-      await api('PATCH', `/flows/${flow.id}`, { operation });
+    // 4) Operationen untereinander verknüpfen (resolve/reject)
+    for (const { id, resolve, reject } of ops) {
+      if (resolve || reject) {
+        await api("PATCH", `/operations/${id}`, { resolve, reject });
+      }
     }
-    console.log(`✅ Flow "${flow.name}" importiert (${ops.length} Operation/en).`);
+
+    // 5) Flow mit erster Operation verknüpfen (Trigger -> Operation)
+    if (operation) {
+      await api("PATCH", `/flows/${flow.id}`, { operation });
+    }
+    console.log(
+      `✅ Flow "${flow.name}" importiert (${ops.length} Operation/en).`,
+    );
   }
 
-  console.log('\n🎉 Fertig. Prüfe Settings → Flows im Studio.');
+  console.log("\n🎉 Fertig. Prüfe Settings → Flows im Studio.");
 }
 
 run().catch((e) => {
-  console.error('❌ Import fehlgeschlagen:', e.message);
+  console.error("❌ Import fehlgeschlagen:", e.message);
   process.exit(1);
 });

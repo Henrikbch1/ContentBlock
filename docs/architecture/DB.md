@@ -10,14 +10,14 @@ und Block-IDs bleiben unveraendert. Build und Bedienung stehen in der
 
 ### Umsetzung
 
-| Aspekt         | Festlegung                                                     |
-| -------------- | -------------------------------------------------------------- |
-| Interface      | `contentblock-table`                                          |
-| Spalten        | Je Tabelle aus `col_N`-Schluesseln; neue Tabellen: zwei       |
-| Ueberschriften | Erste Datenzeile, individuell je Tabelle                       |
-| Reihenfolge    | Sortieren/Filtern deaktiviert, damit die Kopfzeile oben bleibt |
+| Aspekt         | Festlegung                                                      |
+| -------------- | --------------------------------------------------------------- |
+| Interface      | `contentblock-table`                                            |
+| Spalten        | Je Tabelle aus `col_N`-Schluesseln; neue Tabellen: zwei         |
+| Ueberschriften | Erste Datenzeile, individuell je Tabelle                        |
+| Reihenfolge    | Sortieren/Filtern deaktiviert, damit die Kopfzeile oben bleibt  |
 | Struktur       | Spalten/Zeilen hinzufuegen und mit Bestaetigung entfernen; Undo |
-| Migration      | Interface-Wechsel ohne Inhaltsmigration                      |
+| Migration      | Interface-Wechsel ohne Inhaltsmigration                         |
 
 ```json
 [
@@ -259,7 +259,7 @@ erDiagram
         boolean show_photo
         boolean show_email
         boolean show_phone
-        string layout
+        string layout "form, list oder grid (Select)"
         alias roles
     }
     BLOCK_CONTACTS_ROLES {
@@ -316,6 +316,7 @@ erDiagram
         uuid role FK
         uuid photo FK
         string email
+        string phone
     }
     DOCUMENTS {
         uuid id PK
@@ -342,6 +343,20 @@ erDiagram
         string location
         text description
         int show_days_before
+        timestamp visible_from
         uuid category FK
     }
 ```
+
+## Sichtbarkeit von Terminen
+
+`events.visible_from` berechnet der Flow "Events - visible_from" aus
+`start_date - show_days_before` Tage (siehe [CMS-Dokumentation](../../cms/README.md#flows)).
+Das Frontend zeigt einen Termin in Uebersicht und `EventsBlock` nur, wenn
+`visible_from` leer oder erreicht ist und `end_date` (ohne Ende `start_date`) noch nicht
+vergangen ist. Die Detailseite eines Termins ist davon nicht betroffen.
+
+## Kontakte
+
+`people.phone` (optional) wird im Kontakt-Block angezeigt, wenn `show_phone` gesetzt ist.
+`block_contacts.layout` ist ein Select mit den Werten `form`, `list` und `grid`.

@@ -1,6 +1,7 @@
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
-import { getAssetId, getRelation } from "../../lib/directusRelations";
+import { getAssetUrl } from "../../lib/directus";
+import { getRelation } from "../../lib/directusRelations";
 import type { DirectusRelation, Navigation } from "../../lib/types";
 import { DesktopNavItems } from "./DesktopNav";
 import { MobileNavItems } from "./MobileNav";
@@ -13,10 +14,7 @@ export const Header = ({ navigation }: HeaderProps): React.JSX.Element => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigationData = getRelation(navigation);
   const items = navigationData?.items ?? [];
-  const logoId = getAssetId(navigationData?.logo);
-  const directusUrl = import.meta.env.VITE_DIRECTUS_URL;
-  const logoUrl =
-    logoId && directusUrl ? `${directusUrl}/assets/${logoId}` : null;
+  const logoUrl = getAssetUrl(navigationData?.logo);
   const brandText = navigationData?.brand_text?.trim() || null;
 
   return (

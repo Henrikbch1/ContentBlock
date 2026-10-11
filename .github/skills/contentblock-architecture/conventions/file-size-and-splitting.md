@@ -38,8 +38,8 @@ Zielstruktur (Feldlisten bleiben bei ihrer Ressource):
 ```
 lib/queries/
 ├── index.ts          # re-exportiert alles; Import-Pfad "lib/queries" bleibt stabil
-├── siteQueries.ts    # SITE_FIELDS, THEME_FIELDS, getSite
-├── pageQueries.ts    # PAGE_FIELDS, getPageBySlug, getPageSlugs
+├── siteQueries.ts    # SITE_FIELDS, getSite
+├── pageQueries.ts    # PAGE_FIELDS, getPageBySlug
 ├── newsQueries.ts    # NEWS_FIELDS, getNews, getNewsBySlug, getNewsForBlock
 ├── eventQueries.ts   # EVENT_FIELDS, getEvents, getEventBySlug, getEventsForBlock
 └── ...               # eine Datei pro Ressource, gleiche Namenslogik

@@ -20,6 +20,6 @@ verwendet.
 
 ## Struktur
 
-- `frontend` - React/Vite-Frontend mit Directus-Verbindungstest
-- `cms` - Directus-Konfiguration und lokale Laufzeitdaten
+- `frontend` - React/Vite-Frontend (Tailwind CSS v4); Pruefung mit `npm run lint`, `npm run test`, `npm run build`
+- `cms` - Directus-Konfiguration, Snapshots, Flows, Public-Rechte und lokale Laufzeitdaten
 - `docs/architecture` - Architekturuebersicht

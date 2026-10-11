@@ -25,7 +25,7 @@ const getContactRoleIds = (
 
 export const getContactsForBlock = async (
   cfg: BlockContacts,
-): Promise<Array<Person & { phone?: string | null }>> => {
+): Promise<Person[]> => {
   assertDirectusConfigured();
   const roleIds = getContactRoleIds(cfg.roles);
   if (cfg.mode === "manual" && roleIds.length === 0) {
@@ -38,6 +38,7 @@ export const getContactsForBlock = async (
     ...PERSON_FIELDS,
     ...(cfg.show_photo ? ["photo"] : []),
     ...(cfg.show_email || cfg.layout === "form" ? ["email"] : []),
+    ...(cfg.show_phone ? ["phone"] : []),
   ];
 
   return (await directus.request(
@@ -46,5 +47,5 @@ export const getContactsForBlock = async (
       filter: { role: { _in: roleIds } },
       sort: ["role.sort"] as never,
     }),
-  )) as Array<Person & { phone?: string | null }>;
+  )) as Person[];
 };

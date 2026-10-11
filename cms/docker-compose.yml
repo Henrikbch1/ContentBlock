@@ -51,7 +51,12 @@ services:
       CORS_ENABLED: "true"
       CORS_ORIGIN: "http://localhost:5173,http://127.0.0.1:5173"
       EXTENSIONS_AUTO_RELOAD: "true"
-      MARKETPLACE_TRUST: "all"
+      MARKETPLACE_TRUST: "sandbox"
+      RATE_LIMITER_ENABLED: "true"
+      RATE_LIMITER_STORE: redis
+      RATE_LIMITER_REDIS: redis://cache:6379
+      RATE_LIMITER_POINTS: 50
+      RATE_LIMITER_DURATION: 1
 
 volumes:
   directus_extensions:

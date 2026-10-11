@@ -35,7 +35,9 @@ const BLOCKS: Record<BlockCollection, ComponentType<{ item: BlockItem }>> = {
   block_cards: ({ item }) => <CardsBlock item={item as BlockCards} />,
   block_faq: ({ item }) => <FaqBlock item={item as BlockFaq} />,
   block_contacts: ({ item }) => <ContactsBlock item={item as BlockContacts} />,
-  block_documents: ({ item }) => <DocumentsBlock item={item as BlockDocuments} />,
+  block_documents: ({ item }) => (
+    <DocumentsBlock item={item as BlockDocuments} />
+  ),
   block_ticker: ({ item }) => <TickerBlock item={item as BlockTicker} />,
   block_news: ({ item }) => <NewsBlock item={item as BlockNews} />,
   block_events: ({ item }) => <EventsBlock item={item as BlockEvents} />,
@@ -44,7 +46,11 @@ const BLOCKS: Record<BlockCollection, ComponentType<{ item: BlockItem }>> = {
 const isBlockItem = (item: PageBlock["item"]): item is BlockItem =>
   Boolean(item && typeof item === "object");
 
-export const BlockRenderer = ({ blocks }: { blocks?: PageBlock[] | null }): React.JSX.Element => (
+export const BlockRenderer = ({
+  blocks,
+}: {
+  blocks?: PageBlock[] | null;
+}): React.JSX.Element => (
   <>
     {[...(blocks ?? [])]
       .sort((left, right) => (left.sort ?? 0) - (right.sort ?? 0))

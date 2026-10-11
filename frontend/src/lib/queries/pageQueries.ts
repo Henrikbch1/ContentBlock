@@ -44,16 +44,3 @@ export const getPageBySlug = async (slug: string): Promise<Page | null> => {
   )) as Page[];
   return pages[0] ?? null;
 };
-
-export const getPageSlugs = async (): Promise<string[]> => {
-  assertDirectusConfigured();
-  const pages = await directus.request(
-    readItems("pages", {
-      fields: ["slug"],
-      filter: { slug: { _nnull: true } },
-    }),
-  );
-  return pages.flatMap((page) =>
-    typeof page.slug === "string" ? [page.slug] : [],
-  );
-};

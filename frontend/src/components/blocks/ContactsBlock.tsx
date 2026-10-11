@@ -14,13 +14,11 @@ import { LoadingState } from "../common/LoadingState";
 import { Section } from "../layout/Section";
 import { ContactForm } from "./ContactForm";
 
-type Contact = Person & { phone?: string | null };
-
-const getContactName = (contact: Contact): string =>
+const getContactName = (contact: Person): string =>
   [contact.first_name, contact.last_name].filter(Boolean).join(" ") ||
   "Kontakt";
 
-const getRoleName = (contact: Contact): string | null =>
+const getRoleName = (contact: Person): string | null =>
   contact.role && typeof contact.role === "object"
     ? (contact.role.name ?? null)
     : null;

@@ -1,10 +1,12 @@
 # Architekturuebersicht
 
-`frontend` enthaelt das React/Vite-Frontend. Es verwendet den Directus SDK
-Client und prueft beim Start die Erreichbarkeit des CMS ueber `/server/ping`.
+`frontend` enthaelt das React/Vite-Frontend (reine Client-SPA, Tailwind CSS v4).
+Es verwendet den Directus SDK Client; `getSite()` laedt beim Start Navigation,
+Footer und Theme (ueber die Relation `site.theme`) in einer Abfrage.
 
 `cms` enthaelt keinen Directus-Core-Code. Directus laeuft als Docker-Image;
-der Ordner ist fuer Konfiguration und spaetere Schema-Snapshots vorgesehen.
+der Ordner enthaelt Konfiguration, Schema-Snapshots, Flows, das Rechte-Skript
+fuer die Public-Policy und lokale Erweiterungen.
 
 Der Compose-Stack startet drei Container:
 

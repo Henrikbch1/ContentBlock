@@ -1,5 +1,5 @@
+import { getAssetUrl } from "../../lib/directus";
 import { getDocumentsForBlock } from "../../lib/queries";
-import { getAssetId } from "../../lib/directusRelations";
 import { useAsyncResource } from "../../lib/hooks/useAsyncResource";
 import {
   EMPTY_MESSAGES,
@@ -40,11 +40,7 @@ export const DocumentsBlock = ({
       {!isLoading && !hasError && documentList.length > 0 && (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {documentList.map((document) => {
-            const fileId = getAssetId(document.file);
-            const directusUrl = import.meta.env.VITE_DIRECTUS_URL?.replace(
-              /\/$/,
-              "",
-            );
+            const fileUrl = getAssetUrl(document.file);
             return (
               <article
                 className="border border-border bg-card p-6"
@@ -53,10 +49,10 @@ export const DocumentsBlock = ({
                 <h3 className="text-xl font-semibold">
                   {document.title ?? ""}
                 </h3>
-                {fileId && directusUrl && (
+                {fileUrl && (
                   <a
                     className="mt-4 inline-block text-sm underline underline-offset-4"
-                    href={`${directusUrl}/assets/${fileId}`}
+                    href={fileUrl}
                     target="_blank"
                     rel="noreferrer"
                   >

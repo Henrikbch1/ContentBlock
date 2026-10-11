@@ -86,6 +86,7 @@ export interface Person {
   role?: DirectusRelation<Role>;
   photo?: DirectusAsset;
   email?: string | null;
+  phone?: string | null;
 }
 
 export interface Document {
@@ -115,5 +116,6 @@ export interface Event {
   location?: string | null;
   description?: string | null;
   show_days_before?: number | null;
+  visible_from?: string | null;
   category?: DirectusRelation<Category>;
 }

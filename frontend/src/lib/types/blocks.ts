@@ -6,8 +6,7 @@ export type BlockMode =
   | "latest"
   | "upcoming"
   | "by_category"
-  | "by_role"
-  | string;
+  | "by_role";
 
 export type BlockCollection =
   | "block_hero"
@@ -123,6 +122,8 @@ export interface BlockTicker {
   messages?: BlockTickerMessage[] | null;
 }
 
+export type ContactLayout = "form" | "list" | "grid";
+
 export interface BlockContacts {
   id: DirectusId;
   title?: string | null;
@@ -130,7 +131,7 @@ export interface BlockContacts {
   show_photo?: boolean | null;
   show_email?: boolean | null;
   show_phone?: boolean | null;
-  layout?: string | null;
+  layout?: ContactLayout | null;
   roles?: Array<DirectusRelation<BlockContactsRole>> | null;
 }
 

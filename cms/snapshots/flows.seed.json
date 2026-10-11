@@ -30,7 +30,7 @@
       "name": "Events – visible_from",
       "icon": "visibility",
       "color": "#6644FF",
-      "description": "visible_from = start_date minus show_days_before Tage. Blocking Filter (keine Schleife).",
+      "description": "visible_from = start_date minus show_days_before Tage. Fehlende Werte werden beim Update aus dem bestehenden Item gelesen. Blocking Filter (keine Schleife).",
       "status": "active",
       "accountability": "all",
       "trigger": "event",
@@ -45,7 +45,7 @@
         ],
         "return": "$last"
       },
-      "operation": "7eff83be-638f-4dca-aae6-9e326d6bb945"
+      "operation": "5b0c1f0e-6a3e-4c55-9f0a-2f7d3f6a1b11"
     }
   ],
   "operations": [
@@ -57,21 +57,78 @@
       "position_x": 19,
       "position_y": 1,
       "options": {
-        "code": "module.exports = async function (data) {\n  const p = { ...(data.$trigger?.payload ?? {}) };\n  const coll = data.$trigger?.collection;\n  const source = coll === 'categories' ? p.name : p.title;\n  if (!source) return p;\n  p.slug = String(source)\n    .toLowerCase()\n    .replace(/ä/g,'ae').replace(/ö/g,'oe').replace(/ü/g,'ue').replace(/ß/g,'ss')\n    .normalize('NFKD').replace(/[\\u0300-\\u036f]/g,'')\n    .replace(/[^a-z0-9]+/g,'-')\n    .replace(/^-+|-+$/g,'');\n  return p;\n};"
+        "code": "module.exports = async function (data) {\n  const p = { ...(data.$trigger?.payload ?? {}) };\n  if (typeof p.slug === 'string' && p.slug.trim() !== '') return p;\n  const isCreate = !data.$trigger?.keys;\n  if (!isCreate && !('slug' in p)) return p;\n  const coll = data.$trigger?.collection;\n  const source = coll === 'categories' ? p.name : p.title;\n  if (!source) return p;\n  p.slug = String(source)\n    .toLowerCase()\n    .replace(/ä/g,'ae').replace(/ö/g,'oe').replace(/ü/g,'ue').replace(/ß/g,'ss')\n    .normalize('NFKD').replace(/[\\u0300-\\u036f]/g,'')\n    .replace(/[^a-z0-9]+/g,'-')\n    .replace(/^-+|-+$/g,'');\n  return p;\n};"
       },
       "resolve": null,
       "reject": null,
       "flow": "a3621891-e0ad-49ed-bb12-9283dd6f69cc"
     },
     {
+      "id": "5b0c1f0e-6a3e-4c55-9f0a-2f7d3f6a1b11",
+      "name": "is_update",
+      "key": "is_update",
+      "type": "condition",
+      "position_x": 19,
+      "position_y": 1,
+      "options": {
+        "filter": {
+          "$trigger": {
+            "keys": {
+              "_nnull": true
+            }
+          }
+        }
+      },
+      "resolve": "c2d9f7a4-3e1b-4b8a-8a5e-9d6f0e4b7c22",
+      "reject": "e8a4b6d2-1f3c-4d7e-b9a0-5c2e8f1d3a33",
+      "flow": "25076483-f123-4e5c-a896-a4d63c8e32d6"
+    },
+    {
+      "id": "c2d9f7a4-3e1b-4b8a-8a5e-9d6f0e4b7c22",
+      "name": "read_existing",
+      "key": "read_existing",
+      "type": "item-read",
+      "position_x": 37,
+      "position_y": 1,
+      "options": {
+        "collection": "events",
+        "key": "{{$trigger.keys}}",
+        "permissions": "$full",
+        "emitEvents": false,
+        "query": {
+          "fields": [
+            "start_date",
+            "show_days_before"
+          ]
+        }
+      },
+      "resolve": "7eff83be-638f-4dca-aae6-9e326d6bb945",
+      "reject": null,
+      "flow": "25076483-f123-4e5c-a896-a4d63c8e32d6"
+    },
+    {
       "id": "7eff83be-638f-4dca-aae6-9e326d6bb945",
       "name": "compute_visible_from",
       "key": "compute_visible_from",
       "type": "exec",
-      "position_x": 19,
+      "position_x": 55,
       "position_y": 1,
       "options": {
-        "code": "module.exports = async function (data) {\n  const p = { ...(data.$trigger?.payload ?? {}) };\n  const touches = 'start_date' in p || 'show_days_before' in p;\n  if (!touches) return p;\n  if ('start_date' in p && !p.start_date) { p.visible_from = null; return p; }\n  if (p.start_date) {\n    const days = Number(p.show_days_before ?? 0) || 0;\n    const dt = new Date(p.start_date);\n    dt.setDate(dt.getDate() - days);\n    p.visible_from = dt.toISOString();\n  }\n  return p;\n};"
+        "code": "module.exports = async function (data) {\n  const p = { ...(data.$trigger?.payload ?? {}) };\n  const hasStart = 'start_date' in p;\n  const hasDays = 'show_days_before' in p;\n  if (!hasStart && !hasDays) return p;\n  const keys = data.$trigger?.keys ?? [];\n  if ((!hasStart || !hasDays) && keys.length > 1) return p;\n  const raw = data.read_existing;\n  const existing = (Array.isArray(raw) ? raw[0] : raw) ?? {};\n  const start = hasStart ? p.start_date : existing.start_date;\n  const daysValue = hasDays ? p.show_days_before : existing.show_days_before;\n  if (!start) { p.visible_from = null; return p; }\n  const days = Number(daysValue ?? 0) || 0;\n  const dt = new Date(start);\n  dt.setUTCDate(dt.getUTCDate() - days);\n  p.visible_from = dt.toISOString();\n  return p;\n};"
+      },
+      "resolve": null,
+      "reject": null,
+      "flow": "25076483-f123-4e5c-a896-a4d63c8e32d6"
+    },
+    {
+      "id": "e8a4b6d2-1f3c-4d7e-b9a0-5c2e8f1d3a33",
+      "name": "compute_visible_from_create",
+      "key": "compute_visible_from_create",
+      "type": "exec",
+      "position_x": 37,
+      "position_y": 19,
+      "options": {
+        "code": "module.exports = async function (data) {\n  const p = { ...(data.$trigger?.payload ?? {}) };\n  const hasStart = 'start_date' in p;\n  const hasDays = 'show_days_before' in p;\n  if (!hasStart && !hasDays) return p;\n  const keys = data.$trigger?.keys ?? [];\n  if ((!hasStart || !hasDays) && keys.length > 1) return p;\n  const raw = data.read_existing;\n  const existing = (Array.isArray(raw) ? raw[0] : raw) ?? {};\n  const start = hasStart ? p.start_date : existing.start_date;\n  const daysValue = hasDays ? p.show_days_before : existing.show_days_before;\n  if (!start) { p.visible_from = null; return p; }\n  const days = Number(daysValue ?? 0) || 0;\n  const dt = new Date(start);\n  dt.setUTCDate(dt.getUTCDate() - days);\n  p.visible_from = dt.toISOString();\n  return p;\n};"
       },
       "resolve": null,
       "reject": null,

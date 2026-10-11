@@ -4,11 +4,11 @@
 
 Für Selbst-/PR-Review in ContentBlock. Ergänzt — ersetzt nicht — den
 globalen `clean-code`-Skill (dessen Sonar-/Checkstyle-/Java-Abschnitte hier
-nicht gelten; ESLint/Prettier sind in diesem Projekt aktuell **nicht**
-konfiguriert, daher ersetzt `tsc --noEmit` + manuelles Review diese Gates).
+nicht gelten). ESLint (`npm run lint`), Prettier (`npm run format`) und
+Vitest (`npm run test`) sind eingerichtet und Teil der Gates.
 
 **Zuerst mechanisch prüfen:** alle Grep-Checks aus
-[`../invariants.md`](../invariants.md) ausführen (I-1 bis I-10) — erst
+[`../invariants.md`](../invariants.md) ausführen (I-1 bis I-11) — erst
 danach die inhaltlichen Punkte unten.
 
 ## Struktur & Schichtung
