@@ -4,7 +4,13 @@ import { assertDirectusConfigured, directus } from "../directus";
 import { getRelationId, getRelationIds } from "../directusRelations";
 import type { BlockDocuments, Document } from "../types";
 
-const DOCUMENT_FIELDS = ["id", "title", "file", "category.*"] as const;
+const DOCUMENT_FIELDS = [
+  "id",
+  "title",
+  "file.id",
+  "file.filename_download",
+  "category.*",
+] as const;
 
 export const getDocumentsForBlock = async (
   cfg: BlockDocuments,

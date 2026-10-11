@@ -1,4 +1,6 @@
+import type { PropsWithChildren } from "react";
 import { getRelation } from "../../lib/directusRelations";
+import { UI_LABELS } from "../../lib/uiMessages";
 import type {
   DirectusRelation,
   Footer as FooterData,
@@ -20,75 +22,106 @@ const getHref = (link: FooterLink): string | null => {
 };
 
 const FooterLinkItem = ({
-  link,
+  href,
+  label,
 }: {
-  link: FooterLink;
-}): React.JSX.Element | null => {
-  const href = getHref(link);
-  const label = link.label?.trim();
-  if (!href || !label) {
-    return null;
-  }
-  return (
-    <li>
-      <a
-        className="text-sm text-white/75 transition-colors hover:text-white"
-        href={href}
-      >
-        {label}
-      </a>
-    </li>
-  );
-};
+  href: string;
+  label: string;
+}): React.JSX.Element => (
+  <li>
+    <a
+      className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+      href={href}
+    >
+      {label}
+    </a>
+  </li>
+);
+
+const FooterSection = ({
+  heading,
+  children,
+}: PropsWithChildren<{ heading: string }>): React.JSX.Element => (
+  <section>
+    <h2 className="font-heading text-xl font-semibold">{heading}</h2>
+    {children}
+  </section>
+);
 
 export const Footer = ({ footer }: FooterProps): React.JSX.Element => {
   const footerData = getRelation(footer);
-  const requiredLinks = [
-    { label: "Impressum", page: footerData?.imprint_page },
-    { label: "Datenschutz", page: footerData?.privacy_page },
-  ];
+  const contactText = footerData?.contact_text?.trim();
+  const copyright = footerData?.copyright?.trim() || UI_LABELS.defaultCopyright;
 
-  const links = (footerData?.columns ?? [])
+  const quickLinks = (footerData?.columns ?? [])
     .slice()
-    .sort((first, second) => (first.sort ?? 0) - (second.sort ?? 0));
+    .sort((first, second) => (first.sort ?? 0) - (second.sort ?? 0))
+    .flatMap((link) => {
+      const href = getHref(link);
+      const label = link.label?.trim();
+      return href && label ? [{ key: String(link.id), href, label }] : [];
+    });
+
+  const legalLinks = [
+    {
+      key: "imprint",
+      slug: getRelation(footerData?.imprint_page)?.slug,
+      label: footerData?.imprint_label?.trim() || UI_LABELS.imprint,
+    },
+    {
+      key: "privacy",
+      slug: getRelation(footerData?.privacy_page)?.slug,
+      label: footerData?.privacy_label?.trim() || UI_LABELS.privacy,
+    },
+  ].filter((link) => link.slug);
+
   return (
-    <footer className="border-t-4 border-primary bg-foreground text-white">
+    <footer
+      className="border-t-4 border-primary bg-inverse text-inverse-foreground"
+      data-background="inverse"
+    >
       <Container className="grid gap-10 py-12 sm:grid-cols-2 lg:grid-cols-3">
-        <section>
-          <h2 className="font-heading text-2xl font-semibold">Kontakt</h2>
-          <p className="mt-4 text-sm leading-6 text-white/75">
-            {footerData?.copyright || "ContentBlock"}
-          </p>
-        </section>
-        <section>
-          <h2 className="font-heading text-2xl font-semibold">
-            Schnellzugriff
-          </h2>
-          <ul className="mt-4 space-y-3">
-            {links.map((link) => (
-              <FooterLinkItem key={String(link.id)} link={link} />
-            ))}
-          </ul>
-        </section>
-        <section>
-          <h2 className="font-heading text-2xl font-semibold">Rechtliches</h2>
-          <ul className="mt-4 space-y-3">
-            {requiredLinks.map((link) => {
-              const page = getRelation(link.page);
-              return page?.slug ? (
-                <li key={link.label}>
-                  <a
-                    className="text-sm text-white/75 transition-colors hover:text-white"
-                    href={`/${page.slug}`}
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ) : null;
-            })}
-          </ul>
-        </section>
+        {contactText && (
+          <FooterSection heading={UI_LABELS.footerContact}>
+            <p className="mt-4 whitespace-pre-line text-sm leading-6 text-muted-foreground">
+              {contactText}
+            </p>
+          </FooterSection>
+        )}
+        {quickLinks.length > 0 && (
+          <FooterSection heading={UI_LABELS.footerQuickLinks}>
+            <ul className="mt-4 space-y-3">
+              {quickLinks.map((link) => (
+                <FooterLinkItem
+                  href={link.href}
+                  key={link.key}
+                  label={link.label}
+                />
+              ))}
+            </ul>
+          </FooterSection>
+        )}
+        {legalLinks.length > 0 && (
+          <FooterSection
+            heading={footerData?.legal_heading?.trim() || UI_LABELS.footerLegal}
+          >
+            <ul className="mt-4 space-y-3">
+              {legalLinks.map((link) => (
+                <FooterLinkItem
+                  href={`/${link.slug}`}
+                  key={link.key}
+                  label={link.label}
+                />
+              ))}
+            </ul>
+          </FooterSection>
+        )}
       </Container>
+      <div className="border-t border-border">
+        <Container className="py-6">
+          <p className="text-sm text-muted-foreground">{copyright}</p>
+        </Container>
+      </div>
     </footer>
   );
 };

@@ -1,19 +1,23 @@
 import { CircleHelp, Plus } from "lucide-react";
-import type { BlockFaq } from "../../lib/types";
+import type { BlockFaq, BlockProps } from "../../lib/types";
+import { cardClassName } from "../common/cardClassName";
 import { RichText } from "../common/RichText";
 import { Section } from "../layout/Section";
 import { EMPTY_MESSAGES } from "../../lib/uiMessages";
 
-export const FaqBlock = ({ item }: { item: BlockFaq }): React.JSX.Element => (
-  <Section containerClassName="max-w-3xl">
+export const FaqBlock = ({
+  item,
+  background,
+}: BlockProps<BlockFaq>): React.JSX.Element => (
+  <Section background={background} containerClassName="max-w-3xl">
     {item.title && (
       <div className="mb-8 flex items-center gap-3">
-        <CircleHelp aria-hidden="true" className="text-primary" size={24} />
+        <CircleHelp aria-hidden="true" className="text-link" size={24} />
         <h2 className="text-3xl font-semibold tracking-tight">{item.title}</h2>
       </div>
     )}
     {item.faqs?.length ? (
-      <div className="overflow-hidden rounded-[var(--radius)] border border-border bg-card shadow-sm">
+      <div className={cardClassName("overflow-hidden")}>
         {[...item.faqs]
           .sort((a, b) => (a.sort ?? 0) - (b.sort ?? 0))
           .map((faq, index) => (
@@ -33,7 +37,7 @@ export const FaqBlock = ({ item }: { item: BlockFaq }): React.JSX.Element => (
               </summary>
               <RichText
                 content={faq.answer}
-                className="px-5 pb-6 pr-16 leading-7 text-muted-foreground"
+                className="px-5 pb-6 pr-16 text-muted-foreground"
               />
             </details>
           ))}

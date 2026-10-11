@@ -2758,15 +2758,15 @@
         "group": null,
         "hidden": false,
         "interface": "select-dropdown",
-        "note": null,
+        "note": "Schriftart der Überschriften (lokal geladen).",
         "options": {
           "choices": [
             {
-              "text": "Sans",
+              "text": "Sans (DM Sans)",
               "value": "sans"
             },
             {
-              "text": "Serif",
+              "text": "Serif (Fraunces)",
               "value": "serif"
             }
           ]
@@ -13887,6 +13887,1107 @@
       "schema": {
         "name": "analytics_id",
         "table": "site",
+        "data_type": "character varying",
+        "default_value": null,
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "theme",
+      "field": "surface_color",
+      "type": "string",
+      "meta": {
+        "collection": "theme",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "surface_color",
+        "group": null,
+        "hidden": false,
+        "interface": "select-color",
+        "note": "Hintergrund für abgesetzte Abschnitte und Karten-Flächen.",
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 9,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "surface_color",
+        "table": "theme",
+        "data_type": "character varying",
+        "default_value": null,
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "theme",
+      "field": "font_body",
+      "type": "string",
+      "meta": {
+        "collection": "theme",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "font_body",
+        "group": null,
+        "hidden": false,
+        "interface": "select-dropdown",
+        "note": "Schriftart des Fließtexts (lokal geladen).",
+        "options": {
+          "choices": [
+            {
+              "text": "Sans (DM Sans)",
+              "value": "sans"
+            },
+            {
+              "text": "Serif (Fraunces)",
+              "value": "serif"
+            }
+          ]
+        },
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 10,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "font_body",
+        "table": "theme",
+        "data_type": "character varying",
+        "default_value": null,
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "theme",
+      "field": "spacing_scale",
+      "type": "string",
+      "meta": {
+        "collection": "theme",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "spacing_scale",
+        "group": null,
+        "hidden": false,
+        "interface": "select-dropdown",
+        "note": "Vertikaler Abstand zwischen Abschnitten. Standard: normal.",
+        "options": {
+          "choices": [
+            {
+              "text": "Kompakt",
+              "value": "compact"
+            },
+            {
+              "text": "Normal",
+              "value": "normal"
+            },
+            {
+              "text": "Luftig",
+              "value": "airy"
+            }
+          ]
+        },
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 11,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "spacing_scale",
+        "table": "theme",
+        "data_type": "character varying",
+        "default_value": null,
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "theme",
+      "field": "container_width",
+      "type": "string",
+      "meta": {
+        "collection": "theme",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "container_width",
+        "group": null,
+        "hidden": false,
+        "interface": "select-dropdown",
+        "note": "Maximale Inhaltsbreite. Standard: normal.",
+        "options": {
+          "choices": [
+            {
+              "text": "Schmal (64rem)",
+              "value": "narrow"
+            },
+            {
+              "text": "Normal (72rem)",
+              "value": "normal"
+            },
+            {
+              "text": "Breit (80rem)",
+              "value": "wide"
+            }
+          ]
+        },
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 12,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "container_width",
+        "table": "theme",
+        "data_type": "character varying",
+        "default_value": null,
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "theme",
+      "field": "shadow_style",
+      "type": "string",
+      "meta": {
+        "collection": "theme",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "shadow_style",
+        "group": null,
+        "hidden": false,
+        "interface": "select-dropdown",
+        "note": "Schatten von Karten und Menüs. Standard: dezent.",
+        "options": {
+          "choices": [
+            {
+              "text": "Keiner",
+              "value": "none"
+            },
+            {
+              "text": "Dezent",
+              "value": "subtle"
+            },
+            {
+              "text": "Deutlich",
+              "value": "strong"
+            }
+          ]
+        },
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 13,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "shadow_style",
+        "table": "theme",
+        "data_type": "character varying",
+        "default_value": null,
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "footer",
+      "field": "contact_text",
+      "type": "text",
+      "meta": {
+        "collection": "footer",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "contact_text",
+        "group": null,
+        "hidden": false,
+        "interface": "input-multiline",
+        "note": "Text unter der Überschrift „Kontakt“ (Adresse, Telefon, E-Mail). Leer = Bereich wird ausgeblendet.",
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 6,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "contact_text",
+        "table": "footer",
+        "data_type": "text",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "footer",
+      "field": "legal_heading",
+      "type": "string",
+      "meta": {
+        "collection": "footer",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "legal_heading",
+        "group": null,
+        "hidden": false,
+        "interface": "input",
+        "note": "Überschrift des Rechtliches-Bereichs. Leer = „Rechtliches“.",
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 7,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "legal_heading",
+        "table": "footer",
+        "data_type": "character varying",
+        "default_value": null,
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "footer",
+      "field": "imprint_label",
+      "type": "string",
+      "meta": {
+        "collection": "footer",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "imprint_label",
+        "group": null,
+        "hidden": false,
+        "interface": "input",
+        "note": "Linktext zum Impressum. Leer = „Impressum“.",
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 8,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "imprint_label",
+        "table": "footer",
+        "data_type": "character varying",
+        "default_value": null,
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "footer",
+      "field": "privacy_label",
+      "type": "string",
+      "meta": {
+        "collection": "footer",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "privacy_label",
+        "group": null,
+        "hidden": false,
+        "interface": "input",
+        "note": "Linktext zur Datenschutzerklärung. Leer = „Datenschutz“.",
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 9,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "privacy_label",
+        "table": "footer",
+        "data_type": "character varying",
+        "default_value": null,
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "block_hero",
+      "field": "background",
+      "type": "string",
+      "meta": {
+        "collection": "block_hero",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "background",
+        "group": null,
+        "hidden": false,
+        "interface": "select-dropdown",
+        "note": "Nur ohne Bild sichtbar. Leer = Primärfarbe. Mit Bild immer Primärfarbe über dem Bild.",
+        "options": {
+          "choices": [
+            {
+              "text": "Standard",
+              "value": "default"
+            },
+            {
+              "text": "Abgesetzt (Oberfläche)",
+              "value": "surface"
+            },
+            {
+              "text": "Primärfarbe",
+              "value": "primary"
+            }
+          ]
+        },
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 10,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "background",
+        "table": "block_hero",
+        "data_type": "character varying",
+        "default_value": null,
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "block_text",
+      "field": "background",
+      "type": "string",
+      "meta": {
+        "collection": "block_text",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "background",
+        "group": null,
+        "hidden": false,
+        "interface": "select-dropdown",
+        "note": "Hintergrund des Abschnitts. Leer = Standard.",
+        "options": {
+          "choices": [
+            {
+              "text": "Standard",
+              "value": "default"
+            },
+            {
+              "text": "Abgesetzt (Oberfläche)",
+              "value": "surface"
+            },
+            {
+              "text": "Primärfarbe",
+              "value": "primary"
+            }
+          ]
+        },
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 8,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "background",
+        "table": "block_text",
+        "data_type": "character varying",
+        "default_value": null,
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "block_image",
+      "field": "background",
+      "type": "string",
+      "meta": {
+        "collection": "block_image",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "background",
+        "group": null,
+        "hidden": false,
+        "interface": "select-dropdown",
+        "note": "Hintergrund des Abschnitts. Leer = Standard.",
+        "options": {
+          "choices": [
+            {
+              "text": "Standard",
+              "value": "default"
+            },
+            {
+              "text": "Abgesetzt (Oberfläche)",
+              "value": "surface"
+            },
+            {
+              "text": "Primärfarbe",
+              "value": "primary"
+            }
+          ]
+        },
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 8,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "background",
+        "table": "block_image",
+        "data_type": "character varying",
+        "default_value": null,
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "block_table",
+      "field": "background",
+      "type": "string",
+      "meta": {
+        "collection": "block_table",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "background",
+        "group": null,
+        "hidden": false,
+        "interface": "select-dropdown",
+        "note": "Hintergrund des Abschnitts. Leer = Standard.",
+        "options": {
+          "choices": [
+            {
+              "text": "Standard",
+              "value": "default"
+            },
+            {
+              "text": "Abgesetzt (Oberfläche)",
+              "value": "surface"
+            },
+            {
+              "text": "Primärfarbe",
+              "value": "primary"
+            }
+          ]
+        },
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 8,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "background",
+        "table": "block_table",
+        "data_type": "character varying",
+        "default_value": null,
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "block_cards",
+      "field": "background",
+      "type": "string",
+      "meta": {
+        "collection": "block_cards",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "background",
+        "group": null,
+        "hidden": false,
+        "interface": "select-dropdown",
+        "note": "Hintergrund des Abschnitts. Leer = Standard.",
+        "options": {
+          "choices": [
+            {
+              "text": "Standard",
+              "value": "default"
+            },
+            {
+              "text": "Abgesetzt (Oberfläche)",
+              "value": "surface"
+            },
+            {
+              "text": "Primärfarbe",
+              "value": "primary"
+            }
+          ]
+        },
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 8,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "background",
+        "table": "block_cards",
+        "data_type": "character varying",
+        "default_value": null,
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "block_faq",
+      "field": "background",
+      "type": "string",
+      "meta": {
+        "collection": "block_faq",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "background",
+        "group": null,
+        "hidden": false,
+        "interface": "select-dropdown",
+        "note": "Hintergrund des Abschnitts. Leer = Standard.",
+        "options": {
+          "choices": [
+            {
+              "text": "Standard",
+              "value": "default"
+            },
+            {
+              "text": "Abgesetzt (Oberfläche)",
+              "value": "surface"
+            },
+            {
+              "text": "Primärfarbe",
+              "value": "primary"
+            }
+          ]
+        },
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 8,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "background",
+        "table": "block_faq",
+        "data_type": "character varying",
+        "default_value": null,
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "block_ticker",
+      "field": "background",
+      "type": "string",
+      "meta": {
+        "collection": "block_ticker",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "background",
+        "group": null,
+        "hidden": false,
+        "interface": "select-dropdown",
+        "note": "Nur wirksam, wenn keine eigenen Farben gesetzt sind. Leer = Oberfläche.",
+        "options": {
+          "choices": [
+            {
+              "text": "Standard",
+              "value": "default"
+            },
+            {
+              "text": "Abgesetzt (Oberfläche)",
+              "value": "surface"
+            },
+            {
+              "text": "Primärfarbe",
+              "value": "primary"
+            }
+          ]
+        },
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 9,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "background",
+        "table": "block_ticker",
+        "data_type": "character varying",
+        "default_value": null,
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "block_contacts",
+      "field": "background",
+      "type": "string",
+      "meta": {
+        "collection": "block_contacts",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "background",
+        "group": null,
+        "hidden": false,
+        "interface": "select-dropdown",
+        "note": "Hintergrund des Abschnitts. Leer = Standard.",
+        "options": {
+          "choices": [
+            {
+              "text": "Standard",
+              "value": "default"
+            },
+            {
+              "text": "Abgesetzt (Oberfläche)",
+              "value": "surface"
+            },
+            {
+              "text": "Primärfarbe",
+              "value": "primary"
+            }
+          ]
+        },
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 13,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "background",
+        "table": "block_contacts",
+        "data_type": "character varying",
+        "default_value": null,
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "block_documents",
+      "field": "background",
+      "type": "string",
+      "meta": {
+        "collection": "block_documents",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "background",
+        "group": null,
+        "hidden": false,
+        "interface": "select-dropdown",
+        "note": "Hintergrund des Abschnitts. Leer = Standard.",
+        "options": {
+          "choices": [
+            {
+              "text": "Standard",
+              "value": "default"
+            },
+            {
+              "text": "Abgesetzt (Oberfläche)",
+              "value": "surface"
+            },
+            {
+              "text": "Primärfarbe",
+              "value": "primary"
+            }
+          ]
+        },
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 10,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "background",
+        "table": "block_documents",
+        "data_type": "character varying",
+        "default_value": null,
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "block_news",
+      "field": "background",
+      "type": "string",
+      "meta": {
+        "collection": "block_news",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "background",
+        "group": null,
+        "hidden": false,
+        "interface": "select-dropdown",
+        "note": "Hintergrund des Abschnitts. Leer = Standard.",
+        "options": {
+          "choices": [
+            {
+              "text": "Standard",
+              "value": "default"
+            },
+            {
+              "text": "Abgesetzt (Oberfläche)",
+              "value": "surface"
+            },
+            {
+              "text": "Primärfarbe",
+              "value": "primary"
+            }
+          ]
+        },
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 10,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "background",
+        "table": "block_news",
+        "data_type": "character varying",
+        "default_value": null,
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "block_events",
+      "field": "background",
+      "type": "string",
+      "meta": {
+        "collection": "block_events",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "background",
+        "group": null,
+        "hidden": false,
+        "interface": "select-dropdown",
+        "note": "Hintergrund des Abschnitts. Leer = Standard.",
+        "options": {
+          "choices": [
+            {
+              "text": "Standard",
+              "value": "default"
+            },
+            {
+              "text": "Abgesetzt (Oberfläche)",
+              "value": "surface"
+            },
+            {
+              "text": "Primärfarbe",
+              "value": "primary"
+            }
+          ]
+        },
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 10,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "background",
+        "table": "block_events",
         "data_type": "character varying",
         "default_value": null,
         "max_length": 255,

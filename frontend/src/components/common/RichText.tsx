@@ -1,3 +1,4 @@
+import { cn } from "../../lib/utils";
 import { EMPTY_MESSAGES } from "../../lib/uiMessages";
 
 type RichTextProps = {
@@ -65,7 +66,7 @@ const sanitizeHtml = (content: string): string => {
 
 export const RichText = ({
   content,
-  className = "",
+  className,
 }: RichTextProps): React.JSX.Element => {
   if (!content) {
     return <p className={className}>{EMPTY_MESSAGES.richText}</p>;
@@ -73,7 +74,7 @@ export const RichText = ({
 
   return (
     <div
-      className={`prose prose-zinc max-w-none ${className}`}
+      className={cn("prose max-w-none", className)}
       dangerouslySetInnerHTML={{ __html: sanitizeHtml(content) }}
     />
   );

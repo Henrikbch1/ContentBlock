@@ -8,7 +8,8 @@ import {
   ERROR_MESSAGES,
   LOADING_MESSAGES,
 } from "../../lib/uiMessages";
-import type { BlockEvents } from "../../lib/types";
+import type { BlockEvents, BlockProps } from "../../lib/types";
+import { cardClassName } from "../common/cardClassName";
 import { EmptyState } from "../common/EmptyState";
 import { LoadingState } from "../common/LoadingState";
 import { RichText } from "../common/RichText";
@@ -16,9 +17,8 @@ import { Section } from "../layout/Section";
 
 export const EventsBlock = ({
   item,
-}: {
-  item: BlockEvents;
-}): React.JSX.Element => {
+  background,
+}: BlockProps<BlockEvents>): React.JSX.Element => {
   const {
     data: events,
     isLoading,
@@ -27,7 +27,7 @@ export const EventsBlock = ({
   const eventList = events ?? [];
 
   return (
-    <Section>
+    <Section background={background}>
       {item.title && (
         <h2 className="mb-6 text-3xl font-semibold tracking-tight">
           {item.title}
@@ -42,11 +42,13 @@ export const EventsBlock = ({
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {eventList.map((event) => (
             <a
-              className="group flex min-h-64 flex-col border border-border bg-card p-6 transition-colors hover:border-primary"
+              className={cardClassName(
+                "group flex min-h-64 flex-col p-6 transition-colors hover:border-primary",
+              )}
               href={`/termine/${event.slug ?? event.id}`}
               key={event.id}
             >
-              <p className="text-sm font-medium text-primary">
+              <p className="text-sm font-medium text-link">
                 {formatDate(event.start_date)}
               </p>
               <h3 className="mt-2 text-xl font-semibold tracking-tight group-hover:text-primary">

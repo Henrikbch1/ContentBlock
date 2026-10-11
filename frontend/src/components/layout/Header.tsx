@@ -4,6 +4,7 @@ import { getAssetUrl } from "../../lib/directus";
 import { getRelation } from "../../lib/directusRelations";
 import type { DirectusRelation, Navigation } from "../../lib/types";
 import { DesktopNavItems } from "./DesktopNav";
+import { Container } from "./Container";
 import { MobileNavItems } from "./MobileNav";
 
 type HeaderProps = {
@@ -19,7 +20,7 @@ export const Header = ({ navigation }: HeaderProps): React.JSX.Element => {
 
   return (
     <header className="sticky top-0 z-30 border-b border-border bg-background/95 backdrop-blur">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+      <Container className="flex items-center justify-between py-3">
         <a
           className="flex shrink-0 items-center gap-3 text-foreground"
           href="/"
@@ -47,7 +48,7 @@ export const Header = ({ navigation }: HeaderProps): React.JSX.Element => {
         <button
           aria-expanded={isMenuOpen}
           aria-label={isMenuOpen ? "Navigation schließen" : "Navigation öffnen"}
-          className="inline-flex size-10 items-center justify-center border border-border text-foreground lg:hidden"
+          className="inline-flex size-10 items-center justify-center rounded-card border border-input text-foreground lg:hidden"
           onClick={() => setIsMenuOpen((open) => !open)}
           type="button"
         >
@@ -60,7 +61,7 @@ export const Header = ({ navigation }: HeaderProps): React.JSX.Element => {
         <nav aria-label="Hauptnavigation" className="hidden lg:block">
           <DesktopNavItems items={items} />
         </nav>
-      </div>
+      </Container>
       {isMenuOpen && (
         <nav
           aria-label="Mobile Hauptnavigation"

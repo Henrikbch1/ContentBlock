@@ -23,7 +23,7 @@ export const MobileNavItems = ({
         <li key={getItemId(item)}>
           {href ? (
             <a
-              className="text-sm font-semibold text-foreground hover:text-primary"
+              className="text-sm font-semibold text-foreground hover:text-link"
               href={href}
               onClick={onClose}
             >

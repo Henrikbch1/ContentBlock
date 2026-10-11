@@ -1,14 +1,14 @@
 import { DirectusImage } from "../common/DirectusImage";
 import { Section } from "../layout/Section";
 import { EMPTY_MESSAGES } from "../../lib/uiMessages";
-import type { BlockCards } from "../../lib/types";
+import type { BlockCards, BlockProps } from "../../lib/types";
+import { cardClassName } from "../common/cardClassName";
 
 export const CardsBlock = ({
   item,
-}: {
-  item: BlockCards;
-}): React.JSX.Element => (
-  <Section>
+  background,
+}: BlockProps<BlockCards>): React.JSX.Element => (
+  <Section background={background}>
     {item.title && (
       <h2 className="mb-8 text-3xl font-semibold tracking-tight">
         {item.title}
@@ -20,7 +20,7 @@ export const CardsBlock = ({
           .sort((a, b) => (a.sort ?? 0) - (b.sort ?? 0))
           .map((card, index) => (
             <article
-              className="overflow-hidden border border-border bg-card"
+              className={cardClassName("overflow-hidden")}
               key={card.id ?? index}
             >
               {card.image && (

@@ -8,13 +8,17 @@ import {
   ERROR_MESSAGES,
   LOADING_MESSAGES,
 } from "../../lib/uiMessages";
-import type { BlockNews } from "../../lib/types";
+import type { BlockNews, BlockProps } from "../../lib/types";
+import { cardClassName } from "../common/cardClassName";
 import { DirectusImage } from "../common/DirectusImage";
 import { EmptyState } from "../common/EmptyState";
 import { LoadingState } from "../common/LoadingState";
 import { Section } from "../layout/Section";
 
-export const NewsBlock = ({ item }: { item: BlockNews }): React.JSX.Element => {
+export const NewsBlock = ({
+  item,
+  background,
+}: BlockProps<BlockNews>): React.JSX.Element => {
   const {
     data: news,
     isLoading,
@@ -23,7 +27,7 @@ export const NewsBlock = ({ item }: { item: BlockNews }): React.JSX.Element => {
   const newsList = news ?? [];
 
   return (
-    <Section>
+    <Section background={background}>
       {item.title && (
         <h2 className="mb-6 text-3xl font-semibold tracking-tight">
           {item.title}
@@ -38,7 +42,9 @@ export const NewsBlock = ({ item }: { item: BlockNews }): React.JSX.Element => {
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {newsList.map((article) => (
             <a
-              className="group flex min-h-64 flex-col overflow-hidden border border-border bg-card transition-colors hover:border-primary"
+              className={cardClassName(
+                "group flex min-h-64 flex-col overflow-hidden transition-colors hover:border-primary",
+              )}
               href={`/news/${article.slug ?? article.id}`}
               key={article.id}
             >
@@ -51,7 +57,7 @@ export const NewsBlock = ({ item }: { item: BlockNews }): React.JSX.Element => {
               )}
               <div className="flex flex-1 flex-col p-6">
                 {article.published_date && (
-                  <p className="text-sm font-medium text-primary">
+                  <p className="text-sm font-medium text-link">
                     {formatDate(article.published_date)}
                   </p>
                 )}

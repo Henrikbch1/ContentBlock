@@ -9,9 +9,14 @@ export interface Theme {
   secondary_color?: string | null;
   accent_color?: string | null;
   background_color?: string | null;
+  surface_color?: string | null;
   text_color?: string | null;
   font_heading?: string | null;
+  font_body?: string | null;
   border_radius?: string | null;
+  spacing_scale?: string | null;
+  container_width?: string | null;
+  shadow_style?: string | null;
 }
 
 export interface NavItem {
@@ -44,6 +49,10 @@ export interface FooterLink {
 export interface Footer {
   id: DirectusId;
   copyright?: string | null;
+  contact_text?: string | null;
+  legal_heading?: string | null;
+  imprint_label?: string | null;
+  privacy_label?: string | null;
   imprint_page?: DirectusRelation<Page>;
   privacy_page?: DirectusRelation<Page>;
   columns?: FooterLink[] | null;

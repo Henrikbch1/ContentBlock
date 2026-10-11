@@ -1,60 +1,141 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
-:root {
-  --background: #f4f7f4;
-  --foreground: #17312e;
-  --card: #ffffff;
-  --card-foreground: #17312e;
-  --primary: #005f62;
-  --primary-foreground: #ffffff;
-  --secondary: #d7e9e6;
-  --secondary-foreground: #17312e;
-  --muted: #e8efeb;
-  --muted-foreground: #4d6660;
-  --accent: #e7b552;
-  --accent-foreground: #17312e;
-  --accent-hover: #f3c972;
-  --primary-hover: #004a4d;
-  --border: #c8d8d2;
-  --input: #c8d8d2;
-  --ring: #e7b552;
-  --radius: 0.25rem;
-  --font-heading: "Fraunces", Georgia, serif;
-  color: var(--foreground);
-  background: var(--background);
-  font-family: "DM Sans", sans-serif;
+@font-face {
+  font-family: "DM Sans";
+  font-style: normal;
+  font-weight: 100 1000;
+  font-display: swap;
+  src: url("/fonts/dm-sans-latin-wght-normal.woff2") format("woff2");
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212,
+    U+2215, U+FEFF, U+FFFD;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: var(--font-heading);
+@font-face {
+  font-family: "Fraunces";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/fraunces-latin-wght-normal.woff2") format("woff2");
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212,
+    U+2215, U+FEFF, U+FFFD;
+}
+
+/* Theme-Eingänge (--cb-*): Defaults hier, Überschreibung durch ThemeProvider auf <html>. */
+:root {
+  --cb-primary: #005f62;
+  --cb-on-primary: #ffffff;
+  --cb-secondary: #d7e9e6;
+  --cb-accent: #e7b552;
+  --cb-bg: #fcfcfa;
+  --cb-surface: #f0f4f1;
+  --cb-text: #17312e;
+  --cb-muted: #4f625d;
+  --cb-radius: 0.5rem;
+  --cb-font-body: "DM Sans", system-ui, sans-serif;
+  --cb-font-heading: "Fraunces", Georgia, serif;
+  --cb-section-y: clamp(3rem, 6vw, 5rem);
+  --cb-container: 72rem;
+  --cb-shadow: 0 1px 2px rgb(0 0 0 / 0.06);
+
+  --cb-primary-hover: color-mix(in srgb, var(--cb-primary) 85%, black);
+  --cb-accent-hover: color-mix(in srgb, var(--cb-accent) 80%, white);
+  --cb-muted-bg: color-mix(in srgb, var(--cb-text) 6%, var(--cb-bg));
+  --cb-border: color-mix(in srgb, var(--cb-text) 14%, var(--cb-bg));
+  --cb-input-border: color-mix(in srgb, var(--cb-text) 60%, var(--cb-bg));
+}
+
+/* Kontext-Variablen: Sections mit dunklem Hintergrund überschreiben sie, Karten setzen sie zurück. */
+:root,
+.ctx-default {
+  --ctx-fg: var(--cb-text);
+  --ctx-muted: var(--cb-muted);
+  --ctx-line: var(--cb-border);
+  --ctx-link: var(--cb-primary);
+  --ctx-ring: var(--cb-primary);
+}
+
+[data-background="primary"] {
+  --ctx-fg: var(--cb-on-primary);
+  --ctx-muted: color-mix(in srgb, var(--cb-on-primary) 85%, var(--cb-primary));
+  --ctx-line: color-mix(in srgb, var(--cb-on-primary) 30%, var(--cb-primary));
+  --ctx-link: var(--cb-on-primary);
+  --ctx-ring: var(--cb-on-primary);
+}
+
+[data-background="inverse"] {
+  --ctx-fg: var(--cb-bg);
+  --ctx-muted: color-mix(in srgb, var(--cb-bg) 78%, var(--cb-text));
+  --ctx-line: color-mix(in srgb, var(--cb-bg) 25%, var(--cb-text));
+  --ctx-link: var(--cb-bg);
+  --ctx-ring: var(--cb-bg);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent-hover: var(--accent-hover);
-  --color-primary-hover: var(--primary-hover);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
+  --color-background: var(--cb-bg);
+  --color-surface: var(--cb-surface);
+  --color-card: var(--cb-bg);
+  --color-card-foreground: var(--cb-text);
+  --color-inverse: var(--cb-text);
+  --color-inverse-foreground: var(--cb-bg);
+  --color-primary: var(--cb-primary);
+  --color-primary-foreground: var(--cb-on-primary);
+  --color-primary-hover: var(--cb-primary-hover);
+  --color-secondary: var(--cb-secondary);
+  --color-secondary-foreground: var(--cb-text);
+  --color-accent: var(--cb-accent);
+  --color-accent-foreground: var(--cb-text);
+  --color-accent-hover: var(--cb-accent-hover);
+  --color-muted: var(--cb-muted-bg);
+  --color-input: var(--cb-input-border);
+  --color-foreground: var(--ctx-fg);
+  --color-muted-foreground: var(--ctx-muted);
+  --color-border: var(--ctx-line);
+  --color-link: var(--ctx-link);
+  --font-sans: var(--cb-font-body);
+  --font-heading: var(--cb-font-heading);
+  --radius-card: var(--cb-radius);
+  --shadow-card: var(--cb-shadow);
+  --spacing-section: var(--cb-section-y);
+  --container-site: var(--cb-container);
+}
+
+@layer base {
+  body {
+    background-color: var(--cb-bg);
+    color: var(--cb-text);
+    font-family: var(--cb-font-body);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--cb-font-heading);
+  }
+}
+
+.prose {
+  --tw-prose-body: var(--ctx-fg);
+  --tw-prose-headings: var(--ctx-fg);
+  --tw-prose-lead: var(--ctx-muted);
+  --tw-prose-links: var(--ctx-link);
+  --tw-prose-bold: var(--ctx-fg);
+  --tw-prose-counters: var(--ctx-muted);
+  --tw-prose-bullets: var(--ctx-muted);
+  --tw-prose-hr: var(--ctx-line);
+  --tw-prose-quotes: var(--ctx-fg);
+  --tw-prose-quote-borders: var(--ctx-line);
+  --tw-prose-captions: var(--ctx-muted);
+  --tw-prose-code: var(--ctx-fg);
+  --tw-prose-th-borders: var(--ctx-line);
+  --tw-prose-td-borders: var(--ctx-line);
 }
 
 * {
@@ -70,11 +151,6 @@ body {
   margin: 0;
   min-width: 320px;
   overflow-x: hidden;
-  background-color: var(--background);
-  background-image:
-    linear-gradient(90deg, rgb(0 95 98 / 0.035) 1px, transparent 1px),
-    linear-gradient(rgb(0 95 98 / 0.035) 1px, transparent 1px);
-  background-size: 24px 24px;
 }
 
 img {
@@ -82,9 +158,28 @@ img {
   max-width: 100%;
 }
 
-:where(a, button, [tabindex]):focus-visible {
-  outline: 3px solid var(--ring);
+:where(a, button, summary, input, textarea, select, [tabindex]):focus-visible {
+  outline: 3px solid var(--ctx-ring);
   outline-offset: 3px;
+}
+
+.ticker-track {
+  animation: ticker-scroll 40s linear infinite;
+}
+
+.ticker-container:hover .ticker-track,
+.ticker-container:focus-within .ticker-track {
+  animation-play-state: paused;
+}
+
+@keyframes ticker-scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -96,6 +191,14 @@ img {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
   }
+
+  .ticker-track {
+    animation: none !important;
+  }
+
+  .ticker-duplicate {
+    display: none;
+  }
 }
 
 #root {
@@ -104,9 +207,9 @@ img {
 
 .connection-status {
   width: min(100%, 34rem);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--card);
+  border: 1px solid var(--cb-border);
+  border-radius: var(--cb-radius);
+  background: var(--cb-bg);
   padding: 2rem;
   font-size: 1.125rem;
   line-height: 1.5;
@@ -114,13 +217,13 @@ img {
 }
 
 .connection-status--connected {
-  border-color: var(--primary);
-  color: var(--primary);
+  border-color: var(--cb-primary);
+  color: var(--cb-primary);
 }
 
 .connection-status--failed {
-  border-color: #a1a1aa;
-  color: var(--muted-foreground);
+  border-color: var(--cb-input-border);
+  color: var(--cb-muted);
 }
 
 .connection-status--failed p {

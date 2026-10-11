@@ -98,20 +98,41 @@ Unbekannte Slugs rendern `NotFoundPage`.
 ## 6. Theme
 
 `getSite()` lädt das Theme ausschließlich über die Relation `site.theme`.
-`ThemeProvider` setzt daraus CSS-Variablen auf einem Wrapper:
+`ThemeProvider` setzt daraus die `--cb-*`-Variablen auf `document.documentElement`
+(nicht auf einem Wrapper) und entfernt sie beim Unmount. `src/index.css` definiert die
+Defaults in `:root` und mappt sie in `@theme inline` auf Tailwind-Tokens
+(`bg-primary`, `bg-surface`, `font-heading`, `rounded-card`, `shadow-card`, `py-section`,
+`max-w-site`). Die Mapping-Logik liegt rein und testbar in `lib/themeVariables.ts`.
 
-| Directus-Feld      | CSS-Variable                          |
-| ------------------ | ------------------------------------- |
-| `background_color` | `--background`                        |
-| `text_color`       | `--foreground`                        |
-| `primary_color`    | `--primary`                           |
-| `secondary_color`  | `--secondary`                         |
-| `accent_color`     | `--accent`                            |
-| `border_radius`    | `--radius` (`none`, `sm`, `md`, `lg`) |
-| `font_heading`     | `--font-heading` (`sans`, `serif`)    |
+| Directus-Feld      | CSS-Variable        | Werte                                      |
+| ------------------ | ------------------- | ------------------------------------------ |
+| `primary_color`    | `--cb-primary`      | gültige CSS-Farbe                          |
+| `secondary_color`  | `--cb-secondary`    | gültige CSS-Farbe                          |
+| `accent_color`     | `--cb-accent`       | gültige CSS-Farbe                          |
+| `background_color` | `--cb-bg`           | gültige CSS-Farbe                          |
+| `surface_color`    | `--cb-surface`      | gültige CSS-Farbe                          |
+| `text_color`       | `--cb-text`         | gültige CSS-Farbe                          |
+| `border_radius`    | `--cb-radius`       | `none`, `sm`, `md`, `lg`                   |
+| `font_heading`     | `--cb-font-heading` | `sans` (DM Sans), `serif` (Fraunces)       |
+| `font_body`        | `--cb-font-body`    | `sans` (DM Sans), `serif` (Fraunces)       |
+| `spacing_scale`    | `--cb-section-y`    | `compact`, `normal`, `airy`                |
+| `container_width`  | `--cb-container`    | `narrow` (64rem), `normal`, `wide` (80rem) |
+| `shadow_style`     | `--cb-shadow`       | `none`, `subtle`, `strong`                 |
 
 Ungültige oder fehlende Werte fallen auf die Defaults in `src/index.css` zurück
-(grün/gold Vereinspalette, Fraunces/DM Sans).
+(grün/gold Vereinspalette, WCAG-AA-geprüft). Die Schriften DM Sans und Fraunces liegen als
+woff2 in `public/fonts` (Lizenzen daneben) und werden per `@font-face` geladen; es gibt
+keine Anfragen an Google Fonts.
+
+`Section` hat die Prop `background` (`default`, `surface`, `primary`), die der
+`BlockRenderer` aus dem Directus-Feld `background` jedes Blocks durchreicht. Dunkle
+Hintergründe (`primary`, Footer) überschreiben die Kontext-Variablen `--ctx-*`, aus denen
+`text-foreground`, `text-muted-foreground`, `border-border` und `text-link` abgeleitet sind;
+Karten (`cardClassName`) setzen sie per `ctx-default` zurück. Rich-Text nutzt
+`@tailwindcss/typography` mit denselben Tokens.
+
+Die Desktop-Navigation rendert wie die mobile beliebig tiefe Menübäume (verschachtelte
+Listen im Dropdown).
 
 ---
 

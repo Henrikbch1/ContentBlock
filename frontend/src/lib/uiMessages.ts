@@ -1,3 +1,14 @@
+/** Zentrale UI-Labels sowie Fallbacks für optionale Directus-Texte. */
+export const UI_LABELS = {
+  skipToContent: "Zum Inhalt springen",
+  footerContact: "Kontakt",
+  footerQuickLinks: "Schnellzugriff",
+  footerLegal: "Rechtliches",
+  imprint: "Impressum",
+  privacy: "Datenschutz",
+  defaultCopyright: "ContentBlock",
+} as const;
+
 /** Zentrale Lade-/Fehler-/Leertexte, um Duplikate über Blocks/Pages zu vermeiden. */
 export const LOADING_MESSAGES = {
   page: "Seite wird geladen ...",

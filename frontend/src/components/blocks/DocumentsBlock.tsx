@@ -1,4 +1,5 @@
 import { getAssetUrl } from "../../lib/directus";
+import { getAssetFilename } from "../../lib/directusRelations";
 import { getDocumentsForBlock } from "../../lib/queries";
 import { useAsyncResource } from "../../lib/hooks/useAsyncResource";
 import {
@@ -6,16 +7,16 @@ import {
   ERROR_MESSAGES,
   LOADING_MESSAGES,
 } from "../../lib/uiMessages";
-import type { BlockDocuments } from "../../lib/types";
+import type { BlockDocuments, BlockProps } from "../../lib/types";
+import { cardClassName } from "../common/cardClassName";
 import { EmptyState } from "../common/EmptyState";
 import { LoadingState } from "../common/LoadingState";
 import { Section } from "../layout/Section";
 
 export const DocumentsBlock = ({
   item,
-}: {
-  item: BlockDocuments;
-}): React.JSX.Element => {
+  background,
+}: BlockProps<BlockDocuments>): React.JSX.Element => {
   const {
     data: documents,
     isLoading,
@@ -24,7 +25,7 @@ export const DocumentsBlock = ({
   const documentList = documents ?? [];
 
   return (
-    <Section>
+    <Section background={background}>
       {item.title && (
         <h2 className="mb-6 text-3xl font-semibold tracking-tight">
           {item.title}
@@ -41,22 +42,23 @@ export const DocumentsBlock = ({
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {documentList.map((document) => {
             const fileUrl = getAssetUrl(document.file);
+            const fileName = getAssetFilename(document.file);
             return (
-              <article
-                className="border border-border bg-card p-6"
-                key={document.id}
-              >
+              <article className={cardClassName("p-6")} key={document.id}>
                 <h3 className="text-xl font-semibold">
                   {document.title ?? ""}
                 </h3>
                 {fileUrl && (
                   <a
-                    className="mt-4 inline-block text-sm underline underline-offset-4"
+                    className="mt-4 inline-block text-sm text-link underline underline-offset-4"
                     href={fileUrl}
                     target="_blank"
                     rel="noreferrer"
                   >
                     Dokument öffnen
+                    <span className="sr-only">
+                      : {fileName ?? document.title ?? ""} (öffnet in neuem Tab)
+                    </span>
                   </a>
                 )}
               </article>

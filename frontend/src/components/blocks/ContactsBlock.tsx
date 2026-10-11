@@ -7,7 +7,8 @@ import {
   ERROR_MESSAGES,
   LOADING_MESSAGES,
 } from "../../lib/uiMessages";
-import type { BlockContacts, Person } from "../../lib/types";
+import type { BlockContacts, BlockProps, Person } from "../../lib/types";
+import { cardClassName } from "../common/cardClassName";
 import { EmptyState } from "../common/EmptyState";
 import { DirectusImage } from "../common/DirectusImage";
 import { LoadingState } from "../common/LoadingState";
@@ -33,9 +34,8 @@ const getInitials = (name: string): string =>
 
 export const ContactsBlock = ({
   item,
-}: {
-  item: BlockContacts;
-}): React.JSX.Element => {
+  background,
+}: BlockProps<BlockContacts>): React.JSX.Element => {
   const {
     data: contacts,
     isLoading,
@@ -44,7 +44,7 @@ export const ContactsBlock = ({
   const contactList = contacts ?? [];
 
   return (
-    <Section>
+    <Section background={background}>
       {item.title && (
         <h2 className="mb-6 text-3xl font-semibold tracking-tight">
           {item.title}
@@ -90,11 +90,11 @@ export const ContactsBlock = ({
               const roleName = getRoleName(contact);
               return (
                 <article
-                  className={
+                  className={cardClassName(
                     item.layout === "list"
-                      ? "flex gap-4 border border-border bg-card p-5 sm:items-center"
-                      : "border border-border bg-card p-6"
-                  }
+                      ? "flex gap-4 p-5 sm:items-center"
+                      : "p-6",
+                  )}
                   key={contact.id}
                 >
                   {item.show_photo &&
@@ -122,7 +122,7 @@ export const ContactsBlock = ({
                     )}
                     {item.show_email && contact.email && (
                       <a
-                        className="mt-3 flex items-center gap-2 text-sm text-primary underline underline-offset-4"
+                        className="mt-3 flex items-center gap-2 text-sm text-link underline underline-offset-4"
                         href={`mailto:${contact.email}`}
                       >
                         <Mail aria-hidden="true" size={15} />
@@ -131,7 +131,7 @@ export const ContactsBlock = ({
                     )}
                     {item.show_phone && contact.phone && (
                       <a
-                        className="mt-2 flex items-center gap-2 text-sm text-primary underline underline-offset-4"
+                        className="mt-2 flex items-center gap-2 text-sm text-link underline underline-offset-4"
                         href={`tel:${contact.phone}`}
                       >
                         <Phone aria-hidden="true" size={15} />

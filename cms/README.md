@@ -43,28 +43,28 @@ Neue Frontend-Felder oder -Collections muessen hier und im Skript ergaenzt werde
 | `site`                 | id, navigation, footer, theme                                                                               |
 | `navigation`           | id, logo, brand_text, items                                                                                 |
 | `nav_items`            | id, navigation, label, parent, type, page, external_url, sort                                               |
-| `footer`               | id, copyright, imprint_page, privacy_page, columns                                                          |
+| `footer`               | id, copyright, contact_text, legal_heading, imprint_label, privacy_label, imprint_page, privacy_page, columns |
 | `footer_links`         | id, footer, label, page, external_url, sort                                                                 |
-| `theme`                | id, primary_color, secondary_color, accent_color, background_color, text_color, font_heading, border_radius |
+| `theme`                | id, primary_color, secondary_color, accent_color, background_color, surface_color, text_color, font_heading, font_body, border_radius, spacing_scale, container_width, shadow_style |
 | `pages`                | id, title, slug, template, blocks                                                                           |
 | `pages_blocks`         | id, pages_id, collection, item, sort                                                                        |
-| `block_hero`           | id, title, subtitle, image, buttons                                                                         |
+| `block_hero`           | id, background, title, subtitle, image, buttons                                                             |
 | `block_hero_buttons`   | id, hero, label, href, variant, sort                                                                        |
-| `block_text`           | id, headline, content                                                                                       |
-| `block_image`          | id, image, alt                                                                                              |
-| `block_table`          | id, title, data                                                                                             |
-| `block_cards`          | id, title, cards                                                                                            |
+| `block_text`           | id, background, headline, content                                                                           |
+| `block_image`          | id, background, image, alt                                                                                  |
+| `block_table`          | id, background, title, data                                                                                 |
+| `block_cards`          | id, background, title, cards                                                                                |
 | `block_cards_items`    | id, card, title, text, image, sort                                                                          |
-| `block_faq`            | id, title, faqs                                                                                             |
+| `block_faq`            | id, background, title, faqs                                                                                 |
 | `block_faq_items`      | id, faq, question, answer, sort                                                                             |
-| `block_contacts`       | id, title, mode, show_photo, show_email, show_phone, layout, roles                                          |
+| `block_contacts`       | id, background, title, mode, show_photo, show_email, show_phone, layout, roles                              |
 | `block_contacts_roles` | id, block_contacts, role, sort                                                                              |
-| `block_documents`      | id, title, mode, filter_category, docs                                                                      |
+| `block_documents`      | id, background, title, mode, filter_category, docs                                                          |
 | `block_docs_docs`      | id, block_documents, document, sort                                                                         |
-| `block_ticker`         | id, background_color, text_color, messages                                                                  |
+| `block_ticker`         | id, background, background_color, text_color, messages                                                      |
 | `block_ticker_items`   | id, ticker, text, link, sort                                                                                |
-| `block_news`           | id, title, mode, filter_category, limit                                                                     |
-| `block_events`         | id, title, mode, filter_category, limit                                                                     |
+| `block_news`           | id, background, title, mode, filter_category, limit                                                         |
+| `block_events`         | id, background, title, mode, filter_category, limit                                                         |
 | `categories`           | id, name, slug, parent, sort                                                                                |
 | `roles`                | id, name, parent, sort                                                                                      |
 | `people`               | id, first_name, last_name, role, photo, email, phone                                                        |

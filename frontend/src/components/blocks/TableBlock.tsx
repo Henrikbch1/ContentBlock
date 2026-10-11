@@ -1,24 +1,24 @@
 import { Section } from "../layout/Section";
 import { EMPTY_MESSAGES } from "../../lib/uiMessages";
 import { getTableRows, getTableCellText } from "../../lib/tableData";
-import type { BlockTable } from "../../lib/types";
+import type { BlockProps, BlockTable } from "../../lib/types";
+import { cardClassName } from "../common/cardClassName";
 
 export const TableBlock = ({
   item,
-}: {
-  item: BlockTable;
-}): React.JSX.Element => {
+  background,
+}: BlockProps<BlockTable>): React.JSX.Element => {
   const rows = getTableRows(item.data);
   const [headerRow, ...bodyRows] = rows;
   return (
-    <Section>
+    <Section background={background}>
       {item.title && (
         <h2 className="mb-6 text-3xl font-semibold tracking-tight">
           {item.title}
         </h2>
       )}
       {rows.length ? (
-        <div className="overflow-x-auto rounded-(--radius) border border-border bg-card shadow-sm">
+        <div className={cardClassName("overflow-x-auto")}>
           <table className="min-w-152 w-full text-left text-sm">
             <caption className="sr-only">{item.title ?? "Tabelle"}</caption>
             {headerRow && (

@@ -1,9 +1,11 @@
 import { ArrowUpRight, CalendarDays, MapPin } from "lucide-react";
 import { BackLink } from "../components/common/BackLink";
+import { cardClassName } from "../components/common/cardClassName";
 import { EmptyState } from "../components/common/EmptyState";
 import { LoadingState } from "../components/common/LoadingState";
 import { PageHeader } from "../components/common/PageHeader";
 import { RichText } from "../components/common/RichText";
+import { Section } from "../components/layout/Section";
 import { useAsyncResource } from "../lib/hooks/useAsyncResource";
 import { usePageTitle } from "../lib/hooks/usePageTitle";
 import { getEventBySlug, getEvents } from "../lib/queries";
@@ -26,7 +28,7 @@ const EventsOverview = (): React.JSX.Element => {
   usePageTitle("Termine | ContentBlock");
 
   return (
-    <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16">
+    <Section>
       <PageHeader
         eyebrow={
           <>
@@ -47,7 +49,9 @@ const EventsOverview = (): React.JSX.Element => {
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {eventList.map((event) => (
             <a
-              className="group flex min-h-56 flex-col border border-border bg-card p-6 transition-colors hover:border-primary"
+              className={cardClassName(
+                "group flex min-h-56 flex-col p-6 transition-colors hover:border-primary",
+              )}
               href={`/termine/${event.slug ?? event.id}`}
               key={event.id}
             >
@@ -76,7 +80,7 @@ const EventsOverview = (): React.JSX.Element => {
           ))}
         </div>
       )}
-    </section>
+    </Section>
   );
 };
 
@@ -97,19 +101,21 @@ const EventDetail = ({ slug }: { slug: string }): React.JSX.Element => {
   if (!event) return <NotFoundPage message={EMPTY_MESSAGES.eventNotFound} />;
 
   return (
-    <article className="mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-16">
-      <BackLink href="/termine" label="Alle Termine" />
-      <p className="text-sm text-muted-foreground">
-        {formatDateRange(event.start_date, event.end_date)}
-      </p>
-      <h1 className="mt-3 text-4xl font-semibold tracking-tight">
-        {event.title ?? EMPTY_MESSAGES.untitled}
-      </h1>
-      {event.location && (
-        <p className="mt-4 text-lg text-muted-foreground">{event.location}</p>
-      )}
-      <RichText content={event.description} className="mt-8 leading-7" />
-    </article>
+    <Section containerClassName="max-w-3xl">
+      <article>
+        <BackLink href="/termine" label="Alle Termine" />
+        <p className="text-sm text-muted-foreground">
+          {formatDateRange(event.start_date, event.end_date)}
+        </p>
+        <h1 className="mt-3 text-4xl font-semibold tracking-tight">
+          {event.title ?? EMPTY_MESSAGES.untitled}
+        </h1>
+        {event.location && (
+          <p className="mt-4 text-lg text-muted-foreground">{event.location}</p>
+        )}
+        <RichText content={event.description} className="mt-8" />
+      </article>
+    </Section>
   );
 };
 

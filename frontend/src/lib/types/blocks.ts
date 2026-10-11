@@ -1,6 +1,8 @@
 import type { Category, Document, Page, Role } from "./content";
 import type { DirectusAsset, DirectusId, DirectusRelation } from "./directus";
 
+export type SectionBackground = "default" | "surface" | "primary";
+
 export type BlockMode =
   | "manual"
   | "latest"
@@ -41,6 +43,16 @@ export interface PageBlock {
   sort?: number | null;
 }
 
+export interface BlockBase {
+  id: DirectusId;
+  background?: SectionBackground | null;
+}
+
+export interface BlockProps<T extends BlockBase = BlockItem> {
+  item: T;
+  background?: SectionBackground | null;
+}
+
 export interface HeroButton {
   id?: DirectusId;
   label?: string | null;
@@ -49,28 +61,24 @@ export interface HeroButton {
   sort?: number | null;
 }
 
-export interface BlockHero {
-  id: DirectusId;
+export interface BlockHero extends BlockBase {
   title?: string | null;
   subtitle?: string | null;
   image?: DirectusAsset;
   buttons?: HeroButton[] | null;
 }
 
-export interface BlockText {
-  id: DirectusId;
+export interface BlockText extends BlockBase {
   headline?: string | null;
   content?: string | null;
 }
 
-export interface BlockImage {
-  id: DirectusId;
+export interface BlockImage extends BlockBase {
   image?: DirectusAsset;
   alt?: string | null;
 }
 
-export interface BlockTable {
-  id: DirectusId;
+export interface BlockTable extends BlockBase {
   title?: string | null;
   data?: unknown;
 }
@@ -83,8 +91,7 @@ export interface CardItem {
   sort?: number | null;
 }
 
-export interface BlockCards {
-  id: DirectusId;
+export interface BlockCards extends BlockBase {
   title?: string | null;
   cards?: CardItem[] | null;
 }
@@ -96,8 +103,7 @@ export interface FaqItem {
   sort?: number | null;
 }
 
-export interface BlockFaq {
-  id: DirectusId;
+export interface BlockFaq extends BlockBase {
   title?: string | null;
   faqs?: FaqItem[] | null;
 }
@@ -115,8 +121,7 @@ export interface BlockTickerMessage {
   sort?: number | null;
 }
 
-export interface BlockTicker {
-  id: DirectusId;
+export interface BlockTicker extends BlockBase {
   background_color?: string | null;
   text_color?: string | null;
   messages?: BlockTickerMessage[] | null;
@@ -124,8 +129,7 @@ export interface BlockTicker {
 
 export type ContactLayout = "form" | "list" | "grid";
 
-export interface BlockContacts {
-  id: DirectusId;
+export interface BlockContacts extends BlockBase {
   title?: string | null;
   mode?: BlockMode | null;
   show_photo?: boolean | null;
@@ -135,24 +139,21 @@ export interface BlockContacts {
   roles?: Array<DirectusRelation<BlockContactsRole>> | null;
 }
 
-export interface BlockDocuments {
-  id: DirectusId;
+export interface BlockDocuments extends BlockBase {
   title?: string | null;
   mode?: BlockMode | null;
   filter_category?: DirectusRelation<Category>;
   docs?: Array<DirectusRelation<Document>> | null;
 }
 
-export interface BlockNews {
-  id: DirectusId;
+export interface BlockNews extends BlockBase {
   title?: string | null;
   mode?: BlockMode | null;
   filter_category?: DirectusRelation<Category>;
   limit?: number | null;
 }
 
-export interface BlockEvents {
-  id: DirectusId;
+export interface BlockEvents extends BlockBase {
   title?: string | null;
   mode?: BlockMode | null;
   filter_category?: DirectusRelation<Category>;

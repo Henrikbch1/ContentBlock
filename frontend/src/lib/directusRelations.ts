@@ -31,3 +31,10 @@ export const getAssetId = (
 
   return asset && typeof asset === "object" ? asset.id : null;
 };
+
+export const getAssetFilename = (
+  asset: DirectusAsset | undefined,
+): string | null =>
+  asset && typeof asset === "object"
+    ? (asset.filename_download?.trim() ?? null)
+    : null;

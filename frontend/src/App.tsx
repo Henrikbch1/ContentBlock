@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getSite } from "./lib/queries";
 import { useAsyncResource } from "./lib/hooks/useAsyncResource";
-import { ERROR_MESSAGES, LOADING_MESSAGES } from "./lib/uiMessages";
+import { ERROR_MESSAGES, LOADING_MESSAGES, UI_LABELS } from "./lib/uiMessages";
 import { ThemeProvider } from "./components/common/ThemeProvider";
 import { Footer } from "./components/layout/Footer";
 import { Header } from "./components/layout/Header";
@@ -78,6 +78,12 @@ export const App = (): React.JSX.Element => {
 
       const url = new URL(anchor.href, window.location.href);
       if (url.origin !== window.location.origin) return;
+      if (
+        url.hash &&
+        url.pathname === window.location.pathname &&
+        url.search === window.location.search
+      )
+        return;
 
       event.preventDefault();
       window.history.pushState(
@@ -122,8 +128,18 @@ export const App = (): React.JSX.Element => {
       theme={site?.theme && typeof site.theme === "object" ? site.theme : null}
     >
       <div className="flex min-h-screen flex-col bg-background text-foreground">
+        <a
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-card focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-primary-foreground"
+          href="#main-content"
+        >
+          {UI_LABELS.skipToContent}
+        </a>
         <Header navigation={site?.navigation} />
-        <main className="flex-1">
+        <main
+          className="flex-1 focus:outline-none"
+          id="main-content"
+          tabIndex={-1}
+        >
           <RouteContent pathname={pathname} />
         </main>
         <Footer footer={site?.footer} />

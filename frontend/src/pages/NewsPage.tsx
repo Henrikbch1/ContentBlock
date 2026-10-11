@@ -1,10 +1,12 @@
 import { ArrowUpRight, Newspaper, Tag } from "lucide-react";
 import { BackLink } from "../components/common/BackLink";
+import { cardClassName } from "../components/common/cardClassName";
 import { DirectusImage } from "../components/common/DirectusImage";
 import { EmptyState } from "../components/common/EmptyState";
 import { LoadingState } from "../components/common/LoadingState";
 import { PageHeader } from "../components/common/PageHeader";
 import { RichText } from "../components/common/RichText";
+import { Section } from "../components/layout/Section";
 import { useAsyncResource } from "../lib/hooks/useAsyncResource";
 import { usePageTitle } from "../lib/hooks/usePageTitle";
 import { formatDate } from "../lib/format";
@@ -33,7 +35,7 @@ const NewsOverview = (): React.JSX.Element => {
   usePageTitle("Aktuelles | ContentBlock");
 
   return (
-    <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16">
+    <Section>
       <PageHeader
         eyebrow={
           <>
@@ -52,7 +54,9 @@ const NewsOverview = (): React.JSX.Element => {
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {newsList.map((article) => (
             <a
-              className="group flex min-h-80 flex-col overflow-hidden border border-border bg-card transition-colors hover:border-primary"
+              className={cardClassName(
+                "group flex min-h-80 flex-col overflow-hidden transition-colors hover:border-primary",
+              )}
               href={`/news/${article.slug ?? article.id}`}
               key={article.id}
             >
@@ -89,7 +93,7 @@ const NewsOverview = (): React.JSX.Element => {
           ))}
         </div>
       )}
-    </section>
+    </Section>
   );
 };
 
@@ -112,27 +116,29 @@ const NewsDetail = ({ slug }: { slug: string }): React.JSX.Element => {
   if (!article) return <NotFoundPage message={EMPTY_MESSAGES.newsNotFound} />;
 
   return (
-    <article className="mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-16">
-      <BackLink href="/news" label="Alle Beiträge" />
-      {article.cover_image && (
-        <DirectusImage
-          asset={article.cover_image}
-          alt={article.title ?? ""}
-          className="mb-8 aspect-video w-full object-cover"
-        />
-      )}
-      <p className="text-sm text-muted-foreground">
-        {formatDate(article.published_date)}
-        {getCategoryName(article) ? ` | ${getCategoryName(article)}` : ""}
-      </p>
-      <h1 className="mt-3 text-4xl font-semibold tracking-tight">
-        {article.title ?? EMPTY_MESSAGES.untitled}
-      </h1>
-      {article.teaser && (
-        <p className="mt-6 text-lg text-muted-foreground">{article.teaser}</p>
-      )}
-      <RichText content={article.body} className="mt-8 leading-7" />
-    </article>
+    <Section containerClassName="max-w-3xl">
+      <article>
+        <BackLink href="/news" label="Alle Beiträge" />
+        {article.cover_image && (
+          <DirectusImage
+            asset={article.cover_image}
+            alt={article.title ?? ""}
+            className="mb-8 aspect-video w-full rounded-card object-cover"
+          />
+        )}
+        <p className="text-sm text-muted-foreground">
+          {formatDate(article.published_date)}
+          {getCategoryName(article) ? ` | ${getCategoryName(article)}` : ""}
+        </p>
+        <h1 className="mt-3 text-4xl font-semibold tracking-tight">
+          {article.title ?? EMPTY_MESSAGES.untitled}
+        </h1>
+        {article.teaser && (
+          <p className="mt-6 text-lg text-muted-foreground">{article.teaser}</p>
+        )}
+        <RichText content={article.body} className="mt-8" />
+      </article>
+    </Section>
   );
 };
 

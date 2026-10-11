@@ -123,9 +123,14 @@ erDiagram
         string secondary_color
         string accent_color
         string background_color
+        string surface_color
         string text_color
         string font_heading
+        string font_body
         string border_radius
+        string spacing_scale
+        string container_width
+        string shadow_style
     }
     NAVIGATION {
         uuid id PK
@@ -145,6 +150,10 @@ erDiagram
     FOOTER {
         uuid id PK
         string copyright
+        text contact_text
+        string legal_heading
+        string imprint_label
+        string privacy_label
         uuid imprint_page FK
         uuid privacy_page FK
         alias columns
@@ -186,6 +195,7 @@ erDiagram
 
     BLOCK_HERO {
         uuid id PK
+        string background
         string title
         string subtitle
         uuid image FK
@@ -201,21 +211,25 @@ erDiagram
     }
     BLOCK_TEXT {
         uuid id PK
+        string background
         string headline
         text content
     }
     BLOCK_IMAGE {
         uuid id PK
+        string background
         uuid image FK
         string alt
     }
     BLOCK_TABLE {
         uuid id PK
+        string background
         string title
         json data
     }
     BLOCK_CARDS {
         uuid id PK
+        string background
         string title
         alias cards
     }
@@ -229,6 +243,7 @@ erDiagram
     }
     BLOCK_FAQ {
         uuid id PK
+        string background
         string title
         alias faqs
     }
@@ -241,6 +256,7 @@ erDiagram
     }
     BLOCK_TICKER {
         uuid id PK
+        string background
         string background_color
         string text_color
         alias messages
@@ -254,6 +270,7 @@ erDiagram
     }
     BLOCK_CONTACTS {
         uuid id PK
+        string background
         string title
         string mode
         boolean show_photo
@@ -270,6 +287,7 @@ erDiagram
     }
     BLOCK_DOCUMENTS {
         uuid id PK
+        string background
         string title
         string mode
         uuid filter_category FK
@@ -283,6 +301,7 @@ erDiagram
     }
     BLOCK_NEWS {
         uuid id PK
+        string background
         string title
         string mode
         uuid filter_category FK
@@ -290,6 +309,7 @@ erDiagram
     }
     BLOCK_EVENTS {
         uuid id PK
+        string background
         string title
         string mode
         uuid filter_category FK
