@@ -110,8 +110,9 @@ Der Theme-Radius ist über vordefinierte Größen konfigurierbar.
   stammen aus Directus. Lange Menüs und Suchergebnisse sind scrollbar.
 - **Tabellen:** semantische Tabelle mit erster Datenzeile als Spaltenkopf;
   auf schmalen Bildschirmen beschriftete Karten, dazu Suche und Seiteneinteilung.
-- **Dokumente:** Karten mit einem Link zur vorhandenen Datei. Eine Auswahl
-  zwischen Farb- und Schwarz-Weiß-Dateien existiert noch nicht.
+- **Dokumente:** Karten mit Links zu vorhandenen Dateien. Separat gepflegte
+  Farb- und Schwarz-Weiß-Dateien können nebeneinander erscheinen. Eine
+  automatisch verknüpfte Varianten-Auswahl existiert noch nicht.
 - **Fokus und Bewegung:** interaktive Elemente erhalten einen sichtbaren
   Fokusrahmen; reduzierte Bewegung wird im globalen Stylesheet berücksichtigt.
 

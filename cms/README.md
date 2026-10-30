@@ -77,6 +77,39 @@ Neue Frontend-Felder oder -Collections muessen hier und im Skript ergaenzt werde
 anzeigen. Collections ohne Eintrag (`templates`, `templates_blocks`, `nav_groups`,
 `nav_links`, Benutzer, Rollen, Einstellungen) sind fuer anonyme Besucher gesperrt.
 Das Frontend nutzt `VITE_DIRECTUS_TOKEN` optional; ohne Token gelten genau diese Rechte.
+Da `VITE_`-Variablen im Browser sichtbar sind, darf dort kein Admin-Token oder
+anderes geheimes Token hinterlegt werden.
+
+## Redaktion: Inhalte, Navigation und PDFs
+
+1. Eine Seite in `pages` mit einem eindeutigen Titel und Slug anlegen und die
+   gewuenschten Inhalts-Blocks in der richtigen Reihenfolge zuordnen. Tabellen
+   werden wie bisher im AG-Grid gepflegt.
+2. Unter der mit `site.navigation` verknuepften Navigation klare, kurze
+   Beschriftungen und die zugehoerigen Seiten oder URLs pflegen. Ueber `parent`
+   und `sort` die Hierarchie und Reihenfolge festlegen. Fuer Kerninformationen
+   moeglichst flache Menues verwenden und die tatsaechlichen Wege pruefen.
+3. Die Suche findet Navigationsbeschriftungen sowie Titel oeffentlich lesbarer
+   Seiten, Nachrichten und aktuell sichtbarer Termine. Sie findet keine
+   Blocktexte, Tabellenzellen oder PDF-Inhalte. Auch nicht verlinkte Seiten
+   koennen erscheinen. Die Suche ersetzt keine Berechtigungen.
+4. Fuer zwei PDF-Varianten zwei **tatsaechlich unterschiedliche, gepruefte**
+   Dateien hochladen und je einen Dokumenteintrag mit eindeutigem Titel wie
+   „Aufnahmeformular – Farbe“ und „Aufnahmeformular – Schwarz-Weiss“ anlegen.
+   Beide Dokumente im Dokument-Block im Modus `manual` auswaehlen und die
+   Verknuepfungen in die gewuenschte Reihenfolge bringen, oder sie derselben im
+   Modus `by_category` verwendeten Kategorie zuordnen. Der Block zeigt die beiden
+   Eintraege getrennt an und oeffnet jeweils die hinterlegte Datei.
+5. Seite und Downloads auf schmalem und breitem Bildschirm sowie mit Tastatur
+   pruefen. Beide PDFs oeffnen und die Schwarz-Weiss-Datei auf Drucktauglichkeit
+   kontrollieren. Bei „Datei nicht verfuegbar“ die Datei im Dokumenteintrag
+   hinterlegen. Falls der gesamte Dokument-Block nicht geladen wird, die
+   Dokumentverknuepfungen und Leserechte pruefen.
+
+Eine automatische Umwandlung oder eine verknuepfte Varianten-Auswahl existiert
+noch nicht. Bestehende einzelne Dateien werden nicht als Farb- oder
+Schwarz-Weiss-Version bezeichnet. Die Public-Policy hat keine Zeilenfilter.
+Vertrauliche Inhalte gehoeren nicht in oeffentlich lesbare Collections.
 
 ## Farben fuer das neutrale Frontend
 

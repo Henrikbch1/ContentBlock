@@ -38,7 +38,8 @@ Angeln und Gewässern sowie Termine, Kontakt und Downloads im Vordergrund.
   erhalten.
 - Formulare und andere Dokumente sollen herunterladbar sein. Gewünscht sind
   eine farbige und eine druckfreundliche Schwarz-Weiß-Variante; deren
-  technische Bereitstellung ist noch zu entscheiden.
+  separate Bereitstellung ist bereits möglich. Eine automatisch verknüpfte
+  Varianten-Auswahl benötigt noch ein freigegebenes Datenmodell.
 - Das Frontend ist eine clientseitige React-SPA mit Vite, Tailwind CSS und
   shadcn/ui. Ein Router, SSR oder ein Frameworkwechsel sind nicht beauftragt.
 
@@ -51,7 +52,7 @@ Angeln und Gewässern sowie Termine, Kontakt und Downloads im Vordergrund.
   Kerninformationen sollen auf kurzen Wegen erreichbar sein und eine gut
   sichtbare Suche erhalten.
 - Das gewünschte Farbsystem verwendet eine neutrale Basis für Light- und
-  Dark-Mode sowie höchstens zwei administrativ wählbare Akzentfarben. Lesbare
+  Dark-Mode sowie höchstens zwei administrativ wählbare Akzentfarben.
   Geprüfte Farbkombinationen werden im optionalen neutralen Modus automatisch
   korrigiert.
   Das bisherige Theme bleibt ohne Aktivierung unverändert. Ein manueller
