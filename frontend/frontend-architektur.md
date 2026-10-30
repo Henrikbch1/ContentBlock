@@ -56,10 +56,10 @@ frontend/src/
 ├── lib/
 │   ├── directus.ts         # Client, Schema, assertDirectusConfigured, getAssetUrl
 │   ├── directusRelations.ts# getRelation/getRelationId(s)/getAssetId
-│   ├── queries/            # site, page, news, event, document, contact (+ index)
-│   ├── types/              # directus, content, blocks (nullable Relationen)
-│   ├── hooks/              # useAsyncResource, usePageTitle
-│   └── format.ts, tableData.ts, uiMessages.ts, utils.ts
+│   ├── queries/            # site, page, news, event, document, contact, search
+│   ├── types/              # directus, content, blocks, search (nullable Relationen)
+│   ├── hooks/              # useAsyncResource, usePageTitle, useContentSearch
+│   └── format.ts, tableData.ts, searchResults.ts, uiMessages.ts, utils.ts
 └── test/setup.ts           # Vitest-Setup (jest-dom, cleanup)
 ```
 
@@ -78,6 +78,31 @@ frontend/src/
 | alles andere                                   | `CmsPage` mit dem Pfad als `pages.slug` |
 
 Unbekannte Slugs rendern `NotFoundPage`.
+Bei internen Seitenwechseln ohne Fragment und bei der Browser-Zurücknavigation
+wandert der Fokus zum Hauptinhalt. Fragment-Links behalten ihr bisheriges Verhalten.
+
+### Navigation und Suche
+
+Der Header nutzt die in Directus gepflegten Navigationseinträge einschließlich
+verschachtelter Menüs. Lange Desktop-Untermenüs und die mobile Navigation sind
+scrollbar. Escape schließt das jeweils aktive Menü beziehungsweise die Suche und
+setzt den Fokus auf das zugehörige Bedienelement zurück.
+
+[SiteSearch.tsx](src/components/layout/SiteSearch.tsx) durchsucht ab zwei Zeichen
+die erreichbaren Navigationsbeschriftungen und deren Eltern sowie die Titel
+öffentlich lesbarer Seiten, Nachrichten und aktuell sichtbarer Termine. Die
+Directus-Abfragen in [searchQueries.ts](src/lib/queries/searchQueries.ts) sind
+um 250 ms verzögert und fragen höchstens neun Einträge je Collection ab.
+Pro Collection werden bis zu acht berücksichtigt. Unterschiedliche Quellen werden
+abwechselnd gemischt, doppelte Ziele zusammengeführt und höchstens zehn Treffer
+angezeigt. Bei weiteren Treffern wird zum Verfeinern aufgefordert. Fehler einzelner
+Collections werden angezeigt, während Treffer anderer Quellen erhalten bleiben.
+
+Die Suche ist keine Volltextsuche: Blocktexte, Tabellenzellen, Dokumenttitel und
+PDF-Inhalte werden nicht durchsucht. Auch nicht in der Navigation verlinkte,
+öffentlich lesbare Seiten können über ihren Titel erscheinen. Die Suche ist
+keine Zugriffskontrolle. Für die Zwei-Klick-Vorgabe müssen Kernziele redaktionell
+festgelegt und die tatsächlichen Navigationswege geprüft werden.
 
 ---
 

@@ -32,11 +32,11 @@ const EventsOverview = (): React.JSX.Element => {
       <PageHeader
         eyebrow={
           <>
-            <CalendarDays aria-hidden="true" size={17} /> Vereinskalender
+            <CalendarDays aria-hidden="true" size={17} /> Veranstaltungen
           </>
         }
         title="Termine"
-        intro="Arbeitsdienste, Versammlungen und alles, was gemeinsam stattfindet."
+        intro="Kommende Termine und Veranstaltungen im Überblick."
       />
       {isLoading && <LoadingState message={LOADING_MESSAGES.eventsPage} />}
       {!isLoading && hasError && (

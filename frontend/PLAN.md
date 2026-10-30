@@ -13,7 +13,7 @@
 | 1 Setup                         | fertig  | Vite + React 19 + Tailwind v4; `components.json` für shadcn vorhanden, `components/ui` fehlt    |
 | 2 Directus-Anbindung und Typen  | fertig  | `lib/directus.ts`, `lib/types/`, `lib/queries/` mit expliziten Feldlisten                       |
 | 3 Theme-System                  | fertig  | `ThemeProvider` setzt `--cb-*` auf `<html>`; Defaults und Tailwind-Tokens in `src/index.css`    |
-| 4 Layout                        | fertig  | `Header` (Desktop-/Mobile-Navigation), `Footer`, `Container`, `Section`                         |
+| 4 Layout                        | fertig  | `Header` (Desktop-/Mobile-Navigation und Titelsuche), `Footer`, `Container`, `Section`          |
 | 5 BlockRenderer und 11 Blöcke   | fertig  | `components/blocks/`                                                                            |
 | 6 Datenlogik dynamischer Blöcke | fertig  | `get{News,Events,Documents,Contacts}ForBlock`, clientseitig über `useAsyncResource`             |
 | 7 Routing und Detailseiten      | fertig  | Pfad-Auswertung in `App.tsx` (CMS-Seiten, News, Termine); kein Router-Paket                     |
@@ -21,7 +21,8 @@
 
 Abweichungen vom Ursprungsplan: kein Next.js (daher kein SSR, keine statische
 Generierung, kein `getPageSlugs`), `npm` statt `pnpm`, Umgebungsvariablen mit
-`VITE_`-Präfix, Theme-Default ist die grün/goldene Vereinspalette statt Graustufen.
+`VITE_`-Präfix. Das bisherige Theme bleibt Standard. Der neutrale Hell-/Dunkelmodus
+ist über `VITE_THEME_MODE=neutral` optional aktivierbar.
 
 ## Qualitätsgate
 

@@ -40,12 +40,11 @@ components:
 
 ## Overview
 
-Dies ist eine manuelle Bestandsaufnahme des vorhandenen Frontends, keine
-Freigabe für dessen geplante Neugestaltung. Die Werte im Frontmatter sind
-Defaults aus [index.css](frontend/src/index.css); Directus kann mehrere davon
-zur Laufzeit überschreiben. Die lokale Impeccable-Engine war nicht verfügbar,
-daher wurden weder `/impeccable document` noch dessen Sidecar-Erzeugung
-ausgeführt.
+Dies ist eine manuelle Bestandsaufnahme des vorhandenen Frontends. Die Werte im
+Frontmatter sind Legacy-Defaults aus [index.css](frontend/src/index.css);
+Directus kann mehrere davon zur Laufzeit überschreiben. Die lokale
+Impeccable-Engine war nicht verfügbar, daher wurden weder
+`/impeccable document` noch dessen Sidecar-Erzeugung ausgeführt.
 
 Der aktuelle Auftritt kombiniert eine serifenbetonte Überschriftenhierarchie
 mit einer serifenlosen Leseschrift, farbigen Abschnittsflächen und
@@ -107,7 +106,8 @@ Der Theme-Radius ist über vordefinierte Größen konfigurierbar.
 - **Karten:** umrandete, leicht erhöhte Inhaltsflächen. Die vorhandenen
   `block_cards`-Einträge besitzen derzeit kein eigenes Linkfeld.
 - **Navigation:** angehefteter Header mit Desktopmenü beziehungsweise
-  aufklappbarer mobiler Navigation. Die Einträge stammen aus Directus.
+  aufklappbarer mobiler Navigation und sichtbarer Titelsuche. Die Einträge
+  stammen aus Directus. Lange Menüs und Suchergebnisse sind scrollbar.
 - **Tabellen:** semantische Tabelle mit erster Datenzeile als Spaltenkopf;
   auf schmalen Bildschirmen beschriftete Karten, dazu Suche und Seiteneinteilung.
 - **Dokumente:** Karten mit einem Link zur vorhandenen Datei. Eine Auswahl

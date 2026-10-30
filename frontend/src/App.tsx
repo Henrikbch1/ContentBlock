@@ -53,7 +53,11 @@ export const App = (): React.JSX.Element => {
   const [pathname, setPathname] = useState(() => window.location.pathname);
 
   useEffect(() => {
-    const handlePopState = (): void => setPathname(window.location.pathname);
+    const handlePopState = (): void => {
+      setPathname(window.location.pathname);
+      if (!window.location.hash)
+        document.getElementById("main-content")?.focus();
+    };
     const handleDocumentClick = (event: MouseEvent): void => {
       if (
         event.defaultPrevented ||
@@ -92,6 +96,7 @@ export const App = (): React.JSX.Element => {
         `${url.pathname}${url.search}${url.hash}`,
       );
       setPathname(url.pathname);
+      if (!url.hash) document.getElementById("main-content")?.focus();
     };
 
     window.addEventListener("popstate", handlePopState);
@@ -135,11 +140,7 @@ export const App = (): React.JSX.Element => {
           {UI_LABELS.skipToContent}
         </a>
         <Header navigation={site?.navigation} />
-        <main
-          className="flex-1 focus:outline-none"
-          id="main-content"
-          tabIndex={-1}
-        >
+        <main className="flex-1" id="main-content" tabIndex={-1}>
           <RouteContent pathname={pathname} />
         </main>
         <Footer footer={site?.footer} />

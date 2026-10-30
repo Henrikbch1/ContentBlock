@@ -12,7 +12,9 @@ export const MobileNavItems = ({
 }): React.JSX.Element => (
   <ul
     className={
-      parentId ? "mt-2 space-y-2 border-l border-border pl-4" : "space-y-4"
+      parentId
+        ? "mt-2 flex flex-col gap-1 border-l border-border pl-4"
+        : "flex flex-col gap-1"
     }
   >
     {getChildren(items, parentId).map((item) => {
@@ -23,14 +25,14 @@ export const MobileNavItems = ({
         <li key={getItemId(item)}>
           {href ? (
             <a
-              className="text-sm font-semibold text-foreground hover:text-link"
+              className="inline-flex min-h-11 w-full items-center rounded-card py-2 text-base font-semibold text-foreground hover:text-link"
               href={href}
               onClick={onClose}
             >
               {label}
             </a>
           ) : (
-            <span className="text-sm font-semibold text-foreground">
+            <span className="inline-flex min-h-11 items-center py-2 text-base font-semibold text-foreground">
               {label}
             </span>
           )}

@@ -39,11 +39,11 @@ const NewsOverview = (): React.JSX.Element => {
       <PageHeader
         eyebrow={
           <>
-            <Newspaper aria-hidden="true" size={17} /> Aus dem Verein
+            <Newspaper aria-hidden="true" size={17} /> Nachrichten
           </>
         }
         title="Aktuelles"
-        intro="Neuigkeiten, Berichte und wichtige Informationen rund um den Angelsportverein."
+        intro="Aktuelle Meldungen und Informationen im Überblick."
       />
       {isLoading && <LoadingState message={LOADING_MESSAGES.news} />}
       {!isLoading && hasError && <EmptyState message={ERROR_MESSAGES.news} />}

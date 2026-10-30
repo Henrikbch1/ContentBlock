@@ -4,3 +4,4 @@ export * from "./newsQueries";
 export * from "./eventQueries";
 export * from "./documentQueries";
 export * from "./contactQueries";
+export * from "./searchQueries";
