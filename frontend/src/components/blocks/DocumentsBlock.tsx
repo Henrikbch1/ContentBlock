@@ -27,7 +27,7 @@ export const DocumentsBlock = ({
   return (
     <Section background={background}>
       {item.title && (
-        <h2 className="mb-6 text-3xl font-semibold tracking-tight">
+        <h2 className="mb-6 text-3xl font-semibold tracking-tight [overflow-wrap:anywhere]">
           {item.title}
         </h2>
       )}
@@ -39,27 +39,39 @@ export const DocumentsBlock = ({
         <EmptyState message={EMPTY_MESSAGES.documents} />
       )}
       {!isLoading && !hasError && documentList.length > 0 && (
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {documentList.map((document) => {
             const fileUrl = getAssetUrl(document.file);
             const fileName = getAssetFilename(document.file);
+            const title =
+              document.title?.trim() || fileName || EMPTY_MESSAGES.untitled;
             return (
-              <article className={cardClassName("p-6")} key={document.id}>
-                <h3 className="text-xl font-semibold">
-                  {document.title ?? ""}
+              <article
+                className={cardClassName("min-w-0 p-6")}
+                key={document.id}
+              >
+                <h3 className="text-xl font-semibold [overflow-wrap:anywhere]">
+                  {title}
                 </h3>
-                {fileUrl && (
+                {fileUrl ? (
                   <a
-                    className="mt-4 inline-block text-sm text-link underline underline-offset-4"
+                    className="mt-4 inline-flex min-h-11 items-center text-base text-link underline underline-offset-4"
                     href={fileUrl}
                     target="_blank"
                     rel="noreferrer"
                   >
                     Dokument öffnen
                     <span className="sr-only">
-                      : {fileName ?? document.title ?? ""} (öffnet in neuem Tab)
+                      : {title} (öffnet in neuem Tab)
                     </span>
                   </a>
+                ) : (
+                  <p
+                    className="mt-4 text-base text-muted-foreground"
+                    role="status"
+                  >
+                    {EMPTY_MESSAGES.documentFile}
+                  </p>
                 )}
               </article>
             );

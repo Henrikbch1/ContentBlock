@@ -45,6 +45,7 @@ export const EMPTY_MESSAGES = {
   contactsByRole:
     "Für die ausgewählten Rollen sind aktuell keine Personen hinterlegt.",
   documents: "Keine Dokumente vorhanden.",
+  documentFile: "Datei nicht verfügbar.",
   events: "Keine Veranstaltungen vorhanden.",
   eventsPage: "Keine Termine vorhanden.",
   eventNotFound: "Der Termin wurde nicht gefunden.",
