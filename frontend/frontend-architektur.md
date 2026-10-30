@@ -114,6 +114,10 @@ festgelegt und die tatsächlichen Navigationswege geprüft werden.
   `get<X>ForBlock`-Query über `useAsyncResource` auf.
 - Relationen sind `DirectusRelation<T>` (Objekt, Id oder `null`) und werden mit den
   Helfern aus `directusRelations.ts` null-sicher aufgelöst.
+- Manuell ausgewählte Dokumente laufen über `block_docs_docs`: Die Page-Query
+  lädt die Verknüpfungen, die Dokument-Query verwendet deren `document`-IDs und
+  zeigt die Einträge in der gepflegten `sort`-Reihenfolge. Nicht aufgelöste
+  Verknüpfungen oder fehlende Dokumente führen zum Fehlerzustand des Blocks.
 - Events erscheinen nur, wenn `visible_from` leer oder erreicht ist und der Termin
   (`end_date`, ohne Ende `start_date`) nicht vorbei ist.
 - Asset-URLs entstehen ausschließlich über `getAssetUrl` in `lib/directus.ts`.

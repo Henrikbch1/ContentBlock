@@ -139,11 +139,17 @@ export interface BlockContacts extends BlockBase {
   roles?: Array<DirectusRelation<BlockContactsRole>> | null;
 }
 
+export interface BlockDocumentsLink {
+  id: DirectusId;
+  document?: DirectusRelation<Document>;
+  sort?: number | null;
+}
+
 export interface BlockDocuments extends BlockBase {
   title?: string | null;
   mode?: BlockMode | null;
   filter_category?: DirectusRelation<Category>;
-  docs?: Array<DirectusRelation<Document>> | null;
+  docs?: Array<DirectusRelation<BlockDocumentsLink>> | null;
 }
 
 export interface BlockNews extends BlockBase {

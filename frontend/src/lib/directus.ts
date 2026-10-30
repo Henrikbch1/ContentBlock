@@ -6,6 +6,7 @@ import type {
   BlockContacts,
   BlockContactsRole,
   BlockDocuments,
+  BlockDocumentsLink,
   BlockEvents,
   BlockFaq,
   BlockHero,
@@ -55,6 +56,7 @@ export type Schema = {
   block_faq: BlockFaq[];
   block_contacts: BlockContacts[];
   block_documents: BlockDocuments[];
+  block_docs_docs: BlockDocumentsLink[];
   block_ticker: BlockTicker[];
   block_news: BlockNews[];
   block_events: BlockEvents[];
