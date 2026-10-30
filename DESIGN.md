@@ -58,12 +58,19 @@ Fläche, einen goldenen Akzent sowie helle Hintergründe und dunkle Texte.
 Kontextvariablen passen Text, Links, Linien und Fokusfarben für primäre und
 inverse Abschnitte an.
 
-Der [ThemeProvider](frontend/src/components/common/ThemeProvider.tsx) übernimmt
-gültige CMS-Farbwerte über
-[themeVariables.ts](frontend/src/lib/themeVariables.ts). Er prüft deren
-CSS-Syntax, aber nicht die resultierenden Kontrastverhältnisse. Ein
-automatisches Akzentskalen- oder Kontrastsystem und ein vollständiger
-Dark-Mode sind aktuell nicht implementiert.
+Im unveränderten Legacy-Modus übernimmt der
+[ThemeProvider](frontend/src/components/common/ThemeProvider.tsx) gültige
+CMS-Farbwerte über [themeVariables.ts](frontend/src/lib/themeVariables.ts).
+Diese Prüfung bewertet nur die CSS-Syntax und nicht den Kontrast.
+
+Optional aktiviert `VITE_THEME_MODE=neutral` das neue System. Es verwendet feste
+neutrale Flächen für Hell und Dunkel sowie bis zu zwei Akzente aus Directus.
+[neutralTheme.ts](frontend/src/lib/neutralTheme.ts) erzeugt daraus abgestimmte
+Varianten und korrigiert die geprüften Text-, Flächen- und Hover-Kombinationen.
+Das Farbschema folgt der Systemeinstellung. Es gibt noch keinen manuellen
+Umschalter. Bild-Heroes erhalten einen neutralen dunklen Kontrastfilter.
+Die Aktivierung und Pflege sind in der
+[Frontend-Architektur](frontend/frontend-architektur.md#6-theme) beschrieben.
 
 ## Typography
 
@@ -116,7 +123,8 @@ Der Theme-Radius ist über vordefinierte Größen konfigurierbar.
   Relationen null-sicher behandeln.
 - **Do:** responsive Darstellung, Tastaturbedienung und reduzierte Bewegung
   bei UI-Änderungen prüfen.
-- **Don't:** aus der syntaktischen Prüfung einer CMS-Farbe auf ausreichenden
-  Kontrast schließen.
-- **Don't:** das geplante neutrale Light-/Dark-System oder automatische
-  PDF-Varianten als bereits vorhanden darstellen.
+- **Don't:** aus der syntaktischen Prüfung einer Legacy-CMS-Farbe auf
+  ausreichenden Kontrast schließen.
+- **Don't:** aus den überprüften Farbkombinationen auf vollständige
+  WCAG-Konformität der gesamten Website schließen.
+- **Don't:** automatische PDF-Varianten als bereits vorhanden darstellen.

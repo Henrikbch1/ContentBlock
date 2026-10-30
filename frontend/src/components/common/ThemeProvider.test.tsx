@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 import type { Theme } from "../../lib/types";
 import { ThemeProvider } from "./ThemeProvider";
@@ -9,7 +9,7 @@ const readVariable = (name: string): string =>
 
 const renderTheme = (theme: Theme | null) =>
   render(
-    <ThemeProvider theme={theme}>
+    <ThemeProvider mode="legacy" theme={theme}>
       <p>Inhalt</p>
     </ThemeProvider>,
   );
@@ -17,6 +17,8 @@ const renderTheme = (theme: Theme | null) =>
 describe("ThemeProvider", () => {
   afterEach(() => {
     document.documentElement.removeAttribute("style");
+    document.documentElement.removeAttribute("data-cb-theme");
+    vi.restoreAllMocks();
   });
 
   it("sets color variables on the document element", () => {
@@ -89,5 +91,48 @@ describe("ThemeProvider", () => {
     const { container } = renderTheme({ id: 1 });
 
     expect(container.firstElementChild?.tagName).toBe("P");
+  });
+
+  it("enables neutral tokens without applying legacy background colors", () => {
+    const { unmount } = render(
+      <ThemeProvider
+        mode="neutral"
+        theme={{
+          id: 1,
+          primary_color: "#ffff00",
+          background_color: "#ff0000",
+          font_body: "sans",
+        }}
+      >
+        <p>Inhalt</p>
+      </ThemeProvider>,
+    );
+
+    expect(document.documentElement).toHaveAttribute(
+      "data-cb-theme",
+      "neutral",
+    );
+    expect(readVariable("--cb-neutral-light-bg")).toBe("#ffffff");
+    expect(readVariable("--cb-neutral-dark-bg")).toBe("#151515");
+    expect(readVariable("--cb-neutral-light-primary")).not.toBe("#ffff00");
+    expect(readVariable("--cb-bg")).toBe("");
+    expect(readVariable("--cb-font-body")).toContain("DM Sans");
+
+    unmount();
+    expect(document.documentElement).not.toHaveAttribute("data-cb-theme");
+    expect(readVariable("--cb-neutral-light-bg")).toBe("");
+  });
+
+  it("reports invalid neutral accent settings", () => {
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => undefined);
+    render(
+      <ThemeProvider mode="neutral" theme={{ id: 1, primary_color: "invalid" }}>
+        <p>Inhalt</p>
+      </ThemeProvider>,
+    );
+
+    expect(warn).toHaveBeenCalledWith(
+      expect.stringContaining("theme.primary_color"),
+    );
   });
 });

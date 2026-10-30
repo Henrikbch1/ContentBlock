@@ -23,6 +23,7 @@ export const HeroBlock = ({
         getSectionBackgroundClasses(tone),
       )}
       data-background={tone}
+      data-hero-image={hasImage || undefined}
     >
       {hasImage && (
         <>
@@ -31,7 +32,7 @@ export const HeroBlock = ({
             alt=""
             className="absolute inset-0 -z-20 h-full w-full object-cover"
           />
-          <div className="absolute inset-0 -z-10 bg-primary/80" />
+          <div className="hero-image-overlay absolute inset-0 -z-10 bg-primary/80" />
         </>
       )}
       <Container className="py-16 lg:py-24">
@@ -56,7 +57,7 @@ export const HeroBlock = ({
                       "rounded-card px-5 py-3 text-sm font-semibold transition-colors",
                       button.variant === "secondary"
                         ? "border border-current text-foreground hover:bg-foreground/15"
-                        : "bg-secondary text-secondary-foreground hover:bg-accent-hover",
+                        : "hero-primary-action bg-secondary text-secondary-foreground hover:bg-accent-hover",
                     )}
                   >
                     {button.label}

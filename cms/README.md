@@ -78,6 +78,26 @@ anzeigen. Collections ohne Eintrag (`templates`, `templates_blocks`, `nav_groups
 `nav_links`, Benutzer, Rollen, Einstellungen) sind fuer anonyme Besucher gesperrt.
 Das Frontend nutzt `VITE_DIRECTUS_TOKEN` optional; ohne Token gelten genau diese Rechte.
 
+## Farben fuer das neutrale Frontend
+
+Der neue Farbmodus ist opt-in. Die technische Aktivierung steht in der
+[Frontend-Architektur](../frontend/frontend-architektur.md#neutraler-modus).
+Ohne Aktivierung bleibt das bisherige Theme unveraendert.
+
+1. In Directus das mit `site.theme` verknuepfte Theme oeffnen.
+2. Unter `primary_color` eine deckende Hex-Farbe wie `#005f62` auswaehlen.
+3. Optional unter `accent_color` eine zweite deckende Hex-Farbe waehlen.
+   Bleibt das Feld leer, wird nur die erste Farbe verwendet.
+4. Speichern und die Website im hellen und dunklen Systemmodus pruefen.
+
+Im neutralen Modus berechnet das Frontend die Varianten und korrigiert die
+geprueften Kontraste. Die Felder `secondary_color`, `background_color`,
+`surface_color` und `text_color` sowie eigene Ticker-Farben wirken dort nicht.
+Schriften, Abstaende, Radius und Schatten bleiben pflegbar. Nicht unterstuetzte
+Farbwerte verursachen eine Warnung in der Browserkonsole und verwenden einen
+sicheren Standard. Die Farbanpassung ersetzt keine Sicht- und
+Barrierefreiheitspruefung der Inhalte.
+
 ## Flows
 
 Flows stehen in [snapshots/flows.seed.json](snapshots/flows.seed.json) und werden mit

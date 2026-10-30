@@ -37,7 +37,8 @@ Query-Felder, Komponente, Registry-Eintrag (siehe Skill
 - **Daten:** `@directus/sdk` mit typisiertem `Schema` (`src/lib/directus.ts`).
 - **Qualität:** `npm run lint` (ESLint, flat config), `npm run format` (Prettier),
   `npm run test` (Vitest + Testing Library), `npm run build` (`tsc --noEmit` + Vite).
-- **Umgebung:** `VITE_DIRECTUS_URL`, optional `VITE_DIRECTUS_TOKEN`.
+- **Umgebung:** `VITE_DIRECTUS_URL`, optional `VITE_DIRECTUS_TOKEN` und
+  `VITE_THEME_MODE`.
 
 ---
 
@@ -109,6 +110,8 @@ Defaults in `:root` und mappt sie in `@theme inline` auf Tailwind-Tokens
 (`bg-primary`, `bg-surface`, `font-heading`, `rounded-card`, `shadow-card`, `py-section`,
 `max-w-site`). Die Mapping-Logik liegt rein und testbar in `lib/themeVariables.ts`.
 
+Im standardmäßigen Legacy-Modus gelten die bisherigen Farbzuordnungen:
+
 | Directus-Feld      | CSS-Variable        | Werte                                      |
 | ------------------ | ------------------- | ------------------------------------------ |
 | `primary_color`    | `--cb-primary`      | gültige CSS-Farbe                          |
@@ -124,10 +127,47 @@ Defaults in `:root` und mappt sie in `@theme inline` auf Tailwind-Tokens
 | `container_width`  | `--cb-container`    | `narrow` (64rem), `normal`, `wide` (80rem) |
 | `shadow_style`     | `--cb-shadow`       | `none`, `subtle`, `strong`                 |
 
-Ungültige oder fehlende Werte fallen auf die Defaults in `src/index.css` zurück
-(grün/gold Vereinspalette, WCAG-AA-geprüft). Die Schriften DM Sans und Fraunces liegen als
-woff2 in `public/fonts` (Lizenzen daneben) und werden per `@font-face` geladen; es gibt
-keine Anfragen an Google Fonts.
+Ungültige oder fehlende Legacy-Werte fallen auf die Defaults in
+[index.css](src/index.css) zurück. Die Syntaxprüfung gewährleistet keinen
+Kontrast für frei kombinierte CMS-Farben. Die Schriften DM Sans und Fraunces
+liegen als woff2 in `public/fonts` (Lizenzen daneben) und werden per `@font-face`
+geladen; es gibt keine Anfragen an Google Fonts.
+
+### Neutraler Modus
+
+`VITE_THEME_MODE=neutral` wird vor dem Start beziehungsweise Produktionsbuild
+gesetzt. Ohne diese Einstellung oder mit `VITE_THEME_MODE=legacy` bleibt das
+bisherige Theme unverändert. Eine unbekannte Einstellung erzeugt eine
+Konsolenwarnung und verwendet den Legacy-Modus.
+
+Im neutralen Modus liest [neutralTheme.ts](src/lib/neutralTheme.ts) nur
+`theme.primary_color` und optional `theme.accent_color`. Beide Werte müssen
+deckende Hex-Farben wie `#005f62` oder `#fff` sein. Ohne zweiten Akzent wird
+der erste wiederverwendet. Ungültige Eingaben erzeugen eine Konsolenwarnung und
+verwenden den Standard beziehungsweise den ersten Akzent. Die bisherigen
+Felder `secondary_color`, `background_color`, `surface_color` und `text_color`
+sowie die einzelnen Ticker-Farben werden in diesem Modus nicht angewendet.
+Schrift-, Radius-, Abstands-, Container- und Schatten-Presets bleiben erhalten.
+
+Die feste neutrale Basis folgt über `prefers-color-scheme` dem hellen oder
+dunklen Systemmodus. Ein manueller Umschalter ist nicht implementiert. Die
+Primärfarbe wird für einen Kontrast von mindestens 7:1 zur neutralen Fläche
+angepasst und auf höchstens 10:1 begrenzt. Weitere Abstufungen sowie passende
+helle beziehungsweise dunkle Vordergrundfarben werden daraus abgeleitet.
+Bild-Heroes erhalten einen dunklen Filter und helle Schrift. Die getesteten
+Farbpaare und Grenzfälle stehen in
+[neutralTheme.test.ts](src/lib/neutralTheme.test.ts); sie ersetzen keinen
+vollständigen WCAG-Audit der Website.
+
+Beispiel für einen lokalen Build im neutralen Modus aus `frontend`:
+
+```powershell
+$env:VITE_THEME_MODE = "neutral"
+npm run build
+```
+
+Zurück auf das bisherige Verhalten: `VITE_THEME_MODE` entfernen oder auf
+`legacy` setzen und das Frontend neu bauen.
 
 `Section` hat die Prop `background` (`default`, `surface`, `primary`), die der
 `BlockRenderer` aus dem Directus-Feld `background` jedes Blocks durchreicht. Dunkle

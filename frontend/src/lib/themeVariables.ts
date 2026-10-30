@@ -1,4 +1,5 @@
 import type { Theme } from "./types";
+import type { ThemeMode } from "./themeMode";
 
 const FONT_STACKS = {
   sans: '"DM Sans", system-ui, sans-serif',
@@ -65,16 +66,20 @@ const getPresetValue = (
   return preset && Object.hasOwn(presets, preset) ? presets[preset] : null;
 };
 
+/** Maps the applicable CMS theme settings to CSS variables. */
 export const getThemeVariables = (
   theme: Theme | null | undefined,
+  mode: ThemeMode = "legacy",
 ): Record<string, string> => {
   const variables: Record<string, string> = {};
   if (!theme) return variables;
 
-  for (const [themeKey, cssVariable] of Object.entries(COLOR_VARIABLES)) {
-    const value = theme[themeKey as keyof typeof COLOR_VARIABLES]?.trim();
-    if (value && isValidCssColor(value)) {
-      variables[cssVariable] = value;
+  if (mode === "legacy") {
+    for (const [themeKey, cssVariable] of Object.entries(COLOR_VARIABLES)) {
+      const value = theme[themeKey as keyof typeof COLOR_VARIABLES]?.trim();
+      if (value && isValidCssColor(value)) {
+        variables[cssVariable] = value;
+      }
     }
   }
 

@@ -5,6 +5,7 @@ import type {
   DirectusRelation,
   Page,
 } from "../../lib/types";
+import { THEME_MODE } from "../../lib/themeMode";
 import { cn } from "../../lib/utils";
 import {
   getSectionBackgroundClasses,
@@ -49,10 +50,13 @@ export const TickerBlock = ({
   const messages = item.messages?.filter((message) => message.text) ?? [];
   if (!messages.length) return null;
   const tone = resolveSectionBackground(background, "surface");
-  const style = {
-    backgroundColor: item.background_color || undefined,
-    color: item.text_color || undefined,
-  };
+  const style =
+    THEME_MODE === "neutral"
+      ? undefined
+      : {
+          backgroundColor: item.background_color || undefined,
+          color: item.text_color || undefined,
+        };
   const listClassName = "flex shrink-0 gap-12 pr-12";
   return (
     <div
