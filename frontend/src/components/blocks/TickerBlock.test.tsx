@@ -4,24 +4,28 @@ import { describe, expect, it } from "vitest";
 import { TickerBlock } from "./TickerBlock";
 
 describe("TickerBlock", () => {
-  it("hides the duplicated message list from assistive technology", () => {
-    const { container } = render(
+  it("shows every message once as a static, labelled notice", () => {
+    render(
       <TickerBlock
         item={{
           id: 1,
           messages: [
-            { id: 1, text: "Erste Meldung" },
+            { id: 1, text: "Erste Meldung", link: { id: 9, slug: "info" } },
             { id: 2, text: "Zweite Meldung" },
           ],
         }}
       />,
     );
 
-    const lists = container.querySelectorAll("ul");
-    expect(lists).toHaveLength(2);
-    expect(lists[0]).not.toHaveAttribute("aria-hidden");
-    expect(lists[1]).toHaveAttribute("aria-hidden", "true");
-    expect(screen.getAllByText("Erste Meldung")).toHaveLength(2);
+    const notice = screen.getByRole("complementary", { name: "Hinweis" });
+    expect(notice).toBeVisible();
+    expect(screen.getAllByText("Erste Meldung")).toHaveLength(1);
+    expect(screen.getByRole("link", { name: "Erste Meldung" })).toHaveAttribute(
+      "href",
+      "/info",
+    );
+    expect(screen.getByText("Zweite Meldung")).toBeVisible();
+    expect(notice.querySelector("[class*='ticker']")).toBeNull();
   });
 
   it("renders nothing without messages", () => {

@@ -2,6 +2,7 @@ import { getAssetUrl } from "../../lib/directus";
 import type { BlockHero, BlockProps } from "../../lib/types";
 import { cn } from "../../lib/utils";
 import { DirectusImage } from "../common/DirectusImage";
+import { sharpSAttribute } from "../common/displayTitle";
 import { Container } from "../layout/Container";
 import {
   getSectionBackgroundClasses,
@@ -16,10 +17,12 @@ export const HeroBlock = ({
   const tone = hasImage
     ? "primary"
     : resolveSectionBackground(background, "primary");
+  const buttons = item.buttons?.filter((button) => button.label) ?? [];
+  const title = item.title || "Willkommen";
   return (
     <section
       className={cn(
-        "relative isolate flex min-h-125 items-end overflow-hidden sm:min-h-150",
+        "relative isolate flex min-h-[22rem] items-end overflow-hidden sm:min-h-[26rem] lg:min-h-[28rem]",
         getSectionBackgroundClasses(tone),
       )}
       data-background={tone}
@@ -31,41 +34,45 @@ export const HeroBlock = ({
             asset={item.image}
             alt=""
             className="absolute inset-0 -z-20 h-full w-full object-cover"
+            priority
           />
           <div className="hero-image-overlay absolute inset-0 -z-10 bg-primary/80" />
         </>
       )}
-      <Container className="py-16 lg:py-24">
-        <div className="max-w-3xl">
-          <h1 className="max-w-3xl text-5xl font-semibold leading-none tracking-tight sm:text-7xl">
-            {item.title || "Willkommen"}
-          </h1>
-          {item.subtitle && (
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-muted-foreground">
-              {item.subtitle}
-            </p>
-          )}
-          {item.buttons?.length ? (
-            <div className="mt-8 flex flex-wrap gap-3">
-              {item.buttons
-                .filter((button) => button.label)
-                .map((button) => (
+      <Container className="grid gap-6 pb-10 pt-24 sm:pb-12 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] lg:items-end lg:gap-12 lg:pb-14">
+        <h1
+          className="display-title text-[2.75rem] leading-none [overflow-wrap:anywhere] sm:text-[4.25rem] lg:text-[5.5rem]"
+          {...sharpSAttribute(title)}
+        >
+          {title}
+        </h1>
+        {(item.subtitle || buttons.length > 0) && (
+          <div className="max-w-xl lg:pb-2">
+            {item.subtitle && (
+              <p className="text-lg leading-8 text-foreground sm:text-xl">
+                {item.subtitle}
+              </p>
+            )}
+            {buttons.length > 0 && (
+              <div className="mt-6 flex flex-wrap gap-3">
+                {buttons.map((button) => (
                   <a
                     key={button.id ?? button.label}
                     href={button.href || "#"}
                     className={cn(
-                      "rounded-card px-5 py-3 text-sm font-semibold transition-colors",
+                      "inline-flex min-h-12 items-center rounded-card px-5 text-base font-bold transition-colors",
                       button.variant === "secondary"
-                        ? "border border-current text-foreground hover:bg-foreground/15"
+                        ? "border-2 border-current text-foreground hover:bg-foreground/15"
                         : "hero-primary-action bg-secondary text-secondary-foreground hover:bg-accent-hover",
                     )}
                   >
                     {button.label}
                   </a>
                 ))}
-            </div>
-          ) : null}
-        </div>
+              </div>
+            )}
+          </div>
+        )}
       </Container>
     </section>
   );

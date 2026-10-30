@@ -12,7 +12,7 @@ export const NotFoundPage = ({
 
   return (
     <Section containerClassName="max-w-3xl">
-      <h1 className="mb-6 text-4xl font-semibold tracking-tight">
+      <h1 className="display-title mb-6 text-[2.75rem] leading-none sm:text-[4rem]">
         Nicht gefunden
       </h1>
       <EmptyState message={message} />

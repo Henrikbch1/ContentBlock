@@ -30,7 +30,7 @@ export const TableViews = ({
         style={{ minWidth: `${Math.max(38, headers.length * 12)}rem` }}
       >
         <caption className="sr-only">{label}</caption>
-        <thead className="bg-primary text-primary-foreground">
+        <thead className="bg-rail text-rail-foreground">
           <tr>
             {headers.map((heading, index) => (
               <th

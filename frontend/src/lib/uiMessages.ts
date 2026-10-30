@@ -7,6 +7,12 @@ export const UI_LABELS = {
   imprint: "Impressum",
   privacy: "Datenschutz",
   defaultCopyright: "ContentBlock",
+  notice: "Hinweis",
+  news: "Nachricht",
+  event: "Termin",
+  document: "Dokument",
+  readNews: "Beitrag lesen",
+  viewEvent: "Termin ansehen",
 } as const;
 
 /** Zentrale Lade-/Fehler-/Leertexte, um Duplikate über Blocks/Pages zu vermeiden. */

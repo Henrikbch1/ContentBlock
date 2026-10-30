@@ -1,7 +1,4 @@
-import { ArrowUpRight, MapPin } from "lucide-react";
-
 import { getEventsForBlock } from "../../lib/queries";
-import { formatDate } from "../../lib/format";
 import { useAsyncResource } from "../../lib/hooks/useAsyncResource";
 import {
   EMPTY_MESSAGES,
@@ -9,10 +6,11 @@ import {
   LOADING_MESSAGES,
 } from "../../lib/uiMessages";
 import type { BlockEvents, BlockProps } from "../../lib/types";
-import { cardClassName } from "../common/cardClassName";
 import { EmptyState } from "../common/EmptyState";
+import { EventNotice } from "../common/EventNotice";
+import { noticeGridClassName } from "../common/noticeGrid";
 import { LoadingState } from "../common/LoadingState";
-import { RichText } from "../common/RichText";
+import { SectionTitle } from "../common/SectionTitle";
 import { Section } from "../layout/Section";
 
 export const EventsBlock = ({
@@ -28,48 +26,16 @@ export const EventsBlock = ({
 
   return (
     <Section background={background}>
-      {item.title && (
-        <h2 className="mb-6 text-3xl font-semibold tracking-tight">
-          {item.title}
-        </h2>
-      )}
+      {item.title && <SectionTitle>{item.title}</SectionTitle>}
       {isLoading && <LoadingState message={LOADING_MESSAGES.events} />}
       {!isLoading && hasError && <EmptyState message={ERROR_MESSAGES.events} />}
       {!isLoading && !hasError && eventList.length === 0 && (
         <EmptyState message={EMPTY_MESSAGES.events} />
       )}
       {!isLoading && !hasError && eventList.length > 0 && (
-        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        <div className={noticeGridClassName(eventList.length)}>
           {eventList.map((event) => (
-            <a
-              className={cardClassName(
-                "group flex min-h-64 flex-col p-6 transition-colors hover:border-primary",
-              )}
-              href={`/termine/${event.slug ?? event.id}`}
-              key={event.id}
-            >
-              <p className="text-sm font-medium text-link">
-                {formatDate(event.start_date)}
-              </p>
-              <h3 className="mt-2 text-xl font-semibold tracking-tight group-hover:text-primary">
-                {event.title ?? ""}
-              </h3>
-              {event.location && (
-                <p className="mt-3 flex items-start gap-2 text-sm text-muted-foreground">
-                  <MapPin aria-hidden="true" size={16} />
-                  {event.location}
-                </p>
-              )}
-              {event.description && (
-                <RichText
-                  content={event.description}
-                  className="mt-3 line-clamp-3 text-sm leading-6 text-muted-foreground [&_p]:m-0"
-                />
-              )}
-              <span className="mt-auto flex items-center gap-2 pt-6 text-sm font-semibold text-foreground">
-                Termin ansehen <ArrowUpRight aria-hidden="true" size={16} />
-              </span>
-            </a>
+            <EventNotice event={event} key={event.id} />
           ))}
         </div>
       )}

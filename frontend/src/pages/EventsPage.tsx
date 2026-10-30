@@ -1,8 +1,10 @@
-import { ArrowUpRight, CalendarDays, MapPin } from "lucide-react";
+import { MapPin } from "lucide-react";
 import { BackLink } from "../components/common/BackLink";
-import { cardClassName } from "../components/common/cardClassName";
 import { EmptyState } from "../components/common/EmptyState";
+import { EventNotice } from "../components/common/EventNotice";
+import { noticeGridClassName } from "../components/common/noticeGrid";
 import { LoadingState } from "../components/common/LoadingState";
+import { NoticeMeta } from "../components/common/NoticeMeta";
 import { PageHeader } from "../components/common/PageHeader";
 import { RichText } from "../components/common/RichText";
 import { Section } from "../components/layout/Section";
@@ -14,6 +16,7 @@ import {
   EMPTY_MESSAGES,
   ERROR_MESSAGES,
   LOADING_MESSAGES,
+  UI_LABELS,
 } from "../lib/uiMessages";
 import { NotFoundPage } from "./NotFoundPage";
 
@@ -30,11 +33,6 @@ const EventsOverview = (): React.JSX.Element => {
   return (
     <Section>
       <PageHeader
-        eyebrow={
-          <>
-            <CalendarDays aria-hidden="true" size={17} /> Veranstaltungen
-          </>
-        }
         title="Termine"
         intro="Kommende Termine und Veranstaltungen im Überblick."
       />
@@ -46,37 +44,9 @@ const EventsOverview = (): React.JSX.Element => {
         <EmptyState message={EMPTY_MESSAGES.eventsPage} />
       )}
       {!isLoading && !hasError && eventList.length > 0 && (
-        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        <div className={noticeGridClassName(eventList.length)}>
           {eventList.map((event) => (
-            <a
-              className={cardClassName(
-                "group flex min-h-56 flex-col p-6 transition-colors hover:border-primary",
-              )}
-              href={`/termine/${event.slug ?? event.id}`}
-              key={event.id}
-            >
-              <p className="text-sm font-medium text-primary">
-                {formatDateRange(event.start_date, event.end_date)}
-              </p>
-              <h2 className="mt-3 text-xl font-semibold tracking-tight group-hover:text-primary">
-                {event.title ?? EMPTY_MESSAGES.untitled}
-              </h2>
-              {event.location && (
-                <p className="mt-3 flex items-start gap-2 text-sm text-muted-foreground">
-                  <MapPin aria-hidden="true" size={16} />
-                  {event.location}
-                </p>
-              )}
-              {event.description && (
-                <RichText
-                  content={event.description}
-                  className="mt-3 line-clamp-3 text-sm leading-6 text-muted-foreground [&_p]:m-0"
-                />
-              )}
-              <span className="mt-auto flex items-center gap-2 pt-6 text-sm font-semibold text-foreground">
-                Details ansehen <ArrowUpRight aria-hidden="true" size={16} />
-              </span>
-            </a>
+            <EventNotice event={event} headingLevel="h2" key={event.id} />
           ))}
         </div>
       )}
@@ -104,16 +74,20 @@ const EventDetail = ({ slug }: { slug: string }): React.JSX.Element => {
     <Section containerClassName="max-w-3xl">
       <article>
         <BackLink href="/termine" label="Alle Termine" />
-        <p className="text-sm text-muted-foreground">
-          {formatDateRange(event.start_date, event.end_date)}
-        </p>
-        <h1 className="mt-3 text-4xl font-semibold tracking-tight">
+        <NoticeMeta
+          label={UI_LABELS.event}
+          value={formatDateRange(event.start_date, event.end_date) || null}
+        />
+        <h1 className="text-[2.25rem] leading-tight [overflow-wrap:anywhere] sm:text-[2.75rem]">
           {event.title ?? EMPTY_MESSAGES.untitled}
         </h1>
         {event.location && (
-          <p className="mt-4 text-lg text-muted-foreground">{event.location}</p>
+          <p className="mt-4 flex items-start gap-2 text-lg text-muted-foreground">
+            <MapPin aria-hidden="true" className="mt-1.5 shrink-0" size={20} />
+            <span className="[overflow-wrap:anywhere]">{event.location}</span>
+          </p>
         )}
-        <RichText content={event.description} className="mt-8" />
+        <RichText content={event.description} className="prose-lg mt-8" />
       </article>
     </Section>
   );

@@ -94,4 +94,18 @@ describe("TableBlock", () => {
     expect(screen.getByText("Keine Tabellendaten vorhanden.")).toBeVisible();
     expect(screen.queryByRole("searchbox")).not.toBeInTheDocument();
   });
+
+  it("skips completely empty data rows left by the table editor", () => {
+    render(
+      <TableBlock
+        item={{
+          id: 1,
+          title: "Beiträge",
+          data: [...data, { col_1: "", col_2: null }, { col_1: "  " }],
+        }}
+      />,
+    );
+
+    expect(screen.getByText("Zeilen 1–2 von 2")).toBeVisible();
+  });
 });

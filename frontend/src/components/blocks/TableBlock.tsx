@@ -1,6 +1,7 @@
 import { useEffect, useId, useState } from "react";
 
 import { Section } from "../layout/Section";
+import { SectionTitle } from "../common/SectionTitle";
 import { EMPTY_MESSAGES } from "../../lib/uiMessages";
 import { getTableCellText, getTableRows } from "../../lib/tableData";
 import type { TableRow } from "../../lib/tableData";
@@ -46,7 +47,9 @@ export const TableBlock = ({
   }, []);
 
   const [header, ...body] = getTableRows(item.data);
-  const rows = identifyRows(body);
+  const rows = identifyRows(body).filter((row) =>
+    row.values.some((value) => value.trim() !== ""),
+  );
   const search = query.trim().toLocaleLowerCase();
   const filtered = search
     ? rows.filter((row) =>
@@ -69,13 +72,11 @@ export const TableBlock = ({
 
   return (
     <Section background={background}>
-      {item.title && (
-        <h2 className="mb-6 text-3xl font-semibold tracking-tight [overflow-wrap:anywhere]">
-          {item.title}
-        </h2>
-      )}
+      {item.title && <SectionTitle>{item.title}</SectionTitle>}
       {!header ? (
-        <p className="text-base text-muted-foreground">{EMPTY_MESSAGES.table}</p>
+        <p className="text-base text-muted-foreground">
+          {EMPTY_MESSAGES.table}
+        </p>
       ) : (
         <div className="flex flex-col gap-5">
           {rows.length > 0 && (

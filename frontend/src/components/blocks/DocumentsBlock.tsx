@@ -1,17 +1,26 @@
 import { getAssetUrl } from "../../lib/directus";
-import { getAssetFilename } from "../../lib/directusRelations";
+import { getAssetFilename, getRelation } from "../../lib/directusRelations";
 import { getDocumentsForBlock } from "../../lib/queries";
 import { useAsyncResource } from "../../lib/hooks/useAsyncResource";
 import {
   EMPTY_MESSAGES,
   ERROR_MESSAGES,
   LOADING_MESSAGES,
+  UI_LABELS,
 } from "../../lib/uiMessages";
 import type { BlockDocuments, BlockProps } from "../../lib/types";
-import { cardClassName } from "../common/cardClassName";
+import { noticeClassName } from "../common/cardClassName";
+import { noticeGridClassName } from "../common/noticeGrid";
 import { EmptyState } from "../common/EmptyState";
 import { LoadingState } from "../common/LoadingState";
+import { NoticeMeta } from "../common/NoticeMeta";
+import { SectionTitle } from "../common/SectionTitle";
 import { Section } from "../layout/Section";
+
+const getFileType = (fileName: string | null): string | null => {
+  const extension = fileName?.match(/\.([a-z0-9]{1,5})$/i)?.[1];
+  return extension ? extension.toUpperCase() : null;
+};
 
 export const DocumentsBlock = ({
   item,
@@ -26,11 +35,7 @@ export const DocumentsBlock = ({
 
   return (
     <Section background={background}>
-      {item.title && (
-        <h2 className="mb-6 text-3xl font-semibold tracking-tight [overflow-wrap:anywhere]">
-          {item.title}
-        </h2>
-      )}
+      {item.title && <SectionTitle>{item.title}</SectionTitle>}
       {isLoading && <LoadingState message={LOADING_MESSAGES.documents} />}
       {!isLoading && hasError && (
         <EmptyState message={ERROR_MESSAGES.documents} />
@@ -39,7 +44,7 @@ export const DocumentsBlock = ({
         <EmptyState message={EMPTY_MESSAGES.documents} />
       )}
       {!isLoading && !hasError && documentList.length > 0 && (
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className={noticeGridClassName(documentList.length)}>
           {documentList.map((document) => {
             const fileUrl = getAssetUrl(document.file);
             const fileName = getAssetFilename(document.file);
@@ -47,15 +52,22 @@ export const DocumentsBlock = ({
               document.title?.trim() || fileName || EMPTY_MESSAGES.untitled;
             return (
               <article
-                className={cardClassName("min-w-0 p-6")}
+                className={noticeClassName("flex flex-col")}
                 key={document.id}
               >
-                <h3 className="text-xl font-semibold [overflow-wrap:anywhere]">
+                <NoticeMeta
+                  label={
+                    getRelation(document.category)?.name?.trim() ||
+                    UI_LABELS.document
+                  }
+                  value={getFileType(fileName)}
+                />
+                <h3 className="text-[1.375rem] leading-tight [overflow-wrap:anywhere]">
                   {title}
                 </h3>
                 {fileUrl ? (
                   <a
-                    className="mt-4 inline-flex min-h-11 items-center text-base text-link underline underline-offset-4"
+                    className="mt-auto inline-flex min-h-11 items-center pt-5 text-base font-bold text-link underline decoration-2 underline-offset-4 hover:decoration-4"
                     href={fileUrl}
                     target="_blank"
                     rel="noreferrer"
@@ -67,7 +79,7 @@ export const DocumentsBlock = ({
                   </a>
                 ) : (
                   <p
-                    className="mt-4 text-base text-muted-foreground"
+                    className="mt-auto pt-5 text-base text-muted-foreground"
                     role="status"
                   >
                     {EMPTY_MESSAGES.documentFile}

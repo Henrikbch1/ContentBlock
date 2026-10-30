@@ -1,7 +1,4 @@
-import { ArrowUpRight } from "lucide-react";
-
 import { getNewsForBlock } from "../../lib/queries";
-import { formatDate } from "../../lib/format";
 import { useAsyncResource } from "../../lib/hooks/useAsyncResource";
 import {
   EMPTY_MESSAGES,
@@ -9,10 +6,11 @@ import {
   LOADING_MESSAGES,
 } from "../../lib/uiMessages";
 import type { BlockNews, BlockProps } from "../../lib/types";
-import { cardClassName } from "../common/cardClassName";
-import { DirectusImage } from "../common/DirectusImage";
 import { EmptyState } from "../common/EmptyState";
 import { LoadingState } from "../common/LoadingState";
+import { NewsNotice } from "../common/NewsNotice";
+import { noticeGridClassName } from "../common/noticeGrid";
+import { SectionTitle } from "../common/SectionTitle";
 import { Section } from "../layout/Section";
 
 export const NewsBlock = ({
@@ -28,52 +26,16 @@ export const NewsBlock = ({
 
   return (
     <Section background={background}>
-      {item.title && (
-        <h2 className="mb-6 text-3xl font-semibold tracking-tight">
-          {item.title}
-        </h2>
-      )}
+      {item.title && <SectionTitle>{item.title}</SectionTitle>}
       {isLoading && <LoadingState message={LOADING_MESSAGES.news} />}
       {!isLoading && hasError && <EmptyState message={ERROR_MESSAGES.news} />}
       {!isLoading && !hasError && newsList.length === 0 && (
         <EmptyState message={EMPTY_MESSAGES.news} />
       )}
       {!isLoading && !hasError && newsList.length > 0 && (
-        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        <div className={noticeGridClassName(newsList.length)}>
           {newsList.map((article) => (
-            <a
-              className={cardClassName(
-                "group flex min-h-64 flex-col overflow-hidden transition-colors hover:border-primary",
-              )}
-              href={`/news/${article.slug ?? article.id}`}
-              key={article.id}
-            >
-              {article.cover_image && (
-                <DirectusImage
-                  asset={article.cover_image}
-                  alt={article.title ?? ""}
-                  className="aspect-16/10 w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-              )}
-              <div className="flex flex-1 flex-col p-6">
-                {article.published_date && (
-                  <p className="text-sm font-medium text-link">
-                    {formatDate(article.published_date)}
-                  </p>
-                )}
-                <h3 className="mt-2 text-xl font-semibold tracking-tight group-hover:text-primary">
-                  {article.title ?? ""}
-                </h3>
-                {article.teaser && (
-                  <p className="mt-3 line-clamp-3 text-sm leading-6 text-muted-foreground">
-                    {article.teaser}
-                  </p>
-                )}
-                <span className="mt-auto flex items-center gap-2 pt-6 text-sm font-semibold text-foreground">
-                  Beitrag öffnen <ArrowUpRight aria-hidden="true" size={16} />
-                </span>
-              </div>
-            </a>
+            <NewsNotice article={article} key={article.id} />
           ))}
         </div>
       )}

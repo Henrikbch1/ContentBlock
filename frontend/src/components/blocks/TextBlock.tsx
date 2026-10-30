@@ -1,4 +1,5 @@
 import { RichText } from "../common/RichText";
+import { SectionTitle } from "../common/SectionTitle";
 import { Section } from "../layout/Section";
 import type { BlockProps, BlockText } from "../../lib/types";
 
@@ -6,12 +7,10 @@ export const TextBlock = ({
   item,
   background,
 }: BlockProps<BlockText>): React.JSX.Element => (
-  <Section background={background} containerClassName="max-w-3xl">
+  <Section background={background} containerClassName="max-w-[50rem]">
     {item.headline && (
-      <h2 className="mb-6 text-3xl font-semibold tracking-tight">
-        {item.headline}
-      </h2>
+      <SectionTitle className="mb-6">{item.headline}</SectionTitle>
     )}
-    <RichText content={item.content} />
+    <RichText className="prose-lg max-w-[68ch]" content={item.content} />
   </Section>
 );

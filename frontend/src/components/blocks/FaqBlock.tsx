@@ -1,7 +1,8 @@
-import { CircleHelp, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import type { BlockFaq, BlockProps } from "../../lib/types";
-import { cardClassName } from "../common/cardClassName";
+import { noticeClassName } from "../common/cardClassName";
 import { RichText } from "../common/RichText";
+import { SectionTitle } from "../common/SectionTitle";
 import { Section } from "../layout/Section";
 import { EMPTY_MESSAGES } from "../../lib/uiMessages";
 
@@ -9,41 +10,38 @@ export const FaqBlock = ({
   item,
   background,
 }: BlockProps<BlockFaq>): React.JSX.Element => (
-  <Section background={background} containerClassName="max-w-3xl">
-    {item.title && (
-      <div className="mb-8 flex items-center gap-3">
-        <CircleHelp aria-hidden="true" className="text-link" size={24} />
-        <h2 className="text-3xl font-semibold tracking-tight">{item.title}</h2>
-      </div>
-    )}
+  <Section background={background} containerClassName="max-w-[50rem]">
+    {item.title && <SectionTitle>{item.title}</SectionTitle>}
     {item.faqs?.length ? (
-      <div className={cardClassName("overflow-hidden")}>
+      <div className={noticeClassName("px-0 pb-2 pt-8")}>
         {[...item.faqs]
           .sort((a, b) => (a.sort ?? 0) - (b.sort ?? 0))
           .map((faq, index) => (
             <details
-              className="group border-b border-border last:border-b-0"
+              className="group border-t border-border"
               key={faq.id ?? index}
             >
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-6 px-5 py-5 text-left text-lg font-medium marker:hidden transition-colors hover:bg-muted/35 [&::-webkit-details-marker]:hidden">
-                <span>{faq.question || "Frage"}</span>
-                <span className="flex size-9 shrink-0 items-center justify-center rounded-full border border-border text-primary transition-colors group-open:border-primary group-open:bg-primary group-open:text-primary-foreground">
+              <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-6 px-6 py-4 text-left text-lg font-bold marker:hidden transition-colors hover:bg-muted [&::-webkit-details-marker]:hidden">
+                <span className="[overflow-wrap:anywhere]">
+                  {faq.question || "Frage"}
+                </span>
+                <span className="flex size-10 shrink-0 items-center justify-center rounded-full border-2 border-current text-link transition-colors group-open:bg-primary group-open:text-primary-foreground">
                   <Plus
                     aria-hidden="true"
                     className="transition-transform duration-200 group-open:rotate-45"
-                    size={18}
+                    size={20}
                   />
                 </span>
               </summary>
               <RichText
                 content={faq.answer}
-                className="px-5 pb-6 pr-16 text-muted-foreground"
+                className="max-w-[68ch] px-6 pb-6 text-muted-foreground"
               />
             </details>
           ))}
       </div>
     ) : (
-      <p className="text-sm text-muted-foreground">{EMPTY_MESSAGES.faq}</p>
+      <p className="text-base text-muted-foreground">{EMPTY_MESSAGES.faq}</p>
     )}
   </Section>
 );

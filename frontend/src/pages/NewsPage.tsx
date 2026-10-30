@@ -1,9 +1,10 @@
-import { ArrowUpRight, Newspaper, Tag } from "lucide-react";
 import { BackLink } from "../components/common/BackLink";
-import { cardClassName } from "../components/common/cardClassName";
 import { DirectusImage } from "../components/common/DirectusImage";
 import { EmptyState } from "../components/common/EmptyState";
 import { LoadingState } from "../components/common/LoadingState";
+import { NewsNotice } from "../components/common/NewsNotice";
+import { noticeGridClassName } from "../components/common/noticeGrid";
+import { NoticeMeta } from "../components/common/NoticeMeta";
 import { PageHeader } from "../components/common/PageHeader";
 import { RichText } from "../components/common/RichText";
 import { Section } from "../components/layout/Section";
@@ -14,6 +15,7 @@ import {
   EMPTY_MESSAGES,
   ERROR_MESSAGES,
   LOADING_MESSAGES,
+  UI_LABELS,
 } from "../lib/uiMessages";
 import { getNews, getNewsBySlug } from "../lib/queries";
 import type { News } from "../lib/types";
@@ -37,11 +39,6 @@ const NewsOverview = (): React.JSX.Element => {
   return (
     <Section>
       <PageHeader
-        eyebrow={
-          <>
-            <Newspaper aria-hidden="true" size={17} /> Nachrichten
-          </>
-        }
         title="Aktuelles"
         intro="Aktuelle Meldungen und Informationen im Überblick."
       />
@@ -51,45 +48,9 @@ const NewsOverview = (): React.JSX.Element => {
         <EmptyState message={EMPTY_MESSAGES.news} />
       )}
       {!isLoading && !hasError && newsList.length > 0 && (
-        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        <div className={noticeGridClassName(newsList.length)}>
           {newsList.map((article) => (
-            <a
-              className={cardClassName(
-                "group flex min-h-80 flex-col overflow-hidden transition-colors hover:border-primary",
-              )}
-              href={`/news/${article.slug ?? article.id}`}
-              key={article.id}
-            >
-              {article.cover_image && (
-                <DirectusImage
-                  asset={article.cover_image}
-                  alt={article.title ?? ""}
-                  className="aspect-16/10 w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-              )}
-              <div className="flex flex-1 flex-col p-6">
-                <div className="flex items-center justify-between gap-3 text-sm text-muted-foreground">
-                  <p>{formatDate(article.published_date)}</p>
-                  {getCategoryName(article) && (
-                    <p className="flex items-center gap-1">
-                      <Tag aria-hidden="true" size={14} />
-                      {getCategoryName(article)}
-                    </p>
-                  )}
-                </div>
-                <h2 className="mt-3 text-xl font-semibold tracking-tight group-hover:text-primary">
-                  {article.title ?? EMPTY_MESSAGES.untitled}
-                </h2>
-                {article.teaser && (
-                  <p className="mt-3 line-clamp-3 text-sm leading-6 text-muted-foreground">
-                    {article.teaser}
-                  </p>
-                )}
-                <span className="mt-auto flex items-center gap-2 pt-6 text-sm font-semibold text-foreground">
-                  Beitrag öffnen <ArrowUpRight aria-hidden="true" size={16} />
-                </span>
-              </div>
-            </a>
+            <NewsNotice article={article} headingLevel="h2" key={article.id} />
           ))}
         </div>
       )}
@@ -126,17 +87,19 @@ const NewsDetail = ({ slug }: { slug: string }): React.JSX.Element => {
             className="mb-8 aspect-video w-full rounded-card object-cover"
           />
         )}
-        <p className="text-sm text-muted-foreground">
-          {formatDate(article.published_date)}
-          {getCategoryName(article) ? ` | ${getCategoryName(article)}` : ""}
-        </p>
-        <h1 className="mt-3 text-4xl font-semibold tracking-tight">
+        <NoticeMeta
+          label={getCategoryName(article) || UI_LABELS.news}
+          value={formatDate(article.published_date) || null}
+        />
+        <h1 className="text-[2.25rem] leading-tight [overflow-wrap:anywhere] sm:text-[2.75rem]">
           {article.title ?? EMPTY_MESSAGES.untitled}
         </h1>
         {article.teaser && (
-          <p className="mt-6 text-lg text-muted-foreground">{article.teaser}</p>
+          <p className="mt-6 text-xl leading-8 text-muted-foreground">
+            {article.teaser}
+          </p>
         )}
-        <RichText content={article.body} className="mt-8" />
+        <RichText content={article.body} className="prose-lg mt-8" />
       </article>
     </Section>
   );

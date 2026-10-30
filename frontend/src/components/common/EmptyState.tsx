@@ -9,7 +9,7 @@ export const EmptyState = ({
 }: EmptyStateProps): React.JSX.Element => (
   <div
     aria-live="polite"
-    className="rounded-card border border-dashed border-border bg-muted/40 px-6 py-8 text-center text-sm text-muted-foreground"
+    className="rounded-card border border-dashed border-border bg-muted/40 px-6 py-8 text-center text-base text-muted-foreground"
     role="status"
   >
     {message}

@@ -1,4 +1,4 @@
-import { BriefcaseBusiness, Mail, Phone } from "lucide-react";
+import { Mail, Phone } from "lucide-react";
 
 import { getContactsForBlock } from "../../lib/queries";
 import { useAsyncResource } from "../../lib/hooks/useAsyncResource";
@@ -6,12 +6,16 @@ import {
   EMPTY_MESSAGES,
   ERROR_MESSAGES,
   LOADING_MESSAGES,
+  UI_LABELS,
 } from "../../lib/uiMessages";
 import type { BlockContacts, BlockProps, Person } from "../../lib/types";
-import { cardClassName } from "../common/cardClassName";
+import { noticeClassName } from "../common/cardClassName";
+import { noticeGridClassName } from "../common/noticeGrid";
 import { EmptyState } from "../common/EmptyState";
 import { DirectusImage } from "../common/DirectusImage";
 import { LoadingState } from "../common/LoadingState";
+import { NoticeMeta } from "../common/NoticeMeta";
+import { SectionTitle } from "../common/SectionTitle";
 import { Section } from "../layout/Section";
 import { ContactForm } from "./ContactForm";
 
@@ -45,11 +49,7 @@ export const ContactsBlock = ({
 
   return (
     <Section background={background}>
-      {item.title && (
-        <h2 className="mb-6 text-3xl font-semibold tracking-tight">
-          {item.title}
-        </h2>
-      )}
+      {item.title && <SectionTitle>{item.title}</SectionTitle>}
       {isLoading && <LoadingState message={LOADING_MESSAGES.contacts} />}
       {!isLoading && hasError && (
         <EmptyState message={ERROR_MESSAGES.contacts} />
@@ -81,63 +81,63 @@ export const ContactsBlock = ({
           <div
             className={
               item.layout === "list"
-                ? "flex flex-col gap-3"
-                : "grid gap-5 md:grid-cols-2 lg:grid-cols-3"
+                ? "flex flex-col gap-6"
+                : noticeGridClassName(contactList.length)
             }
           >
             {contactList.map((contact) => {
               const name = getContactName(contact);
               const roleName = getRoleName(contact);
               return (
-                <article
-                  className={cardClassName(
-                    item.layout === "list"
-                      ? "flex gap-4 p-5 sm:items-center"
-                      : "p-6",
-                  )}
-                  key={contact.id}
-                >
-                  {item.show_photo &&
-                    (contact.photo ? (
-                      <DirectusImage
-                        asset={contact.photo}
-                        alt={name}
-                        className="size-16 shrink-0 rounded-full object-cover"
-                      />
-                    ) : (
-                      <div
-                        aria-hidden="true"
-                        className="flex size-16 shrink-0 items-center justify-center rounded-full bg-primary text-lg font-semibold text-primary-foreground"
-                      >
-                        {getInitials(name)}
-                      </div>
-                    ))}
-                  <div className="min-w-0">
-                    <h3 className="text-xl font-semibold">{name}</h3>
-                    {roleName && (
-                      <p className="mt-1 flex items-center gap-2 text-sm text-muted-foreground">
-                        <BriefcaseBusiness aria-hidden="true" size={15} />
-                        {roleName}
-                      </p>
-                    )}
-                    {item.show_email && contact.email && (
-                      <a
-                        className="mt-3 flex items-center gap-2 text-sm text-link underline underline-offset-4"
-                        href={`mailto:${contact.email}`}
-                      >
-                        <Mail aria-hidden="true" size={15} />
-                        {contact.email}
-                      </a>
-                    )}
-                    {item.show_phone && contact.phone && (
-                      <a
-                        className="mt-2 flex items-center gap-2 text-sm text-link underline underline-offset-4"
-                        href={`tel:${contact.phone}`}
-                      >
-                        <Phone aria-hidden="true" size={15} />
-                        {contact.phone}
-                      </a>
-                    )}
+                <article className={noticeClassName()} key={contact.id}>
+                  <NoticeMeta label={roleName || UI_LABELS.footerContact} />
+                  <div className="flex gap-4 sm:items-center">
+                    {item.show_photo &&
+                      (contact.photo ? (
+                        <DirectusImage
+                          asset={contact.photo}
+                          alt={name}
+                          className="size-16 shrink-0 rounded-full object-cover"
+                        />
+                      ) : (
+                        <div
+                          aria-hidden="true"
+                          className="flex size-16 shrink-0 items-center justify-center rounded-full bg-primary text-lg font-semibold text-primary-foreground"
+                        >
+                          {getInitials(name)}
+                        </div>
+                      ))}
+                    <div className="min-w-0">
+                      <h3 className="text-[1.375rem] leading-tight [overflow-wrap:anywhere]">
+                        {name}
+                      </h3>
+                      {item.show_email && contact.email && (
+                        <a
+                          className="mt-2 flex min-h-11 items-center gap-2 text-base text-link underline underline-offset-4 [overflow-wrap:anywhere]"
+                          href={`mailto:${contact.email}`}
+                        >
+                          <Mail
+                            aria-hidden="true"
+                            className="shrink-0"
+                            size={18}
+                          />
+                          {contact.email}
+                        </a>
+                      )}
+                      {item.show_phone && contact.phone && (
+                        <a
+                          className="flex min-h-11 items-center gap-2 text-base text-link underline underline-offset-4"
+                          href={`tel:${contact.phone}`}
+                        >
+                          <Phone
+                            aria-hidden="true"
+                            className="shrink-0"
+                            size={18}
+                          />
+                          {contact.phone}
+                        </a>
+                      )}
+                    </div>
                   </div>
                 </article>
               );
