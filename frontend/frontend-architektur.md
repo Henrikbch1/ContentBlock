@@ -139,7 +139,8 @@ Defaults in `:root` und mappt sie in `@theme inline` auf Tailwind-Tokens
 (`bg-primary`, `bg-surface`, `font-heading`, `rounded-card`, `shadow-card`, `py-section`,
 `max-w-site`). Die Mapping-Logik liegt rein und testbar in `lib/themeVariables.ts`.
 
-Im standardmäßigen Legacy-Modus gelten die bisherigen Farbzuordnungen:
+Im optionalen Legacy-Modus (`VITE_THEME_MODE=legacy`) gelten die bisherigen
+Farbzuordnungen:
 
 | Directus-Feld      | CSS-Variable        | Werte                                      |
 | ------------------ | ------------------- | ------------------------------------------ |
@@ -158,45 +159,58 @@ Im standardmäßigen Legacy-Modus gelten die bisherigen Farbzuordnungen:
 
 Ungültige oder fehlende Legacy-Werte fallen auf die Defaults in
 [index.css](src/index.css) zurück. Die Syntaxprüfung gewährleistet keinen
-Kontrast für frei kombinierte CMS-Farben. Die Schriften DM Sans und Fraunces
-liegen als woff2 in `public/fonts` (Lizenzen daneben) und werden per `@font-face`
-geladen; es gibt keine Anfragen an Google Fonts.
+Kontrast für frei kombinierte CMS-Farben. Alle Schriften liegen als woff2 in
+`public/fonts` (OFL-Lizenzen daneben) und werden per `@font-face` geladen; es gibt
+keine Anfragen an Google Fonts.
 
-### Neutraler Modus
+### Neutraler Modus (Standard): Vereinsschaukasten
 
-`VITE_THEME_MODE=neutral` wird vor dem Start beziehungsweise Produktionsbuild
-gesetzt. Ohne diese Einstellung oder mit `VITE_THEME_MODE=legacy` bleibt das
-bisherige Theme unverändert. Eine unbekannte Einstellung erzeugt eine
-Konsolenwarnung und verwendet den Legacy-Modus.
+Ohne `VITE_THEME_MODE` oder mit `VITE_THEME_MODE=neutral` gilt der neutrale
+Modus. `VITE_THEME_MODE=legacy` stellt das bisherige Theme wieder her. Eine
+unbekannte Einstellung erzeugt eine Konsolenwarnung und verwendet den neutralen
+Modus. Die Gestaltung folgt dem Bild eines Vereinsschaukastens:
+
+| Element         | Umsetzung                                                                                                         |
+| --------------- | ----------------------------------------------------------------------------------------------------------------- |
+| Rahmenleiste    | [Header.tsx](src/components/layout/Header.tsx): Logo, Name und Suche oben, Navigation einzeilig darunter; ab `lg` angeheftet |
+| Aushangwand     | Seitenhintergrund `bg-background`, Aushänge auf `bg-paper`                                                        |
+| Aushang         | `noticeClassName` in [cardClassName.ts](src/components/common/cardClassName.ts): Papier mit Nadel (`--cb-pin`)     |
+| Aushang-Kopf    | [NoticeMeta.tsx](src/components/common/NoticeMeta.tsx): Kategorie links, Datum oder Dateityp rechts               |
+| Aktiver Eintrag | Nadel plus Fettdruck (`.nav-pin`), in der Leiste Unterkante in `--cb-rail-accent`                                 |
+| Schriften       | Archivo (Überschriften, schmal) und Atkinson Hyperlegible Next (Lesetext); CMS-Schriftfelder wirken nur im Legacy-Modus |
+| Hinweisleiste   | [TickerBlock.tsx](src/components/blocks/TickerBlock.tsx) zeigt Meldungen statisch statt als Laufschrift           |
+
+Große Anzeigetitel stehen in Versalien, außer wenn sie ein „ß“ enthalten, weil
+die Umwandlung in „SS“ die Bedeutung ändern kann. Nummerierte Listen im Rich-Text
+werden zu einer Schrittspalte. Raster mit zwei oder vier Aushängen werden
+zweispaltig gesetzt, damit keine Lücken entstehen.
 
 Im neutralen Modus liest [neutralTheme.ts](src/lib/neutralTheme.ts) nur
 `theme.primary_color` und optional `theme.accent_color`. Beide Werte müssen
 deckende Hex-Farben wie `#005f62` oder `#fff` sein. Ohne zweiten Akzent wird
 der erste wiederverwendet. Ungültige Eingaben erzeugen eine Konsolenwarnung und
 verwenden den Standard beziehungsweise den ersten Akzent. Die bisherigen
-Felder `secondary_color`, `background_color`, `surface_color` und `text_color`
-sowie die einzelnen Ticker-Farben werden in diesem Modus nicht angewendet.
-Schrift-, Radius-, Abstands-, Container- und Schatten-Presets bleiben erhalten.
+Felder `secondary_color`, `background_color`, `surface_color`, `text_color`,
+`font_heading` und `font_body` sowie die einzelnen Ticker-Farben werden in
+diesem Modus nicht angewendet. Radius-, Abstands-, Container- und
+Schatten-Presets bleiben erhalten.
 
 Die feste neutrale Basis folgt über `prefers-color-scheme` dem hellen oder
 dunklen Systemmodus. Ein manueller Umschalter ist nicht implementiert. Die
-Primärfarbe wird für einen Kontrast von mindestens 7:1 zur neutralen Fläche
-angepasst und auf höchstens 10:1 begrenzt. Weitere Abstufungen sowie passende
-helle beziehungsweise dunkle Vordergrundfarben werden daraus abgeleitet.
-Bild-Heroes erhalten einen dunklen Filter und helle Schrift. Die getesteten
-Farbpaare und Grenzfälle stehen in
+Primärfarbe wird für einen Kontrast von mindestens 7:1 zu Fläche und Papier
+angepasst und auf höchstens 10:1 begrenzt. Die Nadel (zweiter Akzent) erhält
+mindestens 3:1 zum Papier, die Markierung in der Rahmenleiste mindestens 3:1
+zur Leiste. Bild-Heroes erhalten einen Verlauf, der mindestens 45 % abdunkelt.
+Die getesteten Farbpaare und Grenzfälle stehen in
 [neutralTheme.test.ts](src/lib/neutralTheme.test.ts); sie ersetzen keinen
 vollständigen WCAG-Audit der Website.
 
-Beispiel für einen lokalen Build im neutralen Modus aus `frontend`:
+Zurück auf das bisherige Aussehen aus `frontend`:
 
 ```powershell
-$env:VITE_THEME_MODE = "neutral"
+$env:VITE_THEME_MODE = "legacy"
 npm run build
 ```
-
-Zurück auf das bisherige Verhalten: `VITE_THEME_MODE` entfernen oder auf
-`legacy` setzen und das Frontend neu bauen.
 
 `Section` hat die Prop `background` (`default`, `surface`, `primary`), die der
 `BlockRenderer` aus dem Directus-Feld `background` jedes Blocks durchreicht. Dunkle

@@ -17,12 +17,13 @@
 | 5 BlockRenderer und 11 Blöcke   | fertig  | `components/blocks/`                                                                            |
 | 6 Datenlogik dynamischer Blöcke | fertig  | `get{News,Events,Documents,Contacts}ForBlock`, clientseitig über `useAsyncResource`             |
 | 7 Routing und Detailseiten      | fertig  | Pfad-Auswertung in `App.tsx` (CMS-Seiten, News, Termine); kein Router-Paket                     |
-| 8 Feinschliff, A11y, QA         | laufend | Skip-Link, Fokus-Stile, `prefers-reduced-motion`, Ticker-Pause; responsive/Tastatur manuell     |
+| 8 Feinschliff, A11y, QA         | laufend | Skip-Link, Fokus-Stile, `prefers-reduced-motion`, statische Hinweisleiste; responsive/Tastatur geprüft |
 
 Abweichungen vom Ursprungsplan: kein Next.js (daher kein SSR, keine statische
 Generierung, kein `getPageSlugs`), `npm` statt `pnpm`, Umgebungsvariablen mit
-`VITE_`-Präfix. Das bisherige Theme bleibt Standard. Der neutrale Hell-/Dunkelmodus
-ist über `VITE_THEME_MODE=neutral` optional aktivierbar.
+`VITE_`-Präfix. Standard ist die neutrale Gestaltung „Vereinsschaukasten“ mit
+Hell-/Dunkelmodus; das bisherige Theme ist über `VITE_THEME_MODE=legacy`
+weiterhin verfügbar.
 
 ## Qualitätsgate
 

@@ -1,0 +1,493 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-30T21:28:46.114Z",
+  "title": "Design System: ContentBlock",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "Vereinspetrol",
+        "canonical": "oklch(38.2% 0.065 199.3)",
+        "tonalRamp": [
+          "oklch(15.0% 0.013 199.3)",
+          "oklch(26.4% 0.043 199.3)",
+          "oklch(37.9% 0.065 199.3)",
+          "oklch(49.3% 0.065 199.3)",
+          "oklch(60.7% 0.065 199.3)",
+          "oklch(72.1% 0.065 199.3)",
+          "oklch(83.6% 0.038 199.3)",
+          "oklch(95.0% 0.010 199.3)"
+        ]
+      },
+      "primary-hover": {
+        "role": "primary",
+        "displayName": "Vereinspetrol Hover",
+        "canonical": "oklch(35.1% 0.060 198.1)",
+        "tonalRamp": [
+          "oklch(15.0% 0.012 198.1)",
+          "oklch(26.4% 0.039 198.1)",
+          "oklch(37.9% 0.060 198.1)",
+          "oklch(49.3% 0.060 198.1)",
+          "oklch(60.7% 0.060 198.1)",
+          "oklch(72.1% 0.060 198.1)",
+          "oklch(83.6% 0.035 198.1)",
+          "oklch(95.0% 0.009 198.1)"
+        ]
+      },
+      "primary-dark": {
+        "role": "primary",
+        "displayName": "Vereinspetrol (dunkel)",
+        "canonical": "oklch(75.9% 0.045 198.1)",
+        "tonalRamp": [
+          "oklch(15.0% 0.009 198.1)",
+          "oklch(26.4% 0.030 198.1)",
+          "oklch(37.9% 0.045 198.1)",
+          "oklch(49.3% 0.045 198.1)",
+          "oklch(60.7% 0.045 198.1)",
+          "oklch(72.1% 0.045 198.1)",
+          "oklch(83.6% 0.026 198.1)",
+          "oklch(95.0% 0.007 198.1)"
+        ]
+      },
+      "rail-accent": {
+        "role": "primary",
+        "displayName": "Leistenmarke",
+        "canonical": "oklch(51.2% 0.077 197.4)",
+        "tonalRamp": [
+          "oklch(15.0% 0.015 197.4)",
+          "oklch(26.4% 0.051 197.4)",
+          "oklch(37.9% 0.077 197.4)",
+          "oklch(49.3% 0.077 197.4)",
+          "oklch(60.7% 0.077 197.4)",
+          "oklch(72.1% 0.077 197.4)",
+          "oklch(83.6% 0.044 197.4)",
+          "oklch(95.0% 0.012 197.4)"
+        ]
+      },
+      "pin": {
+        "role": "secondary",
+        "displayName": "Nadelfarbe",
+        "canonical": "oklch(44.1% 0.075 198.6)",
+        "tonalRamp": [
+          "oklch(15.0% 0.015 198.6)",
+          "oklch(26.4% 0.049 198.6)",
+          "oklch(37.9% 0.075 198.6)",
+          "oklch(49.3% 0.075 198.6)",
+          "oklch(60.7% 0.075 198.6)",
+          "oklch(72.1% 0.075 198.6)",
+          "oklch(83.6% 0.043 198.6)",
+          "oklch(95.0% 0.011 198.6)"
+        ]
+      },
+      "pin-dark": {
+        "role": "secondary",
+        "displayName": "Nadelfarbe (dunkel)",
+        "canonical": "oklch(54.0% 0.076 197.5)",
+        "tonalRamp": [
+          "oklch(15.0% 0.015 197.5)",
+          "oklch(26.4% 0.050 197.5)",
+          "oklch(37.9% 0.076 197.5)",
+          "oklch(49.3% 0.076 197.5)",
+          "oklch(60.7% 0.076 197.5)",
+          "oklch(72.1% 0.076 197.5)",
+          "oklch(83.6% 0.044 197.5)",
+          "oklch(95.0% 0.011 197.5)"
+        ]
+      },
+      "secondary": {
+        "role": "secondary",
+        "displayName": "Akzenttönung",
+        "canonical": "oklch(93.4% 0.013 196.9)",
+        "tonalRamp": [
+          "oklch(15.0% 0.003 196.9)",
+          "oklch(26.4% 0.009 196.9)",
+          "oklch(37.9% 0.013 196.9)",
+          "oklch(49.3% 0.013 196.9)",
+          "oklch(60.7% 0.013 196.9)",
+          "oklch(72.1% 0.013 196.9)",
+          "oklch(83.6% 0.008 196.9)",
+          "oklch(95.0% 0.002 196.9)"
+        ]
+      },
+      "accent-hover": {
+        "role": "secondary",
+        "displayName": "Akzenttönung kräftig",
+        "canonical": "oklch(86.8% 0.025 196.7)",
+        "tonalRamp": [
+          "oklch(15.0% 0.005 196.7)",
+          "oklch(26.4% 0.016 196.7)",
+          "oklch(37.9% 0.025 196.7)",
+          "oklch(49.3% 0.025 196.7)",
+          "oklch(60.7% 0.025 196.7)",
+          "oklch(72.1% 0.025 196.7)",
+          "oklch(83.6% 0.014 196.7)",
+          "oklch(95.0% 0.004 196.7)"
+        ]
+      },
+      "board": {
+        "role": "neutral",
+        "displayName": "Aushangwand",
+        "canonical": "oklch(93.1% 0.005 95.1)",
+        "tonalRamp": [
+          "oklch(15.0% 0.001 95.1)",
+          "oklch(26.4% 0.003 95.1)",
+          "oklch(37.9% 0.005 95.1)",
+          "oklch(49.3% 0.005 95.1)",
+          "oklch(60.7% 0.005 95.1)",
+          "oklch(72.1% 0.005 95.1)",
+          "oklch(83.6% 0.003 95.1)",
+          "oklch(95.0% 0.001 95.1)"
+        ]
+      },
+      "board-dark": {
+        "role": "neutral",
+        "displayName": "Aushangwand (dunkel)",
+        "canonical": "oklch(20.4% 0.002 197.0)",
+        "tonalRamp": [
+          "oklch(15.0% 0.000 197)",
+          "oklch(26.4% 0.001 197)",
+          "oklch(37.9% 0.002 197)",
+          "oklch(49.3% 0.002 197)",
+          "oklch(60.7% 0.002 197)",
+          "oklch(72.1% 0.002 197)",
+          "oklch(83.6% 0.001 197)",
+          "oklch(95.0% 0.000 197)"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Wandfeld",
+        "canonical": "oklch(89.4% 0.007 97.4)",
+        "tonalRamp": [
+          "oklch(15.0% 0.001 97.4)",
+          "oklch(26.4% 0.005 97.4)",
+          "oklch(37.9% 0.007 97.4)",
+          "oklch(49.3% 0.007 97.4)",
+          "oklch(60.7% 0.007 97.4)",
+          "oklch(72.1% 0.007 97.4)",
+          "oklch(83.6% 0.004 97.4)",
+          "oklch(95.0% 0.001 97.4)"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Aushangpapier",
+        "canonical": "oklch(98.8% 0.004 91.4)",
+        "tonalRamp": [
+          "oklch(15.0% 0.001 91.4)",
+          "oklch(26.4% 0.003 91.4)",
+          "oklch(37.9% 0.004 91.4)",
+          "oklch(49.3% 0.004 91.4)",
+          "oklch(60.7% 0.004 91.4)",
+          "oklch(72.1% 0.004 91.4)",
+          "oklch(83.6% 0.002 91.4)",
+          "oklch(95.0% 0.001 91.4)"
+        ]
+      },
+      "paper-dark": {
+        "role": "neutral",
+        "displayName": "Aushangpapier (dunkel)",
+        "canonical": "oklch(27.5% 0.003 197.0)",
+        "tonalRamp": [
+          "oklch(15.0% 0.001 197)",
+          "oklch(26.4% 0.002 197)",
+          "oklch(37.9% 0.003 197)",
+          "oklch(49.3% 0.003 197)",
+          "oklch(60.7% 0.003 197)",
+          "oklch(72.1% 0.003 197)",
+          "oklch(83.6% 0.002 197)",
+          "oklch(95.0% 0.000 197)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Druckschwarz",
+        "canonical": "oklch(21.5% 0.004 164.7)",
+        "tonalRamp": [
+          "oklch(15.0% 0.001 164.7)",
+          "oklch(26.4% 0.003 164.7)",
+          "oklch(37.9% 0.004 164.7)",
+          "oklch(49.3% 0.004 164.7)",
+          "oklch(60.7% 0.004 164.7)",
+          "oklch(72.1% 0.004 164.7)",
+          "oklch(83.6% 0.002 164.7)",
+          "oklch(95.0% 0.001 164.7)"
+        ]
+      },
+      "muted-ink": {
+        "role": "neutral",
+        "displayName": "Bleistiftgrau",
+        "canonical": "oklch(44.1% 0.007 170.2)",
+        "tonalRamp": [
+          "oklch(15.0% 0.001 170.2)",
+          "oklch(26.4% 0.005 170.2)",
+          "oklch(37.9% 0.007 170.2)",
+          "oklch(49.3% 0.007 170.2)",
+          "oklch(60.7% 0.007 170.2)",
+          "oklch(72.1% 0.007 170.2)",
+          "oklch(83.6% 0.004 170.2)",
+          "oklch(95.0% 0.001 170.2)"
+        ]
+      },
+      "rail": {
+        "role": "neutral",
+        "displayName": "Rahmenanthrazit",
+        "canonical": "oklch(23.6% 0.005 174.0)",
+        "tonalRamp": [
+          "oklch(15.0% 0.001 174)",
+          "oklch(26.4% 0.003 174)",
+          "oklch(37.9% 0.005 174)",
+          "oklch(49.3% 0.005 174)",
+          "oklch(60.7% 0.005 174)",
+          "oklch(72.1% 0.005 174)",
+          "oklch(83.6% 0.003 174)",
+          "oklch(95.0% 0.001 174)"
+        ]
+      },
+      "on-rail": {
+        "role": "neutral",
+        "displayName": "Leistenschrift",
+        "canonical": "oklch(96.4% 0.005 95.1)",
+        "tonalRamp": [
+          "oklch(15.0% 0.001 95.1)",
+          "oklch(26.4% 0.003 95.1)",
+          "oklch(37.9% 0.005 95.1)",
+          "oklch(49.3% 0.005 95.1)",
+          "oklch(60.7% 0.005 95.1)",
+          "oklch(72.1% 0.005 95.1)",
+          "oklch(83.6% 0.003 95.1)",
+          "oklch(95.0% 0.001 95.1)"
+        ]
+      },
+      "rail-edge": {
+        "role": "neutral",
+        "displayName": "Aluminiumkante",
+        "canonical": "oklch(79.7% 0.006 170.4)",
+        "tonalRamp": [
+          "oklch(15.0% 0.001 170.4)",
+          "oklch(26.4% 0.004 170.4)",
+          "oklch(37.9% 0.006 170.4)",
+          "oklch(49.3% 0.006 170.4)",
+          "oklch(60.7% 0.006 170.4)",
+          "oklch(72.1% 0.006 170.4)",
+          "oklch(83.6% 0.003 170.4)",
+          "oklch(95.0% 0.001 170.4)"
+        ]
+      },
+      "hairline": {
+        "role": "neutral",
+        "displayName": "Haarlinie",
+        "canonical": "color-mix(in srgb, var(--cb-text) 18%, var(--cb-paper))"
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Schildschrift",
+        "purpose": "Hero-, Seiten- und Markentitel in Versalien, Archivo Breite 72 Prozent. 2.75rem, 4.25rem ab 640px, 5.5rem ab 1024px im Hero. Ohne Versalien bei ß (data-sharp-s)."
+      },
+      "headline": {
+        "displayName": "Abschnittstitel",
+        "purpose": "Abschnittstitel in gemischter Schreibung, 1.75rem und 2.125rem ab 640px."
+      },
+      "title": {
+        "displayName": "Aushangtitel",
+        "purpose": "Titel auf Aushängen und in Untertiteln von Seiten."
+      },
+      "body": {
+        "displayName": "Lesetext",
+        "purpose": "Aller Fließtext in Atkinson Hyperlegible Next 17px."
+      },
+      "nav": {
+        "displayName": "Leistenmenü",
+        "purpose": "Hauptmenü auf der Rahmenleiste, aktiv 800."
+      },
+      "label": {
+        "displayName": "Aushang-Kopfzeile",
+        "purpose": "Kategorie, Datum, Dateityp, Hinweiskennung und Fußspalten in Versalien."
+      }
+    },
+    "shadows": [
+      {
+        "name": "notice-light",
+        "value": "0 1px 0 rgb(0 0 0 / 0.08), 0 14px 22px -18px rgb(0 0 0 / 0.45)",
+        "purpose": "Aushänge, Dropdown-Blätter und Suchergebnisse im Hellmodus (--cb-shadow)."
+      },
+      {
+        "name": "notice-dark",
+        "value": "0 1px 0 rgb(255 255 255 / 0.04), 0 14px 22px -16px rgb(0 0 0 / 0.8)",
+        "purpose": "Dieselben Elemente im Dunkelmodus."
+      },
+      {
+        "name": "pin-head",
+        "value": "inset 0 -2px 0 rgb(0 0 0 / 0.25), 0 2px 3px rgb(0 0 0 / 0.35)",
+        "purpose": "Plastische Wölbung der Nadel oben mittig auf jedem Aushang."
+      },
+      {
+        "name": "hero-scrim",
+        "value": "linear-gradient(to top, rgb(0 0 0 / 82%) 0%, rgb(0 0 0 / 62%) 60%, rgb(0 0 0 / 45%) 100%)",
+        "purpose": "Bildschleier im Hero unter 1024px. Ab 1024px oben 20% statt 45% und Mitte 52%."
+      }
+    ],
+    "motion": [
+      {
+        "name": "transition-colors",
+        "value": "150ms cubic-bezier(0.4, 0, 0.2, 1)",
+        "purpose": "Tailwind-Standard für Farbwechsel bei Hover. Einzige Bewegung neben der Drehung des Menüpfeils."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "0.01ms",
+        "purpose": "Bei prefers-reduced-motion werden Übergänge, Animationen und weiches Scrollen abgeschaltet."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Primäre Aktion, etwa im Kontaktformular. 48px hoch, Vereinspetrol.",
+      "html": "<button class=\"ds-btn-primary\" type=\"button\">E-Mail vorbereiten <svg aria-hidden=\"true\" width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z\"/><path d=\"m21.854 2.147-10.94 10.939\"/></svg></button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; gap: 0.5rem; min-height: 3rem; padding: 0 1.5rem; border: 0; border-radius: var(--cb-radius); background: var(--cb-primary); color: var(--cb-on-primary); font-family: var(--cb-font-body); font-size: 1rem; font-weight: 700; cursor: pointer; transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-btn-primary:hover { background: var(--cb-primary-hover); } .ds-btn-primary:focus-visible { outline: 3px solid var(--cb-primary); outline-offset: 3px; }"
+    },
+    {
+      "name": "Hero Action on Image",
+      "kind": "button",
+      "refersTo": "hero-action-on-image",
+      "description": "Primäre und sekundäre Aktion auf dem Bildschleier des Heros.",
+      "html": "<div class=\"ds-hero-actions\"><a class=\"ds-hero-primary\" href=\"#\">Gastkarte holen</a><a class=\"ds-hero-secondary\" href=\"#\">Gewässer entdecken</a></div>",
+      "css": ".ds-hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; padding: 1.5rem; background: #1c1f1e; } .ds-hero-primary, .ds-hero-secondary { display: inline-flex; align-items: center; min-height: 3rem; padding: 0 1.25rem; border-radius: var(--cb-radius); font-family: var(--cb-font-body); font-size: 1rem; font-weight: 700; text-decoration: none; transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-hero-primary { border: 2px solid #fcfbf8; background: #fcfbf8; color: #181a19; } .ds-hero-primary:hover { background: #dddcd7; } .ds-hero-secondary { border: 2px solid #ffffff; color: #ffffff; } .ds-hero-secondary:hover { background: rgb(255 255 255 / 0.15); } .ds-hero-primary:focus-visible, .ds-hero-secondary:focus-visible { outline: 3px solid #ffffff; outline-offset: 3px; }"
+    },
+    {
+      "name": "Notice",
+      "kind": "card",
+      "refersTo": "notice",
+      "description": "Aushang mit Nadel, Kopfzeile, Titel, Text und einer Textaktion. Signatur des Systems.",
+      "html": "<article class=\"ds-notice\"><p class=\"ds-notice-meta\"><span>Nachricht</span><span>14.9.2026</span></p><h3 class=\"ds-notice-title\">Vorbereitungslehrgang zur Fischerprüfung</h3><p class=\"ds-notice-text\">Neue Termine werden hier rechtzeitig bekanntgegeben.</p><a class=\"ds-notice-action\" href=\"#\">Beitrag lesen</a></article>",
+      "css": ".ds-notice { position: relative; max-width: 24rem; padding: 2.25rem 1.5rem 1.5rem; border: 1px solid color-mix(in srgb, var(--cb-text) 18%, var(--cb-paper)); border-radius: var(--cb-radius); background: var(--cb-paper); color: var(--cb-text); box-shadow: var(--cb-shadow); font-family: var(--cb-font-body); font-size: 1.0625rem; line-height: 1.6; } .ds-notice::before { content: \"\"; position: absolute; top: 0.75rem; left: 50%; width: 0.875rem; height: 0.875rem; margin-left: -0.4375rem; border-radius: 9999px; background: var(--cb-pin); box-shadow: inset 0 -2px 0 rgb(0 0 0 / 0.25), 0 2px 3px rgb(0 0 0 / 0.35); } .ds-notice-meta { display: flex; justify-content: space-between; gap: 0.75rem; margin: 0 0 1rem; padding-bottom: 0.625rem; border-bottom: 1px solid color-mix(in srgb, var(--cb-text) 18%, var(--cb-paper)); color: var(--cb-muted); font-family: var(--cb-font-display); font-size: 0.8125rem; font-stretch: 90%; font-weight: 700; letter-spacing: 0.1em; line-height: 1.3; text-transform: uppercase; } .ds-notice-title { margin: 0; font-family: var(--cb-font-heading); font-size: 1.375rem; font-stretch: 84%; font-weight: 700; line-height: 1.25; } .ds-notice-text { margin: 0.75rem 0 0; color: var(--cb-muted); } .ds-notice-action { display: inline-block; margin-top: 1.5rem; color: var(--cb-primary); font-weight: 700; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; } .ds-notice-action:hover { text-decoration-thickness: 4px; } .ds-notice-action:focus-visible { outline: 3px solid var(--cb-primary); outline-offset: 3px; }"
+    },
+    {
+      "name": "Rail Header",
+      "kind": "nav",
+      "refersTo": "rail",
+      "description": "Zweizeilige Rahmenleiste: Marke und Suche, darunter das einzeilige Hauptmenü mit aktiver Akzentkante.",
+      "html": "<header class=\"ds-rail\"><div class=\"ds-rail-top\"><a class=\"ds-rail-brand\" href=\"#\">Verein am See</a><label class=\"ds-rail-search\"><svg aria-hidden=\"true\" width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"11\" cy=\"11\" r=\"8\"/><path d=\"m21 21-4.3-4.3\"/></svg><span>Suche</span><input type=\"search\" placeholder=\"Seiten, Nachrichten, Termine\"></label></div><nav class=\"ds-rail-nav\" aria-label=\"Hauptnavigation\"><a href=\"#\">Der Verein</a><a href=\"#\" aria-current=\"page\">Gewässer</a><a href=\"#\">Gastkarten</a><a href=\"#\">Kontakt</a></nav></header>",
+      "css": ".ds-rail { border-bottom: 4px solid var(--cb-rail-edge); background: var(--cb-inverse); color: var(--cb-on-inverse); font-family: var(--cb-font-body); } .ds-rail-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem 1.5rem; padding: 0.75rem 2rem; } .ds-rail-brand { color: inherit; text-decoration: none; font-family: var(--cb-font-display); font-size: 1.625rem; font-stretch: 72%; font-weight: 800; line-height: 0.92; text-transform: uppercase; } .ds-rail-search { display: flex; align-items: center; gap: 0.5rem; width: 20rem; min-height: 2.75rem; padding: 0 0.75rem; border: 1px solid var(--cb-rail-edge); border-radius: var(--cb-radius); background: color-mix(in srgb, var(--cb-on-inverse) 10%, transparent); font-size: 0.875rem; font-weight: 600; } .ds-rail-search:focus-within { outline: 3px solid var(--cb-on-inverse); outline-offset: 2px; } .ds-rail-search input { flex: 1; min-width: 0; border: 0; background: transparent; color: inherit; font: inherit; font-size: 1rem; font-weight: 400; outline: none; } .ds-rail-nav { display: flex; flex-wrap: wrap; padding: 0 1.25rem; border-top: 1px solid color-mix(in srgb, var(--cb-rail-edge) 40%, transparent); } .ds-rail-nav a { display: inline-flex; align-items: center; min-height: 3rem; padding: 0 0.75rem; color: inherit; font-size: 1.0625rem; font-weight: 600; text-decoration: none; transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-rail-nav a:hover { background: color-mix(in srgb, var(--cb-on-inverse) 10%, transparent); } .ds-rail-nav a[aria-current=\"page\"] { font-weight: 800; box-shadow: inset 0 -4px 0 var(--cb-rail-accent); } .ds-rail-nav a:focus-visible { outline: 3px solid var(--cb-on-inverse); outline-offset: 3px; }"
+    },
+    {
+      "name": "Pinned Menu Item",
+      "kind": "nav",
+      "refersTo": "notice-pin",
+      "description": "Eintrag im Untermenü-Aushang. Aktiv mit Nadel davor und Fettdruck.",
+      "html": "<ul class=\"ds-submenu\"><li><a href=\"#\">Mitgliedschaft</a></li><li><a href=\"#\" aria-current=\"page\">Vereinsregeln</a></li></ul>",
+      "css": ".ds-submenu { list-style: none; margin: 0; padding: 0.5rem; width: 18rem; border-radius: var(--cb-radius); background: var(--cb-paper); box-shadow: var(--cb-shadow); font-family: var(--cb-font-body); } .ds-submenu a { display: flex; align-items: center; min-height: 2.75rem; padding: 0.5rem 0.75rem; border-radius: var(--cb-radius); color: var(--cb-text); font-size: 1rem; font-weight: 500; text-decoration: none; transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-submenu a:hover { background: color-mix(in srgb, var(--cb-text) 7%, var(--cb-paper)); } .ds-submenu a[aria-current=\"page\"] { font-weight: 700; } .ds-submenu a[aria-current=\"page\"]::before { content: \"\"; flex-shrink: 0; width: 0.625rem; height: 0.625rem; margin-right: 0.625rem; border-radius: 9999px; background: var(--cb-pin); } .ds-submenu a:focus-visible { outline: 3px solid var(--cb-primary); outline-offset: 3px; }"
+    },
+    {
+      "name": "Notice Strip",
+      "kind": "custom",
+      "refersTo": "notice-strip",
+      "description": "Statische Hinweisleiste unter dem Hero, ohne Laufschrift.",
+      "html": "<aside class=\"ds-strip\" aria-label=\"Hinweis\"><p class=\"ds-strip-label\"><span class=\"ds-strip-pin\"></span>Hinweis</p><a class=\"ds-strip-msg\" href=\"#\">Aktuell besteht ein Aufnahmestopp.</a></aside>",
+      "css": ".ds-strip { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem 1.5rem; padding: 1rem 2rem; border-bottom: 1px solid color-mix(in srgb, var(--cb-text) 18%, var(--cb-paper)); background: var(--cb-paper); color: var(--cb-text); font-family: var(--cb-font-body); } .ds-strip-label { display: flex; align-items: center; gap: 0.5rem; margin: 0; color: var(--cb-muted); font-family: var(--cb-font-display); font-size: 0.8125rem; font-stretch: 90%; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; } .ds-strip-pin { width: 0.75rem; height: 0.75rem; border-radius: 9999px; background: var(--cb-pin); box-shadow: inset 0 -1px 0 rgb(0 0 0 / 0.25); } .ds-strip-msg { color: inherit; font-size: 1.0625rem; font-weight: 700; text-decoration: underline; text-decoration-color: var(--cb-pin); text-decoration-thickness: 2px; text-underline-offset: 4px; } .ds-strip-msg:hover { text-decoration-color: var(--cb-text); } .ds-strip-msg:focus-visible { outline: 3px solid var(--cb-primary); outline-offset: 3px; }"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Formularfeld mit fetter Beschriftung darüber, 48px hoch.",
+      "html": "<label class=\"ds-field\">E-Mail-Adresse<input class=\"ds-input\" type=\"email\"></label>",
+      "css": ".ds-field { display: grid; gap: 0.5rem; max-width: 24rem; color: var(--cb-text); font-family: var(--cb-font-body); font-size: 1rem; font-weight: 700; } .ds-input { min-height: 3rem; padding: 0 0.75rem; border: 1px solid color-mix(in srgb, var(--cb-text) 60%, var(--cb-bg)); border-radius: var(--cb-radius); background: var(--cb-bg); color: var(--cb-text); font: inherit; font-weight: 400; transition: border-color 150ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-input:focus { border-color: var(--cb-primary); } .ds-input:focus-visible { outline: 3px solid var(--cb-primary); outline-offset: 3px; }"
+    },
+    {
+      "name": "Section Title",
+      "kind": "custom",
+      "refersTo": "headline",
+      "description": "Abschnittstitel in Archivo schmal 800, gemischte Schreibung.",
+      "html": "<h2 class=\"ds-section-title\">Unsere Gewässer</h2>",
+      "css": ".ds-section-title { margin: 0 0 2rem; color: var(--cb-text); font-family: var(--cb-font-heading); font-size: 2.125rem; font-stretch: 78%; font-weight: 800; letter-spacing: -0.005em; line-height: 1.25; text-wrap: balance; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Der Vereinsschaukasten",
+    "overview": "Die Website ist der Schaukasten am Vereinsheim. Ein ruhiger, präziser Rahmen aus Anthrazit hält sauber gehängte Aushänge auf einer hellgrauen Wand. Jeder Inhalt, der etwas mitteilt, hängt als papierweißes Blatt mit einer Nadel in Akzentfarbe. Kopf und Fuß der Seite sind dieselbe dunkle Rahmenleiste mit heller Aluminiumkante, dazwischen liegt die Aushangwand. Das Ergebnis liest sich wie ein gepflegtes Brett, nicht wie ein austauschbares Kachelraster.\n\nDie Schildschrift ist Archivo in schmaler, kräftiger Breite. Großformatige Titel stehen in Versalien wie auf einem Vereinsschild, Abschnittstitel bleiben in gemischter Schreibung. Allen Lesetext trägt Atkinson Hyperlegible Next in 17px, weil die Zielgruppe von 14 bis 80 Jahren reicht. Die Dichte ist mittel. Ein Aushang trägt eine Kopfzeile mit Kategorie links und Datum oder Dateityp rechts, darunter eine Haarlinie, dann Titel, Text und eine einzige Aktion.\n\nDie Farbwelt ist neutral und fest. Directus liefert höchstens zwei Akzente (`primary_color` für Links, Buttons und die Leistenmarkierung, optional `accent_color` für die Nadeln), die automatisch auf ausreichenden Kontrast korrigiert werden. Hell und dunkel folgen der Systemeinstellung. Die Frontmatter-Werte zeigen die Ausgabe für den eingebauten Standardakzent `#005f62`, also den Zustand ohne CMS-Akzent. Mit gepflegten CMS-Akzenten ergeben sich andere Akzentwerte bei gleicher Neutralpalette.",
+    "keyCharacteristics": [
+      "Zweizeilige anthrazitfarbene Rahmenleiste als Kopf und gleichartige Leiste als Fuß, jeweils mit 4px heller Kante zur Wand hin",
+      "Material aus Wand (`board`), Papier (`paper`) und Nadel (`pin`) statt Kacheln auf Weiß",
+      "Aushang-Kopfzeile mit Kategorie, Datum oder Dateityp und Haarlinie",
+      "Aktiv heißt Nadel oder Akzentkante plus Fettdruck, nie Farbe allein",
+      "Statische Hinweisleiste statt Laufschrift",
+      "Versalientitel in Archivo schmal, außer wenn der Text ein „ß“ enthält",
+      "Berührungsziele mindestens 44px, Aktionen meist 48px hoch"
+    ],
+    "rules": [
+      {
+        "name": "The Two Accents Rule",
+        "body": "Es gibt genau zwei redaktionelle Farbquellen, `primary_color` und `accent_color`. Jede weitere Farbe ist neutral oder aus diesen beiden abgeleitet.",
+        "section": "colors"
+      },
+      {
+        "name": "The Corrected Accent Rule",
+        "body": "Ein CMS-Akzent wird nie roh verwendet. Er läuft immer durch die Kontrastkorrektur von `neutralTheme.ts`, und ungültige Werte fallen mit Warnung auf den Standardakzent zurück.",
+        "section": "colors"
+      },
+      {
+        "name": "The Pin Is The Marker Rule",
+        "body": "Die Nadelfarbe markiert, sie füllt keine Flächen. Nadeln, Punkte, Linien und Unterstreichungen ja, Abschnittshintergründe nein.",
+        "section": "colors"
+      },
+      {
+        "name": "The Sharp S Rule",
+        "body": "Versalien nur ohne „ß“. Ein Text mit „ß“ bekommt `data-sharp-s` und bleibt in gemischter Schreibung, weil „SS“ die Bedeutung ändern kann (Maße und Masse).",
+        "section": "typography"
+      },
+      {
+        "name": "The One Shout Rule",
+        "body": "Versalien in Archivo schmal sind dem Display und den Labels vorbehalten. Abschnitts- und Aushangtitel schreien nicht.",
+        "section": "typography"
+      },
+      {
+        "name": "The Step Column Rule",
+        "body": "Nummerierte Listen im Fließtext werden zur Schrittspalte: große Ziffern in Archivo schmal 800, rechtsbündig in einer 2.5rem breiten Spalte mit 2px Linie in Nadelfarbe rechts daneben.",
+        "section": "typography"
+      },
+      {
+        "name": "The Pinned Not Floating Rule",
+        "body": "Kein Element schwebt. Ein Schatten zeigt nur, dass Papier auf der Wand hängt, und bleibt kurz und unten konzentriert.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do jeden informierenden Inhalt als Aushang setzen: Papier, Haarlinie, Aushangschatten, Nadel oben mittig, 2.25rem Innenabstand oben.",
+      "Do Kopfzeilen mit echten Daten füllen (Kategorie links, Datum oder Dateityp rechts) und sie weglassen, wenn das CMS keine liefert.",
+      "Do aktive Zustände immer doppelt kodieren: Nadel oder Akzentkante plus höhere Schriftstärke.",
+      "Do Akzente nur über `primary_color` und `accent_color` beziehen und durch `neutralTheme.ts` korrigieren lassen.",
+      "Do Display-Titel mit `sharpSAttribute` auszeichnen, damit Texte mit „ß“ nicht in Versalien gesetzt werden.",
+      "Do Berührungsziele mindestens 44px hoch halten, Aktionen und Menüeinträge 48px.",
+      "Do semantische Tokens verwenden (`bg-paper`, `bg-rail`, `bg-pin`, `text-link`, `border-border`), damit Hell, Dunkel und CMS-Akzente wirken.",
+      "Do Aushangraster mit `noticeGridClassName(count)` bauen, damit kurze Reihen die Wand füllen."
+    ],
+    "donts": [
+      "Don't eine Laufschrift oder animierte Hinweise einsetzen. Die Hinweisleiste steht still.",
+      "Don't einen Zustand nur über Farbe zeigen.",
+      "Don't die Nadelfarbe als Flächenfarbe für Abschnitte oder Buttons verwenden.",
+      "Don't große Radien oder runde Kacheln einführen. Rund ist nur die Nadel.",
+      "Don't CMS-Farbwerte roh als CSS-Variable setzen, im neutralen Modus gilt nur die korrigierte Palette.",
+      "Don't Fraunces oder DM Sans im neutralen Modus verwenden, sie gehören allein zum Legacy-Modus (`VITE_THEME_MODE=legacy`).",
+      "Don't weiche, schwebende Schatten oder Glaseffekte einsetzen."
+    ]
+  }
+}

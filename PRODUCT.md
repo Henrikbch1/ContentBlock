@@ -53,9 +53,8 @@ Angeln und Gewässern sowie Termine, Kontakt und Downloads im Vordergrund.
   sichtbare Suche erhalten.
 - Das gewünschte Farbsystem verwendet eine neutrale Basis für Light- und
   Dark-Mode sowie höchstens zwei administrativ wählbare Akzentfarben.
-  Geprüfte Farbkombinationen werden im optionalen neutralen Modus automatisch
-  korrigiert.
-  Das bisherige Theme bleibt ohne Aktivierung unverändert. Ein manueller
+  Geprüfte Farbkombinationen werden automatisch korrigiert. Das bisherige
+  Theme ist nur noch über eine technische Einstellung verfügbar. Ein manueller
   Hell-/Dunkel-Umschalter ist noch nicht vorhanden.
 - Änderungen am Directus-Datenmodell benötigen vor ihrer Umsetzung eine
   gesonderte Freigabe. Die [Datenbankdokumentation](docs/architecture/DB.md)

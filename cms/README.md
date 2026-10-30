@@ -111,25 +111,31 @@ noch nicht. Bestehende einzelne Dateien werden nicht als Farb- oder
 Schwarz-Weiss-Version bezeichnet. Die Public-Policy hat keine Zeilenfilter.
 Vertrauliche Inhalte gehoeren nicht in oeffentlich lesbare Collections.
 
-## Farben fuer das neutrale Frontend
+## Farben fuer das Frontend
 
-Der neue Farbmodus ist opt-in. Die technische Aktivierung steht in der
-[Frontend-Architektur](../frontend/frontend-architektur.md#neutraler-modus).
-Ohne Aktivierung bleibt das bisherige Theme unveraendert.
+Das Frontend verwendet standardmaessig eine neutrale Basis fuer Hell und Dunkel
+mit hoechstens zwei Akzentfarben. Das bisherige Theme laesst sich technisch ueber
+`VITE_THEME_MODE=legacy` wiederherstellen, siehe
+[Frontend-Architektur](../frontend/frontend-architektur.md#neutraler-modus-standard-vereinsschaukasten).
 
 1. In Directus das mit `site.theme` verknuepfte Theme oeffnen.
-2. Unter `primary_color` eine deckende Hex-Farbe wie `#005f62` auswaehlen.
-3. Optional unter `accent_color` eine zweite deckende Hex-Farbe waehlen.
-   Bleibt das Feld leer, wird nur die erste Farbe verwendet.
+2. Unter `primary_color` eine deckende Hex-Farbe wie `#005f62` auswaehlen. Sie
+   faerbt Links, Schaltflaechen und die Markierung in der Navigationsleiste.
+3. Optional unter `accent_color` eine zweite deckende Hex-Farbe waehlen. Sie
+   faerbt die Nadeln der Aushaenge. Bleibt das Feld leer, wird die erste Farbe
+   verwendet.
 4. Speichern und die Website im hellen und dunklen Systemmodus pruefen.
 
-Im neutralen Modus berechnet das Frontend die Varianten und korrigiert die
-geprueften Kontraste. Die Felder `secondary_color`, `background_color`,
-`surface_color` und `text_color` sowie eigene Ticker-Farben wirken dort nicht.
-Schriften, Abstaende, Radius und Schatten bleiben pflegbar. Nicht unterstuetzte
+Das Frontend berechnet die Varianten und korrigiert die geprueften Kontraste.
+Die Felder `secondary_color`, `background_color`, `surface_color`,
+`text_color`, `font_heading` und `font_body` sowie eigene Ticker-Farben wirken
+dort nicht. Abstaende, Radius und Schatten bleiben pflegbar. Nicht unterstuetzte
 Farbwerte verursachen eine Warnung in der Browserkonsole und verwenden einen
 sicheren Standard. Die Farbanpassung ersetzt keine Sicht- und
 Barrierefreiheitspruefung der Inhalte.
+
+Fuer Bild-Heroes ein Foto mit mindestens 2000 px Breite ohne schwarze Raender
+hochladen. Kleine Bilder werden auf breiten Bildschirmen unscharf.
 
 ## Flows
 
