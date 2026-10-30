@@ -1,15 +1,37 @@
 # Recherche und Setup für das generische ContentBlock-Frontend
 
-**Stand der Recherche: 30.10.2026.** Dieser Stand umfasst Projektanalyse und
-Ressourcenauswahl, **keine** Designfreigabe und keine Umsetzung. Die Quellen
-wurden auf Aktivität, Lizenz und Eignung geprüft; Zahlen und Versionen ändern
-sich. Die Anleitung richtet sich an Windows und GitHub Copilot in VS Code.
+**Stand der Recherche: 30.10.2026.** Dieser Stand umfasst Projektanalyse,
+Ressourcenauswahl und die unten dokumentierte projektlokale Installation der
+Skills auf ausdrücklichen Auftrag, **keine** Designfreigabe und keine weitere
+Umsetzung. Die Quellen wurden auf Aktivität, Lizenz und Eignung geprüft; Zahlen
+und Versionen ändern sich. Die Anleitung richtet sich an Windows und GitHub
+Copilot in VS Code.
 
-**Haltepunkt:** Die ausgewählten Ressourcen werden zunächst auf einem anderen
-PC bereitgestellt. Danach bitte Bescheid geben. Erst dann folgt das Konzept
-mit Seitenstruktur, Navigation, Farbsystem, Komponenten und begründeten
+**Haltepunkt:** Die übrigen ausgewählten Ressourcen werden zunächst auf einem
+anderen PC bereitgestellt. Danach bitte Bescheid geben. Erst dann folgt das
+Konzept mit Seitenstruktur, Navigation, Farbsystem, Komponenten und begründeten
 Vorschlägen für eventuelle Modelländerungen. Vor deren Umsetzung wird die
 Freigabe eingeholt. Der bestehende Kern bleibt erhalten.
+
+**Projektlokale Skills:** Die vorhandenen Projekt-Skills bleiben unverändert.
+Die fünf Emil-Skills liegen unter `.agents/skills`; Impeccable und
+`design-taste-frontend` wurden gemäß der manuellen Installationsanleitung
+unter `.github/skills` abgelegt. Die Quell-Lizenzen aller hinzugefügten Skills
+sind enthalten; Impeccable enthält zusätzlich seine `NOTICE.md`.
+Quell-Commits: Emil `a81dbca07f2217b7103e510c0f13f8d5b017afc9`, Impeccable
+`df3a4abe7d0840d5f60324812c432e00b66a4e75`, Taste
+`12af471f627f866411b4bd785b19646d3672784c`. Es wurden weder Impeccable-Setup-
+Dateien erzeugt noch Pakete oder MCP-Server eingerichtet.
+
+**Übrige Werkzeuge:** Der projektlokale npm-Download von Playwright MCP,
+Playwright Test, axe-core, shadcn CLI und Impeccable ist noch offen. npm meldete
+einen Registry-Authentifizierungsfehler; der anschließende Offline-Versuch
+scheiterte, weil ein benötigtes Paket nicht im Cache lag. Manifest und Lockfile
+wurden dabei nicht geändert. Erst nach Wiederherstellung des Registry-Zugriffs
+erneut nach der Anleitung unter „Abhängigkeiten“ installieren; Registry und
+Sicherheitsoptionen nicht umgehen. Die MCP-Konfiguration daher noch nicht
+anlegen. Produktpakete und weitere optionale Integrationen bleiben wie unten
+beschrieben zurückgestellt.
 
 ## Projektbefund
 
