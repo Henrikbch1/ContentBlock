@@ -25,6 +25,45 @@
     U+2215, U+FEFF, U+FFFD;
 }
 
+@font-face {
+  font-family: "Archivo";
+  font-style: normal;
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  font-display: swap;
+  src: url("/fonts/archivo-latin-wdth-wght-normal.woff2") format("woff2");
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212,
+    U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Atkinson Hyperlegible Next";
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url("/fonts/atkinson-hyperlegible-next-latin-wght-normal.woff2")
+    format("woff2");
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212,
+    U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Atkinson Hyperlegible Next";
+  font-style: italic;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url("/fonts/atkinson-hyperlegible-next-latin-wght-italic.woff2")
+    format("woff2");
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212,
+    U+2215, U+FEFF, U+FFFD;
+}
+
 /* Theme-Eingänge (--cb-*): Defaults hier, Überschreibung durch ThemeProvider auf <html>. */
 :root {
   --cb-primary: #005f62;
@@ -49,12 +88,26 @@
   --cb-input-border: color-mix(in srgb, var(--cb-text) 60%, var(--cb-bg));
   --cb-inverse: var(--cb-text);
   --cb-on-inverse: var(--cb-bg);
+  --cb-paper: var(--cb-bg);
+  --cb-pin: var(--cb-accent);
+  --cb-rail-accent: var(--cb-accent);
+  --cb-rail-edge: color-mix(
+    in srgb,
+    var(--cb-on-inverse) 45%,
+    var(--cb-inverse)
+  );
+  --cb-font-display: var(--cb-font-heading);
+  --cb-body-size: 1rem;
 }
 
 :root[data-cb-theme="neutral"] {
   color-scheme: light;
   --cb-bg: var(--cb-neutral-light-bg);
   --cb-surface: var(--cb-neutral-light-surface);
+  --cb-paper: var(--cb-neutral-light-paper);
+  --cb-pin: var(--cb-neutral-light-pin);
+  --cb-rail-accent: var(--cb-neutral-light-rail-accent);
+  --cb-rail-edge: #b9bebc;
   --cb-text: var(--cb-neutral-light-text);
   --cb-muted: var(--cb-neutral-light-muted);
   --cb-inverse: var(--cb-neutral-light-inverse);
@@ -65,6 +118,15 @@
   --cb-secondary: var(--cb-neutral-light-secondary);
   --cb-accent: var(--cb-neutral-light-accent);
   --cb-accent-hover: var(--cb-neutral-light-accent-hover);
+  --cb-border: color-mix(in srgb, var(--cb-text) 18%, var(--cb-paper));
+  --cb-muted-bg: color-mix(in srgb, var(--cb-text) 7%, var(--cb-paper));
+  --cb-font-display: "Archivo", "Arial Narrow", system-ui, sans-serif;
+  --cb-font-heading: "Archivo", "Arial Narrow", system-ui, sans-serif;
+  --cb-font-body: "Atkinson Hyperlegible Next", system-ui, sans-serif;
+  --cb-body-size: 1.0625rem;
+  --cb-radius: 0.1875rem;
+  --cb-section-y: clamp(2rem, 4vw, 3.25rem);
+  --cb-shadow: 0 1px 0 rgb(0 0 0 / 0.08), 0 14px 22px -18px rgb(0 0 0 / 0.45);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -72,6 +134,12 @@
     color-scheme: dark;
     --cb-bg: var(--cb-neutral-dark-bg);
     --cb-surface: var(--cb-neutral-dark-surface);
+    --cb-paper: var(--cb-neutral-dark-paper);
+    --cb-pin: var(--cb-neutral-dark-pin);
+    --cb-rail-accent: var(--cb-neutral-dark-rail-accent);
+    --cb-rail-edge: #4d5452;
+    --cb-shadow:
+      0 1px 0 rgb(255 255 255 / 0.04), 0 14px 22px -16px rgb(0 0 0 / 0.8);
     --cb-text: var(--cb-neutral-dark-text);
     --cb-muted: var(--cb-neutral-dark-muted);
     --cb-inverse: var(--cb-neutral-dark-inverse);
@@ -119,18 +187,54 @@
 }
 
 :root[data-cb-theme="neutral"] [data-hero-image="true"] .hero-image-overlay {
-  background-color: rgb(0 0 0 / 80%);
+  background-color: transparent;
+  background-image: linear-gradient(
+    to top,
+    rgb(0 0 0 / 82%) 0%,
+    rgb(0 0 0 / 62%) 60%,
+    rgb(0 0 0 / 45%) 100%
+  );
+}
+
+/* Ab Desktopbreite steht der Text nur im unteren Teil des Bandes; oben bleibt das Foto sichtbar. */
+@media (min-width: 64rem) {
+  :root[data-cb-theme="neutral"] [data-hero-image="true"] .hero-image-overlay {
+    background-image: linear-gradient(
+      to top,
+      rgb(0 0 0 / 82%) 0%,
+      rgb(0 0 0 / 52%) 60%,
+      rgb(0 0 0 / 20%) 100%
+    );
+  }
 }
 
 :root[data-cb-theme="neutral"] .hero-primary-action {
   border: 2px solid currentColor;
 }
 
+:root[data-cb-theme="neutral"] [data-hero-image="true"] .hero-primary-action {
+  border-color: var(--cb-neutral-light-paper);
+  background-color: var(--cb-neutral-light-paper);
+  color: var(--cb-neutral-light-text);
+}
+
+:root[data-cb-theme="neutral"]
+  [data-hero-image="true"]
+  .hero-primary-action:hover {
+  background-color: var(--cb-neutral-light-surface);
+}
+
 @theme inline {
   --color-background: var(--cb-bg);
   --color-surface: var(--cb-surface);
-  --color-card: var(--cb-bg);
+  --color-card: var(--cb-paper);
   --color-card-foreground: var(--cb-text);
+  --color-paper: var(--cb-paper);
+  --color-pin: var(--cb-pin);
+  --color-rail: var(--cb-inverse);
+  --color-rail-foreground: var(--cb-on-inverse);
+  --color-rail-accent: var(--cb-rail-accent);
+  --color-rail-edge: var(--cb-rail-edge);
   --color-inverse: var(--cb-inverse);
   --color-inverse-foreground: var(--cb-on-inverse);
   --color-primary: var(--cb-primary);
@@ -149,6 +253,7 @@
   --color-link: var(--ctx-link);
   --font-sans: var(--cb-font-body);
   --font-heading: var(--cb-font-heading);
+  --font-display: var(--cb-font-display);
   --radius-card: var(--cb-radius);
   --shadow-card: var(--cb-shadow);
   --spacing-section: var(--cb-section-y);
@@ -160,6 +265,8 @@
     background-color: var(--cb-bg);
     color: var(--cb-text);
     font-family: var(--cb-font-body);
+    font-size: var(--cb-body-size);
+    line-height: 1.6;
   }
 
   h1,
@@ -170,6 +277,98 @@
   h6 {
     font-family: var(--cb-font-heading);
   }
+
+  :root[data-cb-theme="neutral"] :is(h1, h2, h3, h4) {
+    font-stretch: 84%;
+    font-weight: 700;
+    letter-spacing: -0.005em;
+    text-wrap: balance;
+  }
+
+  :root[data-cb-theme="neutral"] ::selection {
+    background-color: var(--cb-pin);
+    color: var(--cb-paper);
+  }
+
+  :root[data-cb-theme="neutral"] {
+    accent-color: var(--cb-primary);
+    caret-color: var(--cb-primary);
+    scrollbar-color: color-mix(in srgb, var(--cb-text) 45%, transparent)
+      transparent;
+  }
+
+  :root[data-cb-theme="neutral"] a {
+    text-underline-offset: 0.22em;
+    text-decoration-thickness: 0.08em;
+  }
+
+  table {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* Schildschrift: Versalien nur ohne ß, weil "SS" die Bedeutung ändern kann (Maße/Masse). */
+:root[data-cb-theme="neutral"] .display-title {
+  font-family: var(--cb-font-display);
+  font-stretch: 72%;
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 0.92;
+}
+
+:root[data-cb-theme="neutral"] .display-title:not([data-sharp-s]) {
+  text-transform: uppercase;
+}
+
+:root[data-cb-theme="neutral"] .section-title {
+  font-stretch: 78%;
+  font-weight: 800;
+  letter-spacing: -0.005em;
+}
+
+/* Aktueller Menüeintrag: Nadel plus Fettdruck statt Farbe allein. */
+.nav-pin[aria-current="page"]::before {
+  content: "";
+  flex-shrink: 0;
+  width: 0.625rem;
+  height: 0.625rem;
+  margin-right: 0.625rem;
+  border-radius: 9999px;
+  background-color: var(--cb-pin);
+}
+
+.nav-pin--rail[aria-current="page"]::before {
+  background-color: var(--cb-rail-accent);
+}
+
+.notice-label {
+  font-family: var(--cb-font-display);
+  font-size: 0.8125rem;
+  font-stretch: 90%;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+:root[data-cb-theme="neutral"] .notice-sheet {
+  position: relative;
+}
+
+:root[data-cb-theme="neutral"] .notice-sheet::before {
+  content: "";
+  position: absolute;
+  top: 0.75rem;
+  left: 50%;
+  width: 0.875rem;
+  height: 0.875rem;
+  margin-left: -0.4375rem;
+  border-radius: 9999px;
+  background-color: var(--cb-pin);
+  box-shadow:
+    inset 0 -2px 0 rgb(0 0 0 / 0.25),
+    0 2px 3px rgb(0 0 0 / 0.35);
+  pointer-events: none;
 }
 
 .prose {
@@ -187,6 +386,42 @@
   --tw-prose-code: var(--ctx-fg);
   --tw-prose-th-borders: var(--ctx-line);
   --tw-prose-td-borders: var(--ctx-line);
+}
+
+/* Nummerierte Listen werden zur Schrittspalte (Abläufe wie Aufnahme oder Gastkarte). */
+:root[data-cb-theme="neutral"] .prose ol {
+  counter-reset: step;
+  list-style: none;
+  padding-left: 0;
+}
+
+:root[data-cb-theme="neutral"] .prose ol > li {
+  counter-increment: step;
+  position: relative;
+  min-height: 2.5rem;
+  padding-left: 3.75rem;
+}
+
+:root[data-cb-theme="neutral"] .prose ol > li::before {
+  content: counter(step);
+  position: absolute;
+  top: -0.15em;
+  left: 0;
+  width: 2.5rem;
+  border-right: 2px solid var(--cb-pin);
+  padding-right: 0.625rem;
+  color: var(--ctx-link);
+  font-family: var(--cb-font-display);
+  font-size: 1.625em;
+  font-stretch: 72%;
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  line-height: 1.2;
+  text-align: right;
+}
+
+:root[data-cb-theme="neutral"] .prose :is(h2, h3) {
+  font-stretch: 84%;
 }
 
 * {
@@ -213,25 +448,6 @@ img {
   outline-offset: 3px;
 }
 
-.ticker-track {
-  animation: ticker-scroll 40s linear infinite;
-}
-
-.ticker-container:hover .ticker-track,
-.ticker-container:focus-within .ticker-track {
-  animation-play-state: paused;
-}
-
-@keyframes ticker-scroll {
-  from {
-    transform: translateX(0);
-  }
-
-  to {
-    transform: translateX(-50%);
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -240,14 +456,6 @@ img {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
-  }
-
-  .ticker-track {
-    animation: none !important;
-  }
-
-  .ticker-duplicate {
-    display: none;
   }
 }
 

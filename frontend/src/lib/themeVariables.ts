@@ -42,11 +42,16 @@ const COLOR_VARIABLES = {
 
 const PRESET_VARIABLES = [
   ["border_radius", "--cb-radius", RADIUS_VALUES],
-  ["font_heading", "--cb-font-heading", FONT_STACKS],
-  ["font_body", "--cb-font-body", FONT_STACKS],
   ["spacing_scale", "--cb-section-y", SECTION_Y_VALUES],
   ["container_width", "--cb-container", CONTAINER_VALUES],
   ["shadow_style", "--cb-shadow", SHADOW_VALUES],
+] as const satisfies ReadonlyArray<
+  readonly [keyof Theme, `--cb-${string}`, Readonly<Record<string, string>>]
+>;
+
+const LEGACY_FONT_VARIABLES = [
+  ["font_heading", "--cb-font-heading", FONT_STACKS],
+  ["font_body", "--cb-font-body", FONT_STACKS],
 ] as const satisfies ReadonlyArray<
   readonly [keyof Theme, `--cb-${string}`, Readonly<Record<string, string>>]
 >;
@@ -83,8 +88,12 @@ export const getThemeVariables = (
     }
   }
 
-  for (const [themeKey, cssVariable, presets] of PRESET_VARIABLES) {
-    const value = getPresetValue(presets, theme[themeKey]);
+  const presets =
+    mode === "legacy"
+      ? [...PRESET_VARIABLES, ...LEGACY_FONT_VARIABLES]
+      : PRESET_VARIABLES;
+  for (const [themeKey, cssVariable, values] of presets) {
+    const value = getPresetValue(values, theme[themeKey]);
     if (value) {
       variables[cssVariable] = value;
     }

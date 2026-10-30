@@ -7,8 +7,8 @@ if (
   configuredMode !== "legacy" &&
   configuredMode !== "neutral"
 ) {
-  console.warn("Invalid VITE_THEME_MODE; the legacy theme will be used.");
+  console.warn("Invalid VITE_THEME_MODE; the neutral theme will be used.");
 }
 
 export const THEME_MODE: ThemeMode =
-  configuredMode === "neutral" ? "neutral" : "legacy";
+  configuredMode === "legacy" ? "legacy" : "neutral";

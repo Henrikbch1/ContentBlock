@@ -60,9 +60,15 @@ describe("getNeutralTheme", () => {
         const onPrimary = color("on-primary");
         const inverse = color("inverse");
         const onInverse = color("on-inverse");
+        const paper = color("paper");
         const pairs: Array<[number[], number[], number]> = [
           [primaryColor, background, 7],
           [primaryColor, surface, 7],
+          [primaryColor, paper, 7],
+          [text, paper, 7],
+          [muted, paper, 4.5],
+          [color("pin"), paper, 3],
+          [color("rail-accent"), inverse, 3],
           [onPrimary, primaryColor, 4.5],
           [onPrimary, color("primary-hover"), 4.5],
           [text, background, 7],
@@ -114,6 +120,15 @@ describe("getNeutralTheme", () => {
         expect(ratio).toBeGreaterThanOrEqual(7);
         expect(ratio).toBeLessThanOrEqual(10);
         expect(
+          contrastRatio(color("primary"), color("paper")),
+        ).toBeGreaterThanOrEqual(7);
+        expect(
+          contrastRatio(color("pin"), color("paper")),
+        ).toBeGreaterThanOrEqual(3);
+        expect(
+          contrastRatio(color("rail-accent"), color("inverse")),
+        ).toBeGreaterThanOrEqual(3);
+        expect(
           contrastRatio(color("on-primary"), color("primary-hover")),
         ).toBeGreaterThanOrEqual(4.5);
         expect(
@@ -137,13 +152,11 @@ describe("getNeutralTheme", () => {
   });
 
   it("keeps image-overlay text readable over a white image", () => {
-    const brightestOverlayResult = blend(rgb("#ffffff"), rgb("#000000"), 0.8);
+    const largeTextZone = blend(rgb("#ffffff"), rgb("#000000"), 0.45);
+    const bodyTextZone = blend(rgb("#ffffff"), rgb("#000000"), 0.62);
 
-    expect(
-      contrastRatio(rgb("#ffffff"), brightestOverlayResult),
-    ).toBeGreaterThan(4.5);
-    expect(
-      contrastRatio(rgb("#e5e5e5"), brightestOverlayResult),
-    ).toBeGreaterThan(4.5);
+    expect(contrastRatio(rgb("#ffffff"), largeTextZone)).toBeGreaterThan(3);
+    expect(contrastRatio(rgb("#ffffff"), bodyTextZone)).toBeGreaterThan(4.5);
+    expect(contrastRatio(rgb("#e5e5e5"), bodyTextZone)).toBeGreaterThan(4.5);
   });
 });

@@ -112,11 +112,11 @@ describe("ThemeProvider", () => {
       "data-cb-theme",
       "neutral",
     );
-    expect(readVariable("--cb-neutral-light-bg")).toBe("#ffffff");
-    expect(readVariable("--cb-neutral-dark-bg")).toBe("#151515");
+    expect(readVariable("--cb-neutral-light-bg")).toBe("#e9e8e4");
+    expect(readVariable("--cb-neutral-dark-bg")).toBe("#161717");
     expect(readVariable("--cb-neutral-light-primary")).not.toBe("#ffff00");
     expect(readVariable("--cb-bg")).toBe("");
-    expect(readVariable("--cb-font-body")).toContain("DM Sans");
+    expect(readVariable("--cb-font-body")).toBe("");
 
     unmount();
     expect(document.documentElement).not.toHaveAttribute("data-cb-theme");

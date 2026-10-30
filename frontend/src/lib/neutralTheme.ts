@@ -6,6 +6,7 @@ type Scheme = "light" | "dark";
 type Palette = Readonly<{
   background: Color;
   surface: Color;
+  paper: Color;
   text: Color;
   muted: Color;
   inverse: Color;
@@ -22,25 +23,28 @@ const WHITE: Color = [255, 255, 255];
 const BLACK: Color = [0, 0, 0];
 const DEFAULT_ACCENT: Color = [0, 95, 98];
 const MIN_CONTRAST = 7;
+const MIN_INDICATOR_CONTRAST = 3;
 const MAX_PRIMARY_CONTRAST = 10;
 
 const PALETTES: Record<Scheme, Palette> = {
   light: {
-    background: WHITE,
-    surface: [242, 242, 242],
-    text: [23, 23, 23],
-    muted: [89, 89, 89],
-    inverse: [23, 23, 23],
-    onInverse: WHITE,
+    background: [233, 232, 228],
+    surface: [221, 220, 215],
+    paper: [252, 251, 248],
+    text: [24, 26, 25],
+    muted: [79, 84, 82],
+    inverse: [28, 31, 30],
+    onInverse: [244, 243, 239],
     onPrimary: WHITE,
   },
   dark: {
-    background: [21, 21, 21],
-    surface: [36, 36, 36],
-    text: [245, 245, 245],
-    muted: [196, 196, 196],
-    inverse: [9, 9, 9],
-    onInverse: [245, 245, 245],
+    background: [22, 23, 23],
+    surface: [30, 32, 32],
+    paper: [38, 40, 40],
+    text: [240, 239, 235],
+    muted: [189, 191, 189],
+    inverse: [12, 13, 13],
+    onInverse: [240, 239, 235],
     onPrimary: BLACK,
   },
 };
@@ -72,9 +76,10 @@ const ensureContrast = (
   color: Color,
   background: Color,
   destination: Color,
+  minimum = MIN_CONTRAST,
 ): Color => {
-  if (contrast(color, background) >= MIN_CONTRAST) return color;
-  if (contrast(destination, background) < MIN_CONTRAST) {
+  if (contrast(color, background) >= minimum) return color;
+  if (contrast(destination, background) < minimum) {
     throw new RangeError("Neutral theme contrast target cannot be reached.");
   }
 
@@ -82,7 +87,7 @@ const ensureContrast = (
   let high = 1;
   for (let iteration = 0; iteration < 16; iteration += 1) {
     const middle = (low + high) / 2;
-    if (contrast(mix(color, destination, middle), background) >= MIN_CONTRAST) {
+    if (contrast(mix(color, destination, middle), background) >= minimum) {
       high = middle;
     } else {
       low = middle;
@@ -153,9 +158,26 @@ const createScheme = (
 ): Record<string, string> => {
   const base = PALETTES[scheme];
   const isLight = scheme === "light";
+  const towardsText = isLight ? BLACK : WHITE;
   const primary = limitPrimaryContrast(
-    ensureContrast(primaryAccent, base.surface, isLight ? BLACK : WHITE),
+    ensureContrast(
+      ensureContrast(primaryAccent, base.surface, towardsText),
+      base.paper,
+      towardsText,
+    ),
     base.surface,
+  );
+  const pin = ensureContrast(
+    secondAccent,
+    base.paper,
+    towardsText,
+    MIN_INDICATOR_CONTRAST,
+  );
+  const railAccent = ensureContrast(
+    primaryAccent,
+    base.inverse,
+    WHITE,
+    MIN_INDICATOR_CONTRAST,
   );
   const firstScale = createScale(primaryAccent);
   const secondScale = createScale(secondAccent);
@@ -179,6 +201,9 @@ const createScheme = (
     Object.entries({
       bg: base.background,
       surface: base.surface,
+      paper: base.paper,
+      pin,
+      "rail-accent": railAccent,
       text: base.text,
       muted: base.muted,
       inverse: base.inverse,
