@@ -91,7 +91,12 @@ Unbekannte Slugs rendern `NotFoundPage`.
 - Events erscheinen nur, wenn `visible_from` leer oder erreicht ist und der Termin
   (`end_date`, ohne Ende `start_date`) nicht vorbei ist.
 - Asset-URLs entstehen ausschließlich über `getAssetUrl` in `lib/directus.ts`.
-- `block_table.data` bleibt das flache `col_N`-Format; `tableData.ts` normalisiert es.
+- `block_table.data` bleibt das flache `col_N`-Format;
+  [tableData.ts](src/lib/tableData.ts) normalisiert es.
+  [TableBlock.tsx](src/components/blocks/TableBlock.tsx) bietet eine Suche und
+  Seiten zu fünf mobilen beziehungsweise 20 Desktop-Zeilen.
+  [TableViews.tsx](src/components/blocks/TableViews.tsx) zeigt auf kleinen
+  Bildschirmen beschriftete Karten und sonst eine semantische Tabelle.
 
 ---
 

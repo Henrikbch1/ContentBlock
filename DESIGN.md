@@ -102,7 +102,7 @@ Der Theme-Radius ist über vordefinierte Größen konfigurierbar.
 - **Navigation:** angehefteter Header mit Desktopmenü beziehungsweise
   aufklappbarer mobiler Navigation. Die Einträge stammen aus Directus.
 - **Tabellen:** semantische Tabelle mit erster Datenzeile als Spaltenkopf;
-  auf schmalen Bildschirmen derzeit horizontal scrollbar.
+  auf schmalen Bildschirmen beschriftete Karten, dazu Suche und Seiteneinteilung.
 - **Dokumente:** Karten mit einem Link zur vorhandenen Datei. Eine Auswahl
   zwischen Farb- und Schwarz-Weiß-Dateien existiert noch nicht.
 - **Fokus und Bewegung:** interaktive Elemente erhalten einen sichtbaren

@@ -40,7 +40,10 @@ und Block-IDs bleiben unveraendert. Build und Bedienung stehen in der
 und das alte `cells[].value`-Format fuer
 [TableBlock.tsx](../../frontend/src/components/blocks/TableBlock.tsx).
 Leere nachfolgende Grid-Spalten werden ausgeblendet; die erste Zeile bleibt
-`thead`. Die Website verwendet weiterhin eine semantische HTML-Tabelle.
+der Spaltenkopf. Auf breiten Bildschirmen erscheint eine semantische
+HTML-Tabelle, mobil eine beschriftete Kartenliste mit denselben Werten.
+Die Darstellung liegt in [TableViews.tsx](../../frontend/src/components/blocks/TableViews.tsx).
+Besucher koennen alle Zeilen durchsuchen und zwischen Seiten wechseln.
 
 Manuelle Pruefung:
 

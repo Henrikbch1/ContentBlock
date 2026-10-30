@@ -1,4 +1,4 @@
-type TableRow = { cells: Array<{ value: unknown }> };
+export type TableRow = { cells: Array<{ value: unknown }> };
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   value !== null && typeof value === "object" && !Array.isArray(value);

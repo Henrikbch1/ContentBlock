@@ -50,5 +50,6 @@ export const EMPTY_MESSAGES = {
   news: "Keine Nachrichten vorhanden.",
   newsNotFound: "Der Beitrag wurde nicht gefunden.",
   table: "Keine Tabellendaten vorhanden.",
+  tableNoResults: "Keine passenden Tabellenzeilen gefunden.",
   untitled: "Ohne Titel",
 } as const;
