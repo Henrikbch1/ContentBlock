@@ -29,3 +29,36 @@ export const getChildren = (
   items
     .filter((item) => getParentId(item) === parentId)
     .sort((first, second) => (first.sort ?? 0) - (second.sort ?? 0));
+
+const decodePath = (path: string): string => {
+  try {
+    return decodeURIComponent(path);
+  } catch {
+    return path;
+  }
+};
+
+const normalizePath = (path: string): string => {
+  const trimmed = decodePath(path).replace(/\/+$/, "") || "/";
+  return trimmed === "/home" ? "/" : trimmed;
+};
+
+/** Reports whether a navigation target is the page currently shown. */
+export const isCurrentHref = (
+  href: string | null,
+  currentPath: string,
+): boolean =>
+  href !== null &&
+  href.startsWith("/") &&
+  normalizePath(href) === normalizePath(currentPath);
+
+/** Reports whether an item or any of its descendants is the current page. */
+export const containsCurrent = (
+  items: NavItem[],
+  item: NavItem,
+  currentPath: string,
+): boolean =>
+  isCurrentHref(getNavHref(item), currentPath) ||
+  getChildren(items, getItemId(item)).some((child) =>
+    containsCurrent(items, child, currentPath),
+  );

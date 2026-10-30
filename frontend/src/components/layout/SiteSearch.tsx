@@ -37,7 +37,7 @@ export const SiteSearch = ({ items }: SiteSearchProps): React.JSX.Element => {
 
   return (
     <form
-      className="relative order-last w-full lg:order-none lg:w-80"
+      className="relative w-full"
       onBlur={(event) => {
         if (
           !(event.relatedTarget instanceof Node) ||
@@ -62,15 +62,15 @@ export const SiteSearch = ({ items }: SiteSearchProps): React.JSX.Element => {
       }}
       role="search"
     >
-      <div className="flex min-h-11 items-center gap-2 rounded-card border border-input bg-background px-3">
-        <Search aria-hidden="true" size={18} />
+      <div className="flex min-h-11 items-center gap-2 rounded-card border border-rail-edge bg-rail-foreground/10 px-3 text-rail-foreground focus-within:outline-3 focus-within:outline-offset-2 focus-within:outline-rail-foreground">
+        <Search aria-hidden="true" className="shrink-0" size={18} />
         <label className="shrink-0 text-sm font-semibold" htmlFor={inputId}>
           Suche
         </label>
         <input
           aria-controls={isOpen ? resultsId : undefined}
           autoComplete="off"
-          className="min-w-0 flex-1 bg-transparent py-2 text-base text-foreground"
+          className="min-w-0 flex-1 bg-transparent py-2 text-base text-rail-foreground placeholder:text-rail-foreground/70 focus-visible:outline-none"
           id={inputId}
           maxLength={80}
           onChange={(event) => {

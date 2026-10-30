@@ -1,18 +1,32 @@
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
 import type { NavItem } from "../../lib/types";
-import { getChildren, getItemId, getNavHref } from "./navHelpers";
+import {
+  containsCurrent,
+  getChildren,
+  getItemId,
+  getNavHref,
+  isCurrentHref,
+} from "./navHelpers";
 
 const NAV_LINK_CLASS =
-  "flex min-h-11 items-center rounded-card px-3 py-2 text-base font-medium text-foreground transition-colors hover:bg-muted [overflow-wrap:anywhere]";
+  "nav-pin flex min-h-11 items-center rounded-card px-3 py-2 text-base font-medium text-foreground transition-colors hover:bg-muted aria-[current=page]:font-bold [overflow-wrap:anywhere]";
+
+const TOP_LEVEL_CLASS =
+  "inline-flex min-h-12 max-w-full items-center gap-1 px-3 text-[1.0625rem] font-semibold text-rail-foreground transition-colors hover:bg-rail-foreground/10 data-[current=true]:font-extrabold data-[current=true]:shadow-[inset_0_-4px_0_var(--color-rail-accent)] [overflow-wrap:anywhere]";
+
+type NavProps = Readonly<{
+  items: NavItem[];
+  currentPath: string;
+}>;
 
 const SubItems = ({
   items,
   parentId,
+  currentPath,
   nested = false,
   onNavigate,
-}: {
-  items: NavItem[];
+}: NavProps & {
   parentId: string;
   nested?: boolean;
   onNavigate: () => void;
@@ -31,7 +45,14 @@ const SubItems = ({
       return (
         <li key={itemId}>
           {href ? (
-            <a className={NAV_LINK_CLASS} href={href} onClick={onNavigate}>
+            <a
+              aria-current={
+                isCurrentHref(href, currentPath) ? "page" : undefined
+              }
+              className={NAV_LINK_CLASS}
+              href={href}
+              onClick={onNavigate}
+            >
               {label}
             </a>
           ) : (
@@ -41,6 +62,7 @@ const SubItems = ({
           )}
           {getChildren(items, itemId).length > 0 && (
             <SubItems
+              currentPath={currentPath}
               items={items}
               nested
               onNavigate={onNavigate}
@@ -55,42 +77,42 @@ const SubItems = ({
 
 export const DesktopNavItems = ({
   items,
-}: {
-  items: NavItem[];
-}): React.JSX.Element => {
+  currentPath,
+}: NavProps): React.JSX.Element => {
   const [openMenuId, setOpenMenuId] = useState<string | null>(null);
   const closeMenu = (): void => setOpenMenuId(null);
 
   return (
-    <ul className="flex flex-wrap items-center justify-end gap-x-3 gap-y-1">
+    <ul className="-mx-3 flex flex-wrap items-stretch">
       {getChildren(items, null).map((item) => {
         const itemId = getItemId(item);
         const children = getChildren(items, itemId);
         const href = getNavHref(item);
         const label = item.label?.trim() || "Navigation";
-        const topLevelClass =
-          "min-h-11 max-w-full rounded-card px-2 text-base font-semibold text-foreground transition-colors hover:text-link [overflow-wrap:anywhere]";
+        const isCurrent = containsCurrent(items, item, currentPath);
         if (!children.length)
           return (
-            <li key={itemId}>
+            <li className="flex" key={itemId}>
               {href ? (
                 <a
-                  className={`inline-flex items-center ${topLevelClass}`}
+                  aria-current={
+                    isCurrentHref(href, currentPath) ? "page" : undefined
+                  }
+                  className={TOP_LEVEL_CLASS}
+                  data-current={isCurrent}
                   href={href}
                 >
                   {label}
                 </a>
               ) : (
-                <span className={`inline-flex items-center ${topLevelClass}`}>
-                  {label}
-                </span>
+                <span className={TOP_LEVEL_CLASS}>{label}</span>
               )}
             </li>
           );
         return (
           <li
             key={itemId}
-            className="relative"
+            className="relative flex"
             onBlur={(event) => {
               if (
                 !(event.relatedTarget instanceof Node) ||
@@ -108,10 +130,11 @@ export const DesktopNavItems = ({
               }
             }}
           >
-            <details className="group" open={openMenuId === itemId}>
+            <details className="group flex" open={openMenuId === itemId}>
               <summary
                 aria-expanded={openMenuId === itemId}
-                className={`flex cursor-pointer list-none items-center gap-1 ${topLevelClass} [&::-webkit-details-marker]:hidden`}
+                className={`cursor-pointer list-none ${TOP_LEVEL_CLASS} [&::-webkit-details-marker]:hidden`}
+                data-current={isCurrent}
                 onClick={(event) => {
                   event.preventDefault();
                   setOpenMenuId((currentId) =>
@@ -120,15 +143,27 @@ export const DesktopNavItems = ({
                 }}
               >
                 {label}
-                <ChevronDown aria-hidden="true" size={16} />
+                <ChevronDown
+                  aria-hidden="true"
+                  className="transition-transform group-open:rotate-180"
+                  size={18}
+                />
               </summary>
-              <div className="absolute right-0 top-full z-20 max-h-[min(60vh,24rem)] w-72 max-w-[90vw] overflow-x-hidden overflow-y-auto rounded-card border border-border bg-card p-2 shadow-card">
+              <div className="notice-sheet ctx-default absolute left-0 top-full z-20 mt-1 max-h-[min(60vh,26rem)] w-72 max-w-[90vw] overflow-x-hidden overflow-y-auto rounded-card bg-card p-2 pt-8 text-card-foreground shadow-card">
                 {href && (
-                  <a className={NAV_LINK_CLASS} href={href} onClick={closeMenu}>
+                  <a
+                    aria-current={
+                      isCurrentHref(href, currentPath) ? "page" : undefined
+                    }
+                    className={NAV_LINK_CLASS}
+                    href={href}
+                    onClick={closeMenu}
+                  >
                     {label}
                   </a>
                 )}
                 <SubItems
+                  currentPath={currentPath}
                   items={items}
                   onNavigate={closeMenu}
                   parentId={itemId}

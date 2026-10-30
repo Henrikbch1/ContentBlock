@@ -1,7 +1,50 @@
 import { describe, expect, it } from "vitest";
 
 import type { NavItem } from "../../lib/types";
-import { getChildren, getItemId, getNavHref } from "./navHelpers";
+import {
+  containsCurrent,
+  getChildren,
+  getItemId,
+  getNavHref,
+  isCurrentHref,
+} from "./navHelpers";
+
+describe("isCurrentHref", () => {
+  it("treats the start page aliases and trailing slashes as equal", () => {
+    expect(isCurrentHref("/home", "/")).toBe(true);
+    expect(isCurrentHref("/", "/home/")).toBe(true);
+    expect(isCurrentHref("/kontakt", "/kontakt/")).toBe(true);
+  });
+
+  it("compares encoded and decoded paths", () => {
+    expect(isCurrentHref("/über-uns", "/%C3%BCber-uns")).toBe(true);
+  });
+
+  it("never marks external, missing or different targets", () => {
+    expect(isCurrentHref("https://example.test/news", "/news")).toBe(false);
+    expect(isCurrentHref(null, "/")).toBe(false);
+    expect(isCurrentHref("/news", "/termine")).toBe(false);
+  });
+});
+
+describe("containsCurrent", () => {
+  const navigation: NavItem[] = [
+    { id: "group", type: "group" },
+    {
+      id: "lake",
+      type: "page",
+      parent: "group",
+      page: { id: 1, slug: "gewaesser/see" },
+    },
+  ];
+
+  it("marks a group when one of its children is shown", () => {
+    expect(containsCurrent(navigation, navigation[0], "/gewaesser/see")).toBe(
+      true,
+    );
+    expect(containsCurrent(navigation, navigation[0], "/news")).toBe(false);
+  });
+});
 
 describe("getNavHref", () => {
   it("returns the external url for url items", () => {

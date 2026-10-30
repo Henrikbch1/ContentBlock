@@ -3,16 +3,24 @@ import { useId, useRef, useState } from "react";
 import { getAssetUrl } from "../../lib/directus";
 import { getRelation } from "../../lib/directusRelations";
 import type { DirectusRelation, Navigation } from "../../lib/types";
+import { sharpSAttribute } from "../common/displayTitle";
 import { DesktopNavItems } from "./DesktopNav";
 import { Container } from "./Container";
 import { MobileNavItems } from "./MobileNav";
 import { SiteSearch } from "./SiteSearch";
 
-type HeaderProps = {
+type HeaderProps = Readonly<{
   navigation?: DirectusRelation<Navigation>;
-};
+  currentPath?: string;
+}>;
 
-export const Header = ({ navigation }: HeaderProps): React.JSX.Element => {
+const BRAND_TEXT_CLASS =
+  "display-title min-w-0 text-[1.375rem] [overflow-wrap:anywhere] sm:text-[1.625rem]";
+
+export const Header = ({
+  navigation,
+  currentPath = "/",
+}: HeaderProps): React.JSX.Element => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const mobileNavigationId = useId();
@@ -23,7 +31,8 @@ export const Header = ({ navigation }: HeaderProps): React.JSX.Element => {
 
   return (
     <header
-      className="sticky top-0 z-30 border-b border-border bg-background/95 backdrop-blur"
+      className="relative z-30 border-b-4 border-rail-edge bg-rail text-rail-foreground lg:sticky lg:top-0"
+      data-background="inverse"
       onKeyDown={(event) => {
         if (event.key === "Escape" && isMenuOpen) {
           event.preventDefault();
@@ -32,42 +41,33 @@ export const Header = ({ navigation }: HeaderProps): React.JSX.Element => {
         }
       }}
     >
-      <Container className="flex flex-wrap items-center justify-between gap-3 py-3">
+      <Container className="flex flex-wrap items-center gap-x-6 gap-y-3 py-3">
         <a
-          className="flex min-w-0 flex-1 items-center gap-3 text-foreground lg:flex-none"
+          className="flex min-w-0 flex-1 items-center gap-3 text-rail-foreground no-underline"
           href="/"
         >
-          {logoUrl ? (
-            <>
-              <img
-                alt={brandText ? "" : "Startseite"}
-                className="max-h-12 max-w-28 object-contain sm:max-w-48"
-                decoding="async"
-                src={logoUrl}
-              />
-              {brandText && (
-                <span className="min-w-0 font-heading text-lg font-semibold [overflow-wrap:anywhere] sm:text-xl">
-                  {brandText}
-                </span>
-              )}
-            </>
-          ) : (
-            <span className="min-w-0 font-heading text-lg font-semibold [overflow-wrap:anywhere] sm:text-xl">
+          {logoUrl && (
+            <img
+              alt={brandText ? "" : "Startseite"}
+              className="max-h-12 max-w-24 shrink-0 object-contain sm:max-w-40"
+              decoding="async"
+              src={logoUrl}
+            />
+          )}
+          {(brandText || !logoUrl) && (
+            <span
+              className={BRAND_TEXT_CLASS}
+              {...sharpSAttribute(brandText ?? "")}
+            >
               {brandText || "ContentBlock"}
             </span>
           )}
         </a>
-        <nav
-          aria-label="Hauptnavigation"
-          className="hidden min-w-0 lg:block lg:flex-1"
-        >
-          <DesktopNavItems items={items} />
-        </nav>
         <button
           aria-controls={mobileNavigationId}
           aria-expanded={isMenuOpen}
           aria-label={isMenuOpen ? "Navigation schließen" : "Navigation öffnen"}
-          className="inline-flex min-h-11 items-center justify-center gap-2 rounded-card border border-input px-3 font-semibold text-foreground lg:hidden"
+          className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-card border border-rail-edge px-3 font-semibold text-rail-foreground lg:hidden"
           onClick={() => setIsMenuOpen((open) => !open)}
           ref={menuButtonRef}
           type="button"
@@ -79,16 +79,29 @@ export const Header = ({ navigation }: HeaderProps): React.JSX.Element => {
           )}
           <span>Menü</span>
         </button>
-        <SiteSearch items={items} />
+        <div className="w-full lg:w-80 lg:shrink-0">
+          <SiteSearch items={items} />
+        </div>
       </Container>
+      <div className="hidden border-t border-rail-edge/40 lg:block">
+        <Container>
+          <nav aria-label="Hauptnavigation">
+            <DesktopNavItems currentPath={currentPath} items={items} />
+          </nav>
+        </Container>
+      </div>
       <nav
         aria-label="Mobile Hauptnavigation"
-        className="max-h-[60vh] overflow-y-auto border-t border-border bg-background px-4 py-5 lg:hidden"
+        className="max-h-[65vh] overflow-y-auto border-t border-rail-edge/40 px-4 py-4 lg:hidden"
         hidden={!isMenuOpen}
         id={mobileNavigationId}
       >
         {isMenuOpen && (
-          <MobileNavItems items={items} onClose={() => setIsMenuOpen(false)} />
+          <MobileNavItems
+            currentPath={currentPath}
+            items={items}
+            onClose={() => setIsMenuOpen(false)}
+          />
         )}
       </nav>
     </header>

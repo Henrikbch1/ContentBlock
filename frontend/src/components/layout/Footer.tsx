@@ -30,7 +30,7 @@ const FooterLinkItem = ({
 }): React.JSX.Element => (
   <li>
     <a
-      className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+      className="inline-flex min-h-11 items-center text-base text-rail-foreground underline decoration-rail-edge underline-offset-4 transition-colors hover:decoration-rail-foreground"
       href={href}
     >
       {label}
@@ -43,7 +43,9 @@ const FooterSection = ({
   children,
 }: PropsWithChildren<{ heading: string }>): React.JSX.Element => (
   <section>
-    <h2 className="font-heading text-xl font-semibold">{heading}</h2>
+    <h2 className="notice-label border-b border-rail-edge/50 pb-3 text-rail-foreground">
+      {heading}
+    </h2>
     {children}
   </section>
 );
@@ -77,20 +79,20 @@ export const Footer = ({ footer }: FooterProps): React.JSX.Element => {
 
   return (
     <footer
-      className="border-t-4 border-primary bg-inverse text-inverse-foreground"
+      className="border-t-4 border-rail-edge bg-rail text-rail-foreground"
       data-background="inverse"
     >
       <Container className="grid gap-10 py-12 sm:grid-cols-2 lg:grid-cols-3">
         {contactText && (
           <FooterSection heading={UI_LABELS.footerContact}>
-            <p className="mt-4 whitespace-pre-line text-sm leading-6 text-muted-foreground">
+            <p className="mt-4 whitespace-pre-line text-base leading-7 text-muted-foreground">
               {contactText}
             </p>
           </FooterSection>
         )}
         {quickLinks.length > 0 && (
           <FooterSection heading={UI_LABELS.footerQuickLinks}>
-            <ul className="mt-4 space-y-3">
+            <ul className="mt-3">
               {quickLinks.map((link) => (
                 <FooterLinkItem
                   href={link.href}
@@ -105,7 +107,7 @@ export const Footer = ({ footer }: FooterProps): React.JSX.Element => {
           <FooterSection
             heading={footerData?.legal_heading?.trim() || UI_LABELS.footerLegal}
           >
-            <ul className="mt-4 space-y-3">
+            <ul className="mt-3">
               {legalLinks.map((link) => (
                 <FooterLinkItem
                   href={`/${link.slug}`}
@@ -117,9 +119,9 @@ export const Footer = ({ footer }: FooterProps): React.JSX.Element => {
           </FooterSection>
         )}
       </Container>
-      <div className="border-t border-border">
+      <div className="border-t border-rail-edge/40">
         <Container className="py-6">
-          <p className="text-sm text-muted-foreground">{copyright}</p>
+          <p className="text-base text-muted-foreground">{copyright}</p>
         </Container>
       </div>
     </footer>

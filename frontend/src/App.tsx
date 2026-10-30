@@ -139,7 +139,7 @@ export const App = (): React.JSX.Element => {
         >
           {UI_LABELS.skipToContent}
         </a>
-        <Header navigation={site?.navigation} />
+        <Header currentPath={pathname} navigation={site?.navigation} />
         <main className="flex-1" id="main-content" tabIndex={-1}>
           <RouteContent pathname={pathname} />
         </main>

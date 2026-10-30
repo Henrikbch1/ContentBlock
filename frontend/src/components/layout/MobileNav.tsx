@@ -1,20 +1,30 @@
 import type { NavItem } from "../../lib/types";
-import { getChildren, getItemId, getNavHref } from "./navHelpers";
+import {
+  getChildren,
+  getItemId,
+  getNavHref,
+  isCurrentHref,
+} from "./navHelpers";
+
+const LINK_CLASS =
+  "nav-pin nav-pin--rail inline-flex min-h-12 w-full items-center py-2 pl-3 text-[1.0625rem] font-semibold text-rail-foreground hover:bg-rail-foreground/10 aria-[current=page]:font-extrabold";
 
 export const MobileNavItems = ({
   items,
+  currentPath = "/",
   parentId = null,
   onClose,
-}: {
+}: Readonly<{
   items: NavItem[];
+  currentPath?: string;
   parentId?: string | null;
   onClose?: () => void;
-}): React.JSX.Element => (
+}>): React.JSX.Element => (
   <ul
     className={
       parentId
-        ? "mt-2 flex flex-col gap-1 border-l border-border pl-4"
-        : "flex flex-col gap-1"
+        ? "mb-2 ml-3 flex flex-col border-l border-rail-edge/50 pl-2"
+        : "flex flex-col divide-y divide-rail-edge/30"
     }
   >
     {getChildren(items, parentId).map((item) => {
@@ -25,19 +35,23 @@ export const MobileNavItems = ({
         <li key={getItemId(item)}>
           {href ? (
             <a
-              className="inline-flex min-h-11 w-full items-center rounded-card py-2 text-base font-semibold text-foreground hover:text-link"
+              aria-current={
+                isCurrentHref(href, currentPath) ? "page" : undefined
+              }
+              className={LINK_CLASS}
               href={href}
               onClick={onClose}
             >
               {label}
             </a>
           ) : (
-            <span className="inline-flex min-h-11 items-center py-2 text-base font-semibold text-foreground">
+            <span className="notice-label inline-flex min-h-11 items-center pl-4 pt-3 text-rail-foreground/80">
               {label}
             </span>
           )}
           {children.length > 0 && (
             <MobileNavItems
+              currentPath={currentPath}
               items={items}
               onClose={onClose}
               parentId={getItemId(item)}
