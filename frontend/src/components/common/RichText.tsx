@@ -1,5 +1,5 @@
 import { cn } from "../../lib/utils";
-import { EMPTY_MESSAGES } from "../../lib/uiMessages";
+import { EMPTY_MESSAGES, UI_LABELS } from "../../lib/uiMessages";
 
 type RichTextProps = {
   content?: string | null;
@@ -22,6 +22,15 @@ const ALLOWED_TAGS = new Set([
   "H3",
   "H4",
 ]);
+
+const isExternalLink = (href: string | null): boolean => {
+  if (!href || !/^https?:/i.test(href)) return false;
+  try {
+    return new URL(href).origin !== window.location.origin;
+  } catch {
+    return false;
+  }
+};
 
 const escapeHtml = (content: string): string =>
   content
@@ -58,6 +67,14 @@ const sanitizeHtml = (content: string): string => {
 
     if (element.tagName === "A") {
       element.setAttribute("rel", "noreferrer");
+      if (isExternalLink(element.getAttribute("href"))) {
+        // External targets (e.g. Google Maps) open in a new tab or the native app on mobile.
+        element.setAttribute("target", "_blank");
+        const hint = document.createElement("span");
+        hint.className = "sr-only";
+        hint.textContent = ` ${UI_LABELS.opensInNewTab}`;
+        element.append(hint);
+      }
     }
   });
 

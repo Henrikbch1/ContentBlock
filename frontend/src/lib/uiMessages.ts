@@ -1,6 +1,7 @@
 /** Zentrale UI-Labels sowie Fallbacks für optionale Directus-Texte. */
 export const UI_LABELS = {
   skipToContent: "Zum Inhalt springen",
+  opensInNewTab: "(öffnet in neuem Tab)",
   footerContact: "Kontakt",
   footerQuickLinks: "Schnellzugriff",
   footerLegal: "Rechtliches",

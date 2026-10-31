@@ -35,9 +35,11 @@ describe("CardsBlock", () => {
       />,
     );
 
-    expect(
-      screen.getByRole("link", { name: "Standort in Google Maps öffnen" }),
-    ).toHaveAttribute("href", href);
+    const link = screen.getByRole("link", {
+      name: "Standort in Google Maps öffnen (öffnet in neuem Tab)",
+    });
+    expect(link).toHaveAttribute("href", href);
+    expect(link).toHaveAttribute("target", "_blank");
     expect(document.querySelector("script")).toBeNull();
   });
 });
