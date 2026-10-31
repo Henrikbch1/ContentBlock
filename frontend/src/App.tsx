@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getSite } from "./lib/queries";
 import { useAsyncResource } from "./lib/hooks/useAsyncResource";
+import { useHashScroll } from "./lib/hooks/useHashScroll";
 import { ERROR_MESSAGES, LOADING_MESSAGES, UI_LABELS } from "./lib/uiMessages";
 import { ThemeProvider } from "./components/common/ThemeProvider";
 import { Footer } from "./components/layout/Footer";
@@ -51,6 +52,7 @@ const RouteContent = ({
 export const App = (): React.JSX.Element => {
   const { data: site, isLoading, error } = useAsyncResource(getSite, []);
   const [pathname, setPathname] = useState(() => window.location.pathname);
+  useHashScroll(pathname);
 
   useEffect(() => {
     const handlePopState = (): void => {
