@@ -1,4 +1,5 @@
 import type { NavItem } from "../../lib/types";
+import { SymbolIcon } from "../common/SymbolIcon";
 import {
   getChildren,
   getItemId,
@@ -7,7 +8,7 @@ import {
 } from "./navHelpers";
 
 const LINK_CLASS =
-  "nav-pin nav-pin--rail inline-flex min-h-12 w-full items-center py-2 pl-3 text-[1.0625rem] font-semibold text-rail-foreground hover:bg-rail-foreground/10 aria-[current=page]:font-extrabold";
+  "nav-pin nav-pin--rail inline-flex min-h-12 w-full items-center gap-2 py-2 pl-3 text-[1.0625rem] font-semibold text-rail-foreground hover:bg-rail-foreground/10 aria-[current=page]:font-extrabold";
 
 export const MobileNavItems = ({
   items,
@@ -42,10 +43,12 @@ export const MobileNavItems = ({
               href={href}
               onClick={onClose}
             >
+              <SymbolIcon name={item.icon} />
               {label}
             </a>
           ) : (
-            <span className="notice-label inline-flex min-h-11 items-center pl-4 pt-3 text-rail-foreground/80">
+            <span className="notice-label inline-flex min-h-11 items-center gap-2 pl-4 pt-3 text-rail-foreground/80">
+              <SymbolIcon name={item.icon} />
               {label}
             </span>
           )}

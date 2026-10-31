@@ -27,6 +27,8 @@ export interface NavItem {
   type?: NavItemType | null;
   page?: DirectusRelation<Page>;
   external_url?: string | null;
+  /** Key from the fixed symbol list, see `components/common/iconRegistry.ts`. */
+  icon?: string | null;
   sort?: number | null;
 }
 

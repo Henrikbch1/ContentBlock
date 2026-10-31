@@ -38,6 +38,47 @@ describe("Header navigation", () => {
     expect(trigger).toHaveFocus();
   });
 
+  it("shows decorative icons before labels and ignores unknown keys", () => {
+    render(
+      <Header
+        navigation={{
+          id: 1,
+          items: [
+            {
+              id: 1,
+              label: "Gewässer",
+              icon: "gewaesser",
+              type: "page",
+              page: { id: 1, slug: "gewaesser" },
+            },
+            {
+              id: 2,
+              label: "Sonstiges",
+              icon: "gibt-es-nicht",
+              type: "page",
+              page: { id: 2, slug: "sonstiges" },
+            },
+          ],
+        }}
+      />,
+    );
+    fireEvent.click(screen.getByRole("button", { name: "Navigation öffnen" }));
+    const mobile = screen.getByRole("navigation", {
+      name: "Mobile Hauptnavigation",
+    });
+
+    const withIcon = within(mobile).getByRole("link", { name: "Gewässer" });
+    expect(withIcon.querySelector("svg")).toHaveAttribute(
+      "aria-hidden",
+      "true",
+    );
+    expect(
+      within(mobile)
+        .getByRole("link", { name: "Sonstiges" })
+        .querySelector("svg"),
+    ).toBeNull();
+  });
+
   it("opens a desktop submenu and returns focus to its summary", () => {
     render(<Header navigation={navigation} />);
     const desktop = screen.getByRole("navigation", { name: "Hauptnavigation" });
