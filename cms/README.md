@@ -91,6 +91,14 @@ anderes geheimes Token hinterlegt werden.
    Beschriftungen und die zugehoerigen Seiten oder URLs pflegen. Ueber `parent`
    und `sort` die Hierarchie und Reihenfolge festlegen. Fuer Kerninformationen
    moeglichst flache Menues verwenden und die tatsaechlichen Wege pruefen.
+   Auf einen Abschnitt einer Seite verlinkt ein Menüpunkt vom Typ „URL“ mit
+   `/seite#abschnitt`. Der Anker entsteht automatisch aus dem Blocktitel
+   (klein, Umlaute als ae/oe/ue/ss, Leerzeichen als Bindestrich), z. B.
+   „Unser Vorstand“ → `/verein#unser-vorstand`. Wird der Blocktitel geändert,
+   den Menüpunkt anpassen.
+   Kartentexte sind Rich-Text: Links (z. B. „Standort in Google Maps öffnen“
+   mit `https://www.google.com/maps/search/?api=1&query=Name, Straße, PLZ Ort`)
+   werden auf der Website klickbar.
 3. Es gibt keine Suche. Inhalte muessen ueber die Navigation und die
    Schnellzugriffe erreichbar sein; die tatsaechlichen Wege nach dem Anlegen
    neuer Seiten pruefen.
