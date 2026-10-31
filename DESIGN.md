@@ -9,6 +9,7 @@ colors:
   rail-accent: "#217476"
   secondary: "#e0ecec"
   accent-hover: "#c2d9d9"
+  highlight: "#b0cccb"
   board: "#e9e8e4"
   surface: "#dddcd7"
   paper: "#fcfbf8"
@@ -23,6 +24,7 @@ colors:
   on-primary-dark: "#000000"
   pin-dark: "#2d7c7e"
   rail-accent-dark: "#0f696b"
+  highlight-dark: "#1f3d3d"
   board-dark: "#161717"
   surface-dark: "#1e2020"
   paper-dark: "#262828"
@@ -172,6 +174,7 @@ Eine warmgraue, fast farblose Neutralpalette trägt das System, Farbe kommt nur 
 ### Secondary
 - **Nadelfarbe** (`pin`, dunkel `pin-dark`): Nadeln auf Aushängen und im Menü, Punkt der Hinweisleiste, Unterstreichung der Hinweise, Ziffernlinie der Schrittspalte und Textmarkierung. Stammt aus `accent_color`, ersatzweise aus `primary_color`, und hat gegen `paper` mindestens 3:1.
 - **Akzenttönung** (`secondary`, `accent-hover`): 12 beziehungsweise 24 Prozent des Akzents auf Weiß (im Dunkelmodus auf Schwarz). Fläche des primären Hero-Buttons ohne Bild und dessen Hover. Text darauf erreicht mindestens 7:1.
+- **Heute-Markierung** (`highlight`, dunkel `highlight-dark`, Schrift `on-highlight` = Druckschwarz): 30 Prozent der Nadelfarbe auf Papier, mindestens 1,25:1 Abstand zum Papier, Text darauf mindestens 7:1. Fläche für Tabellenzellen, deren Zeitraum heute gilt, und für die Übersicht „Gilt heute“. Sie markiert immer zusammen mit dem Text „gilt heute“.
 
 ### Neutral
 - **Aushangwand** (`board`, dunkel `board-dark`): Seitenhintergrund und Grundfläche der Abschnitte.
@@ -278,6 +281,18 @@ Eine statische Papierleiste direkt unter dem Hero. Links ein 12px Nadelpunkt mit
 ### Schrittspalte
 Nummerierte Listen in Fließtexten werden zu Schritten mit großen Ziffern und einer Nadelfarblinie (siehe Typography). Gedacht für Abläufe wie Aufnahme oder Gastkarte.
 
+### Schnellzugriff
+Große Aushang-Kacheln mit Nadel, jede Kachel ist ein einziger Link. Oben ein 28px Symbol in Linkfarbe, darunter die Beschriftung in 1.25rem 700 und ein optionaler Kurztext in 1rem Bleistiftgrau. Mindesthöhe 7rem, Hover mit Wandfeld-Tönung und Unterstreichung der Beschriftung. Raster: unter 384px einspaltig, darauf zweispaltig, ab 640px dreispaltig, ab 1024px je nach Anzahl bis fünf Spalten. Externe Ziele bekommen ein kleines Symbol für „neuer Tab“.
+
+### Symbole
+Lucide-Linien-Symbole aus einer festen, im CMS wählbaren Liste (`components/common/iconRegistry.ts`). Sie stehen immer neben einer sichtbaren Beschriftung, sind `aria-hidden`, haben die Größe 1em und erben die Textfarbe. In der obersten Desktop-Menüleiste erscheinen sie erst ab 1280px, damit die Leiste einzeilig bleibt. Unbekannte Schlüssel zeigen kein Symbol.
+
+### Heute gültige Zeiträume
+Tabellenzellen mit Datumsbereichen („01.02. – 15.05.“, auch über den Jahreswechsel) erhalten die Heute-Markierung als Fläche und darunter ein Badge „gilt heute“ in Vereinspetrol (text-sm, fett). Mobile Karten bekommen zusätzlich eine linke Kante in Nadelfarbe. Über der Tabelle fasst ein statischer Kasten „Gilt heute“ alle aktiven Einträge zusammen, damit sie auch bei Seitenumbruch und Filter sichtbar bleiben.
+
+### Dokumentvarianten
+Hat ein Dokument eine Schwarz-Weiß-Datei, zeigt der Aushang statt „Dokument öffnen“ die Zeile „Version wählen“ mit den Textaktionen „Farbe öffnen“ und „Schwarz-Weiß öffnen“, beide 44px hoch.
+
 ### Bewegung
 Es gibt keine gestaltete Bewegung. Übergänge betreffen nur Farbe und die Drehung des Menüpfeils, mit Tailwind-Standarddauer. Bei reduzierter Bewegung fallen Übergänge und weiches Scrollen weg.
 
@@ -307,7 +322,8 @@ Es gibt keine gestaltete Bewegung. Übergänge betreffen nur Farbe und die Drehu
 Diese Punkte beschreiben den gebauten Stand und sind keine Gestaltungsregeln.
 
 - Bildkarten aus `block_cards` haben keine Kopfzeile, weil der CMS-Eintrag kein Kategorie- oder Wertfeld besitzt. Eine CMS-Erweiterung ist vorgeschlagen und wartet auf Freigabe.
-- Ob im ersten Viewport eine Reihe Aushänge erscheint, hängt von der Blockreihenfolge im CMS ab.
+- Ob im ersten Viewport eine Reihe Aushänge erscheint, hängt von der Blockreihenfolge im CMS ab. Auf der Startseite sorgt der Schnellzugriff direkt unter der Hinweisleiste dafür.
 - Es gibt keinen manuellen Umschalter zwischen Hell und Dunkel. Das Schema folgt der Systemeinstellung.
-- Farbige und druckfreundliche Schwarz-Weiß-PDFs sind zwei getrennte Dokumente. Eine automatische Paarung existiert nicht.
+- Die druckfreundliche Schwarz-Weiß-Datei eines Dokuments wird nicht automatisch erzeugt, sondern von der Redaktion hochgeladen.
+- Bilder werden in Originalgröße geladen (keine responsiven Varianten über Directus-Transformationen).
 - Der Legacy-Modus nutzt weiterhin Fraunces und DM Sans mit der alten Petrol-Gold-Palette.

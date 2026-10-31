@@ -17,10 +17,10 @@ pages (slug) ──> pages_blocks[] (sort, collection, item)  ← M2A
               <BlockRenderer blocks />
                        │
      ┌─────────────────┼─────────────────────────────┐
-  block_hero   block_text   block_image ... (11 Block-Typen)
+  block_hero   block_text   block_image ... (12 Block-Typen)
 ```
 
-`src/components/blocks/BlockRenderer.tsx` ordnet über `collection` jede der elf
+`src/components/blocks/BlockRenderer.tsx` ordnet über `collection` jede der zwölf
 `block_*`-Collections einer Komponente zu. Neuer Block = Typ, Directus-Schema,
 Query-Felder, Komponente, Registry-Eintrag (siehe Skill
 `.github/skills/contentblock-architecture`).

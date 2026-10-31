@@ -11,7 +11,7 @@
 
 - `src/lib/directus.ts` ist die Directus-Schema-Grenze und besitzt `getAssetUrl` als einzige Stelle für Asset-URLs. `src/lib/types/` definiert nullable `DirectusRelation<T>`-Typen; Relationen immer null-sicher behandeln.
 - `src/lib/queries/` (je Domäne eine Datei, Re-Export über `index.ts`) besitzt die typisierten Directus-Queries und expliziten Feldlisten. Neue Daten dort typisieren, die benötigten Felder ausdrücklich aufnehmen und sie auch in `cms/snapshots/apply-public-permissions.mjs` freigeben.
-- CMS-Inhalte werden als Blocks gerendert. `src/components/blocks/BlockRenderer.tsx` ordnet die elf implementierten `block_*`-Collections jeweils einer Komponente zu.
+- CMS-Inhalte werden als Blocks gerendert. `src/components/blocks/BlockRenderer.tsx` ordnet die zwölf implementierten `block_*`-Collections jeweils einer Komponente zu.
 - Einen neuen Block vollständig ergänzen: Typ, Directus-Schema, Query-Felder, Komponente und Registry-Eintrag. Das Directus-Schema nur ändern, wenn sich das CMS-Modell ändert.
 - Theme-Daten kommen über die Relation `site.theme` (Directus-Collection `theme`). `src/components/common/ThemeProvider.tsx` überführt sie in CSS-Variablen; die semantischen Tailwind-v4-Tokens liegen in `src/index.css`.
 - Für Farben semantische Tokens wie `bg-primary` und `text-foreground` verwenden, keine rohen Tailwind-Farben oder hart codierten Theme-Farben.

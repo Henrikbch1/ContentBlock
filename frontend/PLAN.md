@@ -14,7 +14,7 @@
 | 2 Directus-Anbindung und Typen  | fertig  | `lib/directus.ts`, `lib/types/`, `lib/queries/` mit expliziten Feldlisten                       |
 | 3 Theme-System                  | fertig  | `ThemeProvider` setzt `--cb-*` auf `<html>`; Defaults und Tailwind-Tokens in `src/index.css`    |
 | 4 Layout                        | fertig  | `Header` (Desktop-/Mobile-Navigation und Titelsuche), `Footer`, `Container`, `Section`          |
-| 5 BlockRenderer und 11 Blöcke   | fertig  | `components/blocks/`                                                                            |
+| 5 BlockRenderer und 12 Blöcke   | fertig  | `components/blocks/`                                                                            |
 | 6 Datenlogik dynamischer Blöcke | fertig  | `get{News,Events,Documents,Contacts}ForBlock`, clientseitig über `useAsyncResource`             |
 | 7 Routing und Detailseiten      | fertig  | Pfad-Auswertung in `App.tsx` (CMS-Seiten, News, Termine); kein Router-Paket                     |
 | 8 Feinschliff, A11y, QA         | laufend | Skip-Link, Fokus-Stile, `prefers-reduced-motion`, statische Hinweisleiste; responsive/Tastatur geprüft |

@@ -95,22 +95,34 @@ anderes geheimes Token hinterlegt werden.
    Seiten, Nachrichten und aktuell sichtbarer Termine. Sie findet keine
    Blocktexte, Tabellenzellen oder PDF-Inhalte. Auch nicht verlinkte Seiten
    koennen erscheinen. Die Suche ersetzt keine Berechtigungen.
-4. Fuer zwei PDF-Varianten zwei **tatsaechlich unterschiedliche, gepruefte**
-   Dateien hochladen und je einen Dokumenteintrag mit eindeutigem Titel wie
-   „Aufnahmeformular – Farbe“ und „Aufnahmeformular – Schwarz-Weiss“ anlegen.
-   Beide Dokumente im Dokument-Block im Modus `manual` auswaehlen und die
-   Verknuepfungen in die gewuenschte Reihenfolge bringen, oder sie derselben im
-   Modus `by_category` verwendeten Kategorie zuordnen. Der Block zeigt die beiden
-   Eintraege getrennt an und oeffnet jeweils die hinterlegte Datei.
-5. Seite und Downloads auf schmalem und breitem Bildschirm sowie mit Tastatur
-   pruefen. Beide PDFs oeffnen und die Schwarz-Weiss-Datei auf Drucktauglichkeit
-   kontrollieren. Bei „Datei nicht verfuegbar“ die Datei im Dokumenteintrag
+4. **PDF in Farbe und Schwarz-Weiß:** Im Dokumenteintrag unter „Datei“ die
+   Farbversion und unter „Schwarz-Weiß-Version (druckfreundlich)“ die geprüfte
+   Druckdatei hochladen. Der Aushang zeigt dann „Version wählen“ mit den Links
+   „Farbe öffnen“ und „Schwarz-Weiß öffnen“. Ohne Schwarz-Weiß-Datei bleibt es
+   bei „Dokument öffnen“. Die Druckdatei wird nicht automatisch erzeugt; sie
+   lässt sich z. B. per „Drucken → Als PDF speichern“ mit Graustufen erstellen.
+5. **Symbole:** Menüpunkte und Schnellzugriff-Kacheln haben ein optionales Feld
+   „Symbol“ mit einer festen Auswahlliste (z. B. Fisch, Gewässer, Termine,
+   Download, Kontakt). Das Symbol steht immer neben der Beschriftung, nie allein.
+   In der obersten Desktop-Menüleiste erscheint es erst ab 1280 px Breite.
+6. **Schnellzugriff:** Den Block „Schnellzugriff“ auf einer Seite einfügen und
+   4 bis 8 Kacheln anlegen: Beschriftung (Pflicht), Symbol, Kurztext (ein Satz)
+   und entweder eine Ziel-Seite oder eine externe Adresse. Kacheln ohne Ziel
+   werden nicht angezeigt. Auf der Startseite steht der Block direkt unter der
+   Hinweisleiste.
+7. **Zeiträume in Tabellen:** Zellen mit Datumsbereichen wie „01.02. – 15.05.“
+   oder „15.10. – 15.02.“ (auch mit „bis“ oder Jahreszahl) werden automatisch
+   farbig mit „gilt heute“ markiert, wenn das heutige Datum darin liegt. Über der
+   Tabelle steht dann eine Übersicht „Gilt heute“. Freitexte wie
+   „keine Schonzeit“ bleiben unverändert. Tag und Monat immer mit Punkt
+   schreiben (`15.10.`), sonst wird der Bereich nicht erkannt.
+8. Seite und Downloads auf schmalem und breitem Bildschirm sowie mit Tastatur
+   prüfen. Beide PDFs öffnen und die Schwarz-Weiß-Datei auf Drucktauglichkeit
+   kontrollieren. Bei „Datei nicht verfügbar“ die Datei im Dokumenteintrag
    hinterlegen. Falls der gesamte Dokument-Block nicht geladen wird, die
-   Dokumentverknuepfungen und Leserechte pruefen.
+   Dokumentverknüpfungen und Leserechte prüfen.
 
-Eine automatische Umwandlung oder eine verknuepfte Varianten-Auswahl existiert
-noch nicht. Bestehende einzelne Dateien werden nicht als Farb- oder
-Schwarz-Weiss-Version bezeichnet. Die Public-Policy hat keine Zeilenfilter.
+Die Public-Policy hat keine Zeilenfilter.
 Vertrauliche Inhalte gehoeren nicht in oeffentlich lesbare Collections.
 
 ## Farben fuer das Frontend
@@ -137,7 +149,11 @@ sicheren Standard. Die Farbanpassung ersetzt keine Sicht- und
 Barrierefreiheitspruefung der Inhalte.
 
 Fuer Bild-Heroes ein Foto mit mindestens 2000 px Breite ohne schwarze Raender
-hochladen. Kleine Bilder werden auf breiten Bildschirmen unscharf.
+hochladen. Kleine Bilder werden auf breiten Bildschirmen unscharf. Das Frontend
+laedt Bilder in Originalgroesse; Fotos vorher zuschneiden und verkleinern
+(Hero etwa 2560 × 1440 px, Kartenbilder 1600 × 1000 px im Format 16:10,
+JPEG-Qualitaet um 80). Titel und Beschreibung in der Mediathek pflegen; bei
+Kartenbildern dient der Kartentitel als Alternativtext.
 
 ## Flows
 
