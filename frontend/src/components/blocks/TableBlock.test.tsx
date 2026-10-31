@@ -28,27 +28,7 @@ describe("TableBlock", () => {
     expect(within(cards).getByText("30 cm")).toBeVisible();
   });
 
-  it("filters all rows and reports an empty result", () => {
-    render(<TableBlock item={{ id: 1, title: "Fischarten", data }} />);
-
-    fireEvent.change(
-      screen.getByRole("searchbox", { name: "Tabelle durchsuchen" }),
-      {
-        target: { value: "hecht" },
-      },
-    );
-    expect(screen.getAllByText("Hecht")).toHaveLength(2);
-    expect(screen.queryByText("Forelle")).not.toBeInTheDocument();
-
-    fireEvent.change(screen.getByRole("searchbox"), {
-      target: { value: "unbekannt" },
-    });
-    expect(
-      screen.getByText("Keine passenden Tabellenzeilen gefunden."),
-    ).toBeVisible();
-  });
-
-  it("paginates long tables and searches beyond the current page", () => {
+  it("paginates long tables on desktop", () => {
     const manyRows = [
       { col_1: "Name" },
       ...Array.from({ length: 25 }, (_, index) => ({
@@ -57,22 +37,18 @@ describe("TableBlock", () => {
     ];
     render(<TableBlock item={{ id: 1, title: "Liste", data: manyRows }} />);
 
+    expect(screen.queryByRole("searchbox")).not.toBeInTheDocument();
     expect(screen.getByText("Zeilen 1–20 von 25")).toBeVisible();
     fireEvent.click(screen.getByRole("button", { name: "Weiter" }));
     expect(screen.getByText("Zeilen 21–25 von 25")).toBeVisible();
-    fireEvent.change(screen.getByRole("searchbox"), {
-      target: { value: "Eintrag 3" },
-    });
-    expect(screen.getByText("Zeilen 1–1 von 1")).toBeVisible();
-    expect(screen.getAllByText("Eintrag 3")).toHaveLength(2);
   });
 
-  it("limits the mobile view to five cards per page", () => {
+  it("limits the mobile view to five cards per page for more than ten rows", () => {
     const narrow = window.matchMedia("(min-width: 9999px)");
     const matchMedia = vi.spyOn(window, "matchMedia").mockReturnValue(narrow);
     const manyRows = [
       { col_1: "Name" },
-      ...Array.from({ length: 6 }, (_, index) => ({
+      ...Array.from({ length: 11 }, (_, index) => ({
         col_1: `Eintrag ${index + 1}`,
       })),
     ];
@@ -82,7 +58,31 @@ describe("TableBlock", () => {
 
       const cards = screen.getByRole("list", { name: "Liste als Karten" });
       expect(within(cards).getAllByRole("listitem")).toHaveLength(5);
-      expect(screen.getByText("Zeilen 1–5 von 6")).toBeVisible();
+      expect(screen.getByText("Zeilen 1–5 von 11")).toBeVisible();
+    } finally {
+      matchMedia.mockRestore();
+    }
+  });
+
+  it("shows up to ten rows completely on mobile without paging", () => {
+    const narrow = window.matchMedia("(min-width: 9999px)");
+    const matchMedia = vi.spyOn(window, "matchMedia").mockReturnValue(narrow);
+    const rows = [
+      { col_1: "Name" },
+      ...Array.from({ length: 8 }, (_, index) => ({
+        col_1: `Eintrag ${index + 1}`,
+      })),
+    ];
+
+    try {
+      render(<TableBlock item={{ id: 1, title: "Liste", data: rows }} />);
+
+      const cards = screen.getByRole("list", { name: "Liste als Karten" });
+      expect(within(cards).getAllByRole("listitem")).toHaveLength(8);
+      expect(screen.getByText("Zeilen 1–8 von 8")).toBeVisible();
+      expect(
+        screen.queryByRole("button", { name: "Weiter" }),
+      ).not.toBeInTheDocument();
     } finally {
       matchMedia.mockRestore();
     }
@@ -150,7 +150,7 @@ describe("TableBlock", () => {
     const matchMedia = vi.spyOn(window, "matchMedia").mockReturnValue(narrow);
     const rows = [
       { col_1: "Art", col_2: "Schonzeit" },
-      ...Array.from({ length: 6 }, (_, index) => ({
+      ...Array.from({ length: 11 }, (_, index) => ({
         col_1: `Fisch ${index + 1}`,
         col_2: "01.02. – 15.05.",
       })),
@@ -172,7 +172,7 @@ describe("TableBlock", () => {
       expect(
         within(summary as HTMLElement).getByRole("listitem"),
       ).toHaveTextContent("Bachforelle – Schonzeit 15.10. – 15.02.");
-      expect(screen.getByText("Zeilen 1–5 von 7")).toBeVisible();
+      expect(screen.getByText("Zeilen 1–5 von 12")).toBeVisible();
       expect(
         within(
           screen.getByRole("list", { name: "Zeiten als Karten" }),
@@ -205,7 +205,6 @@ describe("TableBlock", () => {
     render(<TableBlock item={{ id: 1, data: null }} />);
 
     expect(screen.getByText("Keine Tabellendaten vorhanden.")).toBeVisible();
-    expect(screen.queryByRole("searchbox")).not.toBeInTheDocument();
   });
 
   it("skips completely empty data rows left by the table editor", () => {

@@ -1,4 +1,4 @@
-import { useEffect, useId, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Section } from "../layout/Section";
 import { SectionTitle } from "../common/SectionTitle";
@@ -15,9 +15,15 @@ import type { TableDisplayRow } from "./TableViews";
 const TABLE_BREAKPOINT = "(min-width: 48rem)";
 const DESKTOP_PAGE_SIZE = 20;
 const MOBILE_PAGE_SIZE = 5;
+/** Tables up to this many rows are shown completely on narrow screens. */
+const MOBILE_PAGING_THRESHOLD = 10;
 
-const getPageSize = (wide: boolean): number =>
-  wide ? DESKTOP_PAGE_SIZE : MOBILE_PAGE_SIZE;
+const getPageSize = (wide: boolean, rowCount: number): number =>
+  wide
+    ? DESKTOP_PAGE_SIZE
+    : rowCount > MOBILE_PAGING_THRESHOLD
+      ? MOBILE_PAGE_SIZE
+      : Math.max(1, rowCount);
 
 const identifyRows = (rows: TableRow[], today: Date): TableDisplayRow[] => {
   const occurrences = new Map<string, number>();
@@ -45,17 +51,14 @@ export const TableBlock = ({
   background,
   today = new Date(),
 }: TableBlockProps): React.JSX.Element => {
-  const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(() =>
-    getPageSize(window.matchMedia(TABLE_BREAKPOINT).matches),
+  const [wide, setWide] = useState(
+    () => window.matchMedia(TABLE_BREAKPOINT).matches,
   );
-  const searchId = useId();
-  const tableId = useId();
   useEffect(() => {
     const media = window.matchMedia(TABLE_BREAKPOINT);
     const onChange = (event: MediaQueryListEvent): void =>
-      setPageSize(getPageSize(event.matches));
+      setWide(event.matches);
     media.addEventListener("change", onChange);
     return () => media.removeEventListener("change", onChange);
   }, []);
@@ -64,16 +67,11 @@ export const TableBlock = ({
   const rows = identifyRows(body, today).filter((row) =>
     row.values.some((value) => value.trim() !== ""),
   );
-  const search = query.trim().toLocaleLowerCase();
-  const filtered = search
-    ? rows.filter((row) =>
-        row.values.some((value) => value.toLocaleLowerCase().includes(search)),
-      )
-    : rows;
-  const pages = Math.max(1, Math.ceil(filtered.length / pageSize));
+  const pageSize = getPageSize(wide, rows.length);
+  const pages = Math.max(1, Math.ceil(rows.length / pageSize));
   const currentPage = Math.min(page, pages);
   const offset = (currentPage - 1) * pageSize;
-  const visibleRows = filtered.slice(offset, offset + pageSize);
+  const visibleRows = rows.slice(offset, offset + pageSize);
   const columnCount = rows.reduce(
     (count, row) => Math.max(count, row.values.length),
     header?.cells.length ?? 0,
@@ -95,38 +93,12 @@ export const TableBlock = ({
       ) : (
         <div className="flex flex-col gap-5">
           <TableActiveSummary entries={activeEntries} />
+          <TableViews headers={headers} label={label} rows={visibleRows} />
           {rows.length > 0 && (
-            <div className="flex max-w-md flex-col gap-2">
-              <label className="font-semibold" htmlFor={searchId}>
-                Tabelle durchsuchen
-              </label>
-              <input
-                aria-controls={tableId}
-                className="min-h-11 rounded-card border border-input bg-background px-4 text-foreground"
-                id={searchId}
-                onChange={(event) => {
-                  setQuery(event.currentTarget.value);
-                  setPage(1);
-                }}
-                type="search"
-                value={query}
-              />
-            </div>
-          )}
-          {filtered.length === 0 && rows.length > 0 && (
-            <p role="status">{EMPTY_MESSAGES.tableNoResults}</p>
-          )}
-          <TableViews
-            headers={headers}
-            id={tableId}
-            label={label}
-            rows={visibleRows}
-          />
-          {filtered.length > 0 && (
             <div className="flex flex-wrap items-center justify-between gap-3">
               <p aria-live="polite" className="text-base text-muted-foreground">
                 Zeilen {offset + 1}–{offset + visibleRows.length} von{" "}
-                {filtered.length}
+                {rows.length}
               </p>
               {pages > 1 && (
                 <div className="flex gap-2">

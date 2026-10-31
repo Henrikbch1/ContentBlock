@@ -11,7 +11,6 @@ export type TableDisplayRow = Readonly<{
 
 type TableViewsProps = Readonly<{
   headers: string[];
-  id: string;
   label: string;
   rows: TableDisplayRow[];
 }>;
@@ -34,11 +33,10 @@ const ActiveMark = ({ heading }: { heading: string }): React.JSX.Element => (
 
 export const TableViews = ({
   headers,
-  id,
   label,
   rows,
 }: TableViewsProps): React.JSX.Element => (
-  <div id={id}>
+  <div>
     <div
       aria-label={`${label} als Tabelle`}
       className={cardClassName("hidden overflow-x-auto md:block")}

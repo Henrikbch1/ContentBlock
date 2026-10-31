@@ -56,10 +56,10 @@ frontend/src/
 ├── lib/
 │   ├── directus.ts         # Client, Schema, assertDirectusConfigured, getAssetUrl
 │   ├── directusRelations.ts# getRelation/getRelationId(s)/getAssetId
-│   ├── queries/            # site, page, news, event, document, contact, search
-│   ├── types/              # directus, content, blocks, search (nullable Relationen)
-│   ├── hooks/              # useAsyncResource, usePageTitle, useContentSearch
-│   └── format.ts, tableData.ts, searchResults.ts, uiMessages.ts, utils.ts
+│   ├── queries/            # site, page, news, event, document, contact
+│   ├── types/              # directus, content, blocks (nullable Relationen)
+│   ├── hooks/              # useAsyncResource, usePageTitle
+│   └── format.ts, tableData.ts, uiMessages.ts, utils.ts
 └── test/setup.ts           # Vitest-Setup (jest-dom, cleanup)
 ```
 
@@ -81,28 +81,16 @@ Unbekannte Slugs rendern `NotFoundPage`.
 Bei internen Seitenwechseln ohne Fragment und bei der Browser-Zurücknavigation
 wandert der Fokus zum Hauptinhalt. Fragment-Links behalten ihr bisheriges Verhalten.
 
-### Navigation und Suche
+### Navigation
 
 Der Header nutzt die in Directus gepflegten Navigationseinträge einschließlich
 verschachtelter Menüs. Lange Desktop-Untermenüs und die mobile Navigation sind
-scrollbar. Escape schließt das jeweils aktive Menü beziehungsweise die Suche und
-setzt den Fokus auf das zugehörige Bedienelement zurück.
+scrollbar. Escape schließt das jeweils aktive Menü und setzt den Fokus auf das
+zugehörige Bedienelement zurück.
 
-[SiteSearch.tsx](src/components/layout/SiteSearch.tsx) durchsucht ab zwei Zeichen
-die erreichbaren Navigationsbeschriftungen und deren Eltern sowie die Titel
-öffentlich lesbarer Seiten, Nachrichten und aktuell sichtbarer Termine. Die
-Directus-Abfragen in [searchQueries.ts](src/lib/queries/searchQueries.ts) sind
-um 250 ms verzögert und fragen höchstens neun Einträge je Collection ab.
-Pro Collection werden bis zu acht berücksichtigt. Unterschiedliche Quellen werden
-abwechselnd gemischt, doppelte Ziele zusammengeführt und höchstens zehn Treffer
-angezeigt. Bei weiteren Treffern wird zum Verfeinern aufgefordert. Fehler einzelner
-Collections werden angezeigt, während Treffer anderer Quellen erhalten bleiben.
-
-Die Suche ist keine Volltextsuche: Blocktexte, Tabellenzellen, Dokumenttitel und
-PDF-Inhalte werden nicht durchsucht. Auch nicht in der Navigation verlinkte,
-öffentlich lesbare Seiten können über ihren Titel erscheinen. Die Suche ist
-keine Zugriffskontrolle. Für die Zwei-Klick-Vorgabe müssen Kernziele redaktionell
-festgelegt und die tatsächlichen Navigationswege geprüft werden.
+Es gibt keine globale Suche und keine Tabellensuche. Für die Zwei-Klick-Vorgabe
+müssen Kernziele redaktionell festgelegt und die tatsächlichen Navigationswege
+geprüft werden.
 
 ---
 
@@ -123,8 +111,9 @@ festgelegt und die tatsächlichen Navigationswege geprüft werden.
 - Asset-URLs entstehen ausschließlich über `getAssetUrl` in `lib/directus.ts`.
 - `block_table.data` bleibt das flache `col_N`-Format;
   [tableData.ts](src/lib/tableData.ts) normalisiert es.
-  [TableBlock.tsx](src/components/blocks/TableBlock.tsx) bietet eine Suche und
-  Seiten zu fünf mobilen beziehungsweise 20 Desktop-Zeilen.
+  [TableBlock.tsx](src/components/blocks/TableBlock.tsx) paginiert mit 20
+  Desktop-Zeilen je Seite; mobil erst ab mehr als zehn Zeilen mit fünf Zeilen je
+  Seite, kürzere Tabellen erscheinen vollständig.
   [TableViews.tsx](src/components/blocks/TableViews.tsx) zeigt auf kleinen
   Bildschirmen beschriftete Karten und sonst eine semantische Tabelle.
 
@@ -172,7 +161,7 @@ Modus. Die Gestaltung folgt dem Bild eines Vereinsschaukastens:
 
 | Element         | Umsetzung                                                                                                         |
 | --------------- | ----------------------------------------------------------------------------------------------------------------- |
-| Rahmenleiste    | [Header.tsx](src/components/layout/Header.tsx): Logo, Name und Suche oben, Navigation einzeilig darunter; ab `lg` angeheftet |
+| Rahmenleiste    | [Header.tsx](src/components/layout/Header.tsx): Logo und Name oben, Navigation einzeilig darunter; ab `lg` angeheftet |
 | Aushangwand     | Seitenhintergrund `bg-background`, Aushänge auf `bg-paper`                                                        |
 | Aushang         | `noticeClassName` in [cardClassName.ts](src/components/common/cardClassName.ts): Papier mit Nadel (`--cb-pin`)     |
 | Aushang-Kopf    | [NoticeMeta.tsx](src/components/common/NoticeMeta.tsx): Kategorie links, Datum oder Dateityp rechts               |

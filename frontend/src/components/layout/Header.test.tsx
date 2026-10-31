@@ -1,10 +1,8 @@
 import { fireEvent, render, screen, within } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 
 import type { Navigation } from "../../lib/types";
 import { Header } from "./Header";
-
-vi.mock("./SiteSearch", () => ({ SiteSearch: () => null }));
 
 const navigation: Navigation = {
   id: 1,

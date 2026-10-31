@@ -28,7 +28,6 @@ export const LOADING_MESSAGES = {
   documents: "Dokumente werden geladen ...",
   contacts: "Kontakte werden geladen ...",
   connection: "Directus-Verbindung wird geprüft ...",
-  search: "Suche läuft ...",
 } as const;
 
 export const ERROR_MESSAGES = {
@@ -41,7 +40,6 @@ export const ERROR_MESSAGES = {
   documents: "Dokumente konnten nicht geladen werden.",
   contacts: "Kontakte konnten nicht geladen werden.",
   connection: "Die Verbindung zu Directus konnte nicht hergestellt werden.",
-  search: "Seiten, Nachrichten und Termine konnten nicht durchsucht werden.",
 } as const;
 
 export const EMPTY_MESSAGES = {
@@ -61,7 +59,5 @@ export const EMPTY_MESSAGES = {
   news: "Keine Nachrichten vorhanden.",
   newsNotFound: "Der Beitrag wurde nicht gefunden.",
   table: "Keine Tabellendaten vorhanden.",
-  tableNoResults: "Keine passenden Tabellenzeilen gefunden.",
-  search: "Keine passenden Einträge gefunden.",
   untitled: "Ohne Titel",
 } as const;

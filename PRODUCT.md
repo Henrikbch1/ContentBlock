@@ -49,8 +49,9 @@ Angeln und Gewässern sowie Termine, Kontakt und Downloads im Vordergrund.
   vereins- oder projektspezifische Inhalte dürfen nicht im Frontend fest
   codiert werden.
 - Die Website soll für Smartphones, Tablets und Desktopgeräte geeignet sein.
-  Kerninformationen sollen auf kurzen Wegen erreichbar sein und eine gut
-  sichtbare Suche erhalten.
+  Kerninformationen sollen auf kurzen Wegen über Navigation und Schnellzugriff
+  erreichbar sein. Eine Suche ist für den überschaubaren Umfang bewusst nicht
+  vorgesehen.
 - Das gewünschte Farbsystem verwendet eine neutrale Basis für Light- und
   Dark-Mode sowie höchstens zwei administrativ wählbare Akzentfarben.
   Geprüfte Farbkombinationen werden automatisch korrigiert. Das bisherige

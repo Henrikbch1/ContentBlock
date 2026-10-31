@@ -97,11 +97,6 @@ components:
     typography: "{typography.nav}"
     height: "3rem"
     padding: "0 0.75rem"
-  rail-search:
-    textColor: "{colors.on-rail}"
-    rounded: "{rounded.card}"
-    height: "2.75rem"
-    padding: "0 0.75rem"
   notice:
     backgroundColor: "{colors.paper}"
     textColor: "{colors.ink}"
@@ -179,12 +174,12 @@ Eine warmgraue, fast farblose Neutralpalette trägt das System, Farbe kommt nur 
 ### Neutral
 - **Aushangwand** (`board`, dunkel `board-dark`): Seitenhintergrund und Grundfläche der Abschnitte.
 - **Wandfeld** (`surface`, dunkel `surface-dark`): Abschnitte mit Hintergrund `surface`, Hover von Buttons auf Bildern.
-- **Aushangpapier** (`paper`, dunkel `paper-dark`): Aushänge, Hinweisleiste, Dropdowns und Suchergebnisse.
+- **Aushangpapier** (`paper`, dunkel `paper-dark`): Aushänge, Hinweisleiste und Dropdowns.
 - **Druckschwarz** (`ink`, dunkel `ink-dark`): Fließtext und Titel.
 - **Bleistiftgrau** (`muted-ink`, dunkel `muted-ink-dark`): Kopfzeilen der Aushänge, Teaser, Hilfetexte. Erreicht auf Papier rund 7,4:1.
 - **Haarlinie** (`hairline`): Rahmen der Aushänge und Linie unter der Kopfzeile, gemischt aus 18 Prozent Text in Papier.
 - **Rahmenanthrazit** (`rail`, dunkel `rail-dark`) mit **Leistenschrift** (`on-rail`): Kopf- und Fußleiste.
-- **Aluminiumkante** (`rail-edge`, dunkel `rail-edge-dark`): 4px Kante unter dem Kopf und über dem Fuß, Rahmen von Suchfeld und Menübutton, mit 40 Prozent Deckkraft als Trennlinie zwischen den Leistenzeilen.
+- **Aluminiumkante** (`rail-edge`, dunkel `rail-edge-dark`): 4px Kante unter dem Kopf und über dem Fuß, Rahmen des Menübuttons, mit 40 Prozent Deckkraft als Trennlinie zwischen den Leistenzeilen.
 - **Bildschleier**: Auf Bild-Heroes liegt ein Verlauf von unten `rgb(0 0 0 / 82%)` über `62%` nach oben `45%`, ab 1024px Breite oben nur noch `20%`. Schrift darauf ist Weiß.
 
 ### Named Rules
@@ -222,7 +217,7 @@ Alle Schriften liegen selbst gehostet unter `frontend/public/fonts/` mit ihren O
 
 Ein zentrierter Container von maximal 72rem mit 16px, ab 640px 24px und ab 1024px 32px Seitenrand trägt alle Inhalte. Die Breakpoints sind die Tailwind-Standards (640px, 768px, 1024px). Abschnitte haben einen vertikalen Abstand von `clamp(2rem, 4vw, 3.25rem)`. Das CMS kann Radius, Abschnittsabstand, Containerbreite und Schatten über Vorgaben ändern. Farben und Schriften setzt es im neutralen Modus nicht.
 
-Die Rahmenleiste hat zwei Zeilen. Oben Logo und Markenname links, rechts ein 20rem breites Suchfeld. Darunter, durch eine Linie getrennt, die Navigation in einer Zeile. Unter 1024px wandert das Suchfeld in eine eigene volle Zeile, der Menübutton ersetzt die zweite Zeile und öffnet die Navigation in der Leiste. Angeheftet ist die Leiste erst ab 1024px.
+Die Rahmenleiste hat zwei Zeilen. Oben Logo und Markenname links, rechts bleibt die Zeile frei (mobil steht dort der Menübutton). Darunter, durch eine Linie getrennt, die Navigation in einer Zeile. Unter 1024px ersetzt der Menübutton die zweite Zeile und öffnet die Navigation in der Leiste. Angeheftet ist die Leiste erst ab 1024px. Es gibt keine Suche; Inhalte müssen über Navigation und Schnellzugriffe erreichbar sein.
 
 Der Bild-Hero ist ein randloses Band von mindestens 22rem, 26rem ab 640px und 28rem ab 1024px Höhe. Der Titel steht unten links, ab 1024px rechts daneben Untertitel und Aktionen im Verhältnis 1.4 zu 1. Direkt darunter folgt die Hinweisleiste über die volle Breite.
 
@@ -230,10 +225,10 @@ Aushangraster passen sich der Anzahl an. Ein Aushang steht allein mit höchstens
 
 ## Elevation & Depth
 
-Tiefe entsteht aus Material, nicht aus schwebenden Ebenen. Die Wand ist flach, die Aushänge liegen mit einer Haarlinie und einem kurzen, nach unten gezogenen Schatten knapp davor, als hingen sie auf Kork. Die Nadel ist das einzige Element mit plastischer Wölbung. Die Rahmenleiste bleibt flach und grenzt sich über Farbe und Aluminiumkante ab. Dropdowns und Suchergebnisse sind ebenfalls Aushänge und nutzen denselben Schatten.
+Tiefe entsteht aus Material, nicht aus schwebenden Ebenen. Die Wand ist flach, die Aushänge liegen mit einer Haarlinie und einem kurzen, nach unten gezogenen Schatten knapp davor, als hingen sie auf Kork. Die Nadel ist das einzige Element mit plastischer Wölbung. Die Rahmenleiste bleibt flach und grenzt sich über Farbe und Aluminiumkante ab. Dropdowns sind ebenfalls Aushänge und nutzen denselben Schatten.
 
 ### Shadow Vocabulary
-- **Aushang hell** (`box-shadow: 0 1px 0 rgb(0 0 0 / 0.08), 0 14px 22px -18px rgb(0 0 0 / 0.45)`): Aushänge, Dropdown-Blätter, Suchergebnisse.
+- **Aushang hell** (`box-shadow: 0 1px 0 rgb(0 0 0 / 0.08), 0 14px 22px -18px rgb(0 0 0 / 0.45)`): Aushänge, Dropdown-Blätter.
 - **Aushang dunkel** (`box-shadow: 0 1px 0 rgb(255 255 255 / 0.04), 0 14px 22px -16px rgb(0 0 0 / 0.8)`): dieselben Elemente im Dunkelmodus.
 - **Nadelkopf** (`box-shadow: inset 0 -2px 0 rgb(0 0 0 / 0.25), 0 2px 3px rgb(0 0 0 / 0.35)`): der 14px Punkt oben mittig auf jedem Aushang.
 
@@ -267,7 +262,6 @@ Die Signatur des Systems. Jedes Blatt, das informiert, ist ein Aushang.
 ### Inputs / Fields
 - **Style:** 48px hoch, 1px Rahmen aus 60 Prozent Text, Grund in Wandfarbe, 3px Ecken, Beschriftung fett darüber. Checkboxen 24px mit Akzentfarbe.
 - **Focus:** Rahmen wechselt zu Vereinspetrol, dazu der globale 3px Fokusumriss.
-- **Suche in der Leiste:** 44px hoch, Aluminiumrahmen, zehnprozentige Aufhellung der Leiste, Lupe und sichtbare Beschriftung „Suche“ vor dem Feld. Ergebnisse erscheinen als Aushangblatt darunter.
 
 ### Navigation
 - **Hauptmenü (ab 1024px):** einzeilig in der zweiten Leistenzeile, 48px hohe Einträge in 17px 600. Hover hellt mit 10 Prozent auf. Der aktive Zweig wird 800 und bekommt eine 4px Unterkante in Leistenmarke.
@@ -288,7 +282,7 @@ Große Aushang-Kacheln mit Nadel, jede Kachel ist ein einziger Link. Oben ein 28
 Lucide-Linien-Symbole aus einer festen, im CMS wählbaren Liste (`components/common/iconRegistry.ts`). Sie stehen immer neben einer sichtbaren Beschriftung, sind `aria-hidden`, haben die Größe 1em und erben die Textfarbe. In der obersten Desktop-Menüleiste erscheinen sie erst ab 1280px, damit die Leiste einzeilig bleibt. Unbekannte Schlüssel zeigen kein Symbol.
 
 ### Heute gültige Zeiträume
-Tabellenzellen mit Datumsbereichen („01.02. – 15.05.“, auch über den Jahreswechsel) erhalten die Heute-Markierung als Fläche und darunter ein Badge „gilt heute“ in Vereinspetrol (text-sm, fett), in der Tabelle wie in den mobilen Karten. Keine Seitenkante (siehe Detektor-Regel `side-tab`). Über der Tabelle fasst ein statischer Kasten „Gilt heute“ alle aktiven Einträge zusammen, damit sie auch bei Seitenumbruch und Filter sichtbar bleiben.
+Tabellenzellen mit Datumsbereichen („01.02. – 15.05.“, auch über den Jahreswechsel) erhalten die Heute-Markierung als Fläche und darunter ein Badge „gilt heute“ in Vereinspetrol (text-sm, fett), in der Tabelle wie in den mobilen Karten. Keine Seitenkante (siehe Detektor-Regel `side-tab`). Über der Tabelle fasst ein statischer Kasten „Gilt heute“ alle aktiven Einträge zusammen, damit sie auch bei Seitenumbruch sichtbar bleiben.
 
 ### Dokumentvarianten
 Hat ein Dokument eine Schwarz-Weiß-Datei, zeigt der Aushang statt „Dokument öffnen“ die Zeile „Version wählen“ mit den Textaktionen „Farbe öffnen“ und „Schwarz-Weiß öffnen“, beide 44px hoch.

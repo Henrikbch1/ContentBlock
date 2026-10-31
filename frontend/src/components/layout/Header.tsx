@@ -7,7 +7,6 @@ import { sharpSAttribute } from "../common/displayTitle";
 import { DesktopNavItems } from "./DesktopNav";
 import { Container } from "./Container";
 import { MobileNavItems } from "./MobileNav";
-import { SiteSearch } from "./SiteSearch";
 
 type HeaderProps = Readonly<{
   navigation?: DirectusRelation<Navigation>;
@@ -41,7 +40,7 @@ export const Header = ({
         }
       }}
     >
-      <Container className="flex flex-wrap items-center gap-x-6 gap-y-3 py-3">
+      <Container className="flex items-center gap-x-6 py-3">
         <a
           className="flex min-w-0 flex-1 items-center gap-3 text-rail-foreground no-underline"
           href="/"
@@ -79,9 +78,6 @@ export const Header = ({
           )}
           <span>Menü</span>
         </button>
-        <div className="w-full lg:w-80 lg:shrink-0">
-          <SiteSearch items={items} />
-        </div>
       </Container>
       <div className="hidden border-t border-rail-edge/40 lg:block">
         <Container>

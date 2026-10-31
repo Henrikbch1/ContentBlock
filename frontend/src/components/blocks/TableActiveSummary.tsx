@@ -5,7 +5,7 @@ type TableActiveSummaryProps = Readonly<{
   entries: readonly ActiveEntry[];
 }>;
 
-/** Static overview of all table cells that apply today, independent of paging and search. */
+/** Static overview of all table cells that apply today, independent of paging. */
 export const TableActiveSummary = ({
   entries,
 }: TableActiveSummaryProps): React.JSX.Element | null =>

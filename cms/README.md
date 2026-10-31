@@ -91,10 +91,9 @@ anderes geheimes Token hinterlegt werden.
    Beschriftungen und die zugehoerigen Seiten oder URLs pflegen. Ueber `parent`
    und `sort` die Hierarchie und Reihenfolge festlegen. Fuer Kerninformationen
    moeglichst flache Menues verwenden und die tatsaechlichen Wege pruefen.
-3. Die Suche findet Navigationsbeschriftungen sowie Titel oeffentlich lesbarer
-   Seiten, Nachrichten und aktuell sichtbarer Termine. Sie findet keine
-   Blocktexte, Tabellenzellen oder PDF-Inhalte. Auch nicht verlinkte Seiten
-   koennen erscheinen. Die Suche ersetzt keine Berechtigungen.
+3. Es gibt keine Suche. Inhalte muessen ueber die Navigation und die
+   Schnellzugriffe erreichbar sein; die tatsaechlichen Wege nach dem Anlegen
+   neuer Seiten pruefen.
 4. **PDF in Farbe und Schwarz-Weiß:** Im Dokumenteintrag unter „Datei“ die
    Farbversion und unter „Schwarz-Weiß-Version (druckfreundlich)“ die geprüfte
    Druckdatei hochladen. Der Aushang zeigt dann „Version wählen“ mit den Links
