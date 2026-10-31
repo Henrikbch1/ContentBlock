@@ -1,4 +1,5 @@
 import { DirectusImage } from "../common/DirectusImage";
+import { RichText } from "../common/RichText";
 import { Section } from "../layout/Section";
 import { EMPTY_MESSAGES } from "../../lib/uiMessages";
 import type { BlockCards, BlockProps } from "../../lib/types";
@@ -33,9 +34,10 @@ export const CardsBlock = ({
                   {card.title || ""}
                 </h3>
                 {card.text && (
-                  <p className="mt-3 text-muted-foreground [overflow-wrap:anywhere]">
-                    {card.text}
-                  </p>
+                  <RichText
+                    className="mt-3 text-muted-foreground [overflow-wrap:anywhere]"
+                    content={card.text}
+                  />
                 )}
               </div>
             </article>
