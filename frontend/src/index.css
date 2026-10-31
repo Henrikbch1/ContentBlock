@@ -359,8 +359,11 @@
   text-transform: uppercase;
 }
 
-:root[data-cb-theme="neutral"] .notice-sheet {
-  position: relative;
+/* Layered with zero specificity so positioning utilities (e.g. `absolute` on dropdown sheets) win. */
+@layer components {
+  :where(:root[data-cb-theme="neutral"]) .notice-sheet {
+    position: relative;
+  }
 }
 
 :root[data-cb-theme="neutral"] .notice-sheet::before {
