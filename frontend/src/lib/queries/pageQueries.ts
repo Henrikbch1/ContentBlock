@@ -31,6 +31,15 @@ const PAGE_FIELDS = [
   "blocks.item:block_ticker.messages.link.*",
   "blocks.item:block_news.*",
   "blocks.item:block_events.*",
+  "blocks.item:block_quicklinks.id",
+  "blocks.item:block_quicklinks.title",
+  "blocks.item:block_quicklinks.items.id",
+  "blocks.item:block_quicklinks.items.label",
+  "blocks.item:block_quicklinks.items.icon",
+  "blocks.item:block_quicklinks.items.text",
+  "blocks.item:block_quicklinks.items.external_url",
+  "blocks.item:block_quicklinks.items.sort",
+  "blocks.item:block_quicklinks.items.page.slug",
 ] as const;
 
 export const getPageBySlug = async (slug: string): Promise<Page | null> => {

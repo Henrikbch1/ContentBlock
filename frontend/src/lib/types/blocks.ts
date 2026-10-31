@@ -4,11 +4,7 @@ import type { DirectusAsset, DirectusId, DirectusRelation } from "./directus";
 export type SectionBackground = "default" | "surface" | "primary";
 
 export type BlockMode =
-  | "manual"
-  | "latest"
-  | "upcoming"
-  | "by_category"
-  | "by_role";
+  "manual" | "latest" | "upcoming" | "by_category" | "by_role";
 
 export type BlockCollection =
   | "block_hero"
@@ -21,7 +17,8 @@ export type BlockCollection =
   | "block_documents"
   | "block_ticker"
   | "block_news"
-  | "block_events";
+  | "block_events"
+  | "block_quicklinks";
 
 export type BlockItem =
   | BlockHero
@@ -34,7 +31,8 @@ export type BlockItem =
   | BlockDocuments
   | BlockTicker
   | BlockNews
-  | BlockEvents;
+  | BlockEvents
+  | BlockQuicklinks;
 
 export interface PageBlock {
   id: DirectusId;
@@ -164,4 +162,20 @@ export interface BlockEvents extends BlockBase {
   mode?: BlockMode | null;
   filter_category?: DirectusRelation<Category>;
   limit?: number | null;
+}
+
+export interface QuicklinkItem {
+  id?: DirectusId;
+  label?: string | null;
+  /** Symbolschlüssel aus der festen Liste (`iconRegistry.ts`). */
+  icon?: string | null;
+  text?: string | null;
+  page?: DirectusRelation<Page>;
+  external_url?: string | null;
+  sort?: number | null;
+}
+
+export interface BlockQuicklinks extends BlockBase {
+  title?: string | null;
+  items?: QuicklinkItem[] | null;
 }

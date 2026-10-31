@@ -12,6 +12,7 @@ import type {
   BlockHero,
   BlockImage,
   BlockNews,
+  BlockQuicklinks,
   BlockTable,
   BlockText,
   BlockTicker,
@@ -60,6 +61,7 @@ export type Schema = {
   block_ticker: BlockTicker[];
   block_news: BlockNews[];
   block_events: BlockEvents[];
+  block_quicklinks: BlockQuicklinks[];
 };
 
 const directusUrl = import.meta.env.VITE_DIRECTUS_URL?.replace(/\/$/, "");

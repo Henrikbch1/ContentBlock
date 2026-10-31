@@ -8,6 +8,7 @@ import type {
   BlockHero,
   BlockImage,
   BlockNews,
+  BlockQuicklinks,
   BlockTable,
   BlockText,
   BlockTicker,
@@ -24,6 +25,7 @@ import { FaqBlock } from "./FaqBlock";
 import { HeroBlock } from "./HeroBlock";
 import { ImageBlock } from "./ImageBlock";
 import { NewsBlock } from "./NewsBlock";
+import { QuicklinksBlock } from "./QuicklinksBlock";
 import { TableBlock } from "./TableBlock";
 import { TextBlock } from "./TextBlock";
 import { TickerBlock } from "./TickerBlock";
@@ -61,6 +63,9 @@ const BLOCKS: Record<BlockCollection, ComponentType<BlockProps>> = {
   ),
   block_events: ({ item, background }) => (
     <EventsBlock item={item as BlockEvents} background={background} />
+  ),
+  block_quicklinks: ({ item, background }) => (
+    <QuicklinksBlock item={item as BlockQuicklinks} background={background} />
   ),
 };
 
