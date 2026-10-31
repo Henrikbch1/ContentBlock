@@ -1,6 +1,14 @@
+import {
+  BLACK,
+  WHITE,
+  ensureContrast,
+  limitPrimaryContrast,
+  mix,
+  toHex,
+} from "./colorContrast";
+import type { Color } from "./colorContrast";
 import type { Theme } from "./types";
 
-type Color = readonly [number, number, number];
 type Scheme = "light" | "dark";
 
 type Palette = Readonly<{
@@ -19,12 +27,10 @@ type NeutralThemeResult = Readonly<{
   warnings: string[];
 }>;
 
-const WHITE: Color = [255, 255, 255];
-const BLACK: Color = [0, 0, 0];
 const DEFAULT_ACCENT: Color = [0, 95, 98];
-const MIN_CONTRAST = 7;
 const MIN_INDICATOR_CONTRAST = 3;
-const MAX_PRIMARY_CONTRAST = 10;
+const HIGHLIGHT_TINT = 0.3;
+const MIN_HIGHLIGHT_CONTRAST = 1.25;
 
 const PALETTES: Record<Scheme, Palette> = {
   light: {
@@ -48,75 +54,6 @@ const PALETTES: Record<Scheme, Palette> = {
     onPrimary: BLACK,
   },
 };
-
-const mix = (from: Color, to: Color, amount: number): Color => [
-  Math.round(from[0] + (to[0] - from[0]) * amount),
-  Math.round(from[1] + (to[1] - from[1]) * amount),
-  Math.round(from[2] + (to[2] - from[2]) * amount),
-];
-
-const luminance = (color: Color): number => {
-  const linear = color.map((channel) => {
-    const value = channel / 255;
-    return value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4;
-  });
-  return 0.2126 * linear[0] + 0.7152 * linear[1] + 0.0722 * linear[2];
-};
-
-const contrast = (first: Color, second: Color): number => {
-  const firstLuminance = luminance(first);
-  const secondLuminance = luminance(second);
-  return (
-    (Math.max(firstLuminance, secondLuminance) + 0.05) /
-    (Math.min(firstLuminance, secondLuminance) + 0.05)
-  );
-};
-
-const ensureContrast = (
-  color: Color,
-  background: Color,
-  destination: Color,
-  minimum = MIN_CONTRAST,
-): Color => {
-  if (contrast(color, background) >= minimum) return color;
-  if (contrast(destination, background) < minimum) {
-    throw new RangeError("Neutral theme contrast target cannot be reached.");
-  }
-
-  let low = 0;
-  let high = 1;
-  for (let iteration = 0; iteration < 16; iteration += 1) {
-    const middle = (low + high) / 2;
-    if (contrast(mix(color, destination, middle), background) >= minimum) {
-      high = middle;
-    } else {
-      low = middle;
-    }
-  }
-  return mix(color, destination, high);
-};
-
-const limitPrimaryContrast = (color: Color, background: Color): Color => {
-  if (contrast(color, background) <= MAX_PRIMARY_CONTRAST) return color;
-
-  let low = 0;
-  let high = 1;
-  for (let iteration = 0; iteration < 16; iteration += 1) {
-    const middle = (low + high) / 2;
-    if (
-      contrast(mix(color, background, middle), background) <=
-      MAX_PRIMARY_CONTRAST
-    ) {
-      high = middle;
-    } else {
-      low = middle;
-    }
-  }
-  return mix(color, background, high);
-};
-
-const toHex = (color: Color): string =>
-  `#${color.map((channel) => channel.toString(16).padStart(2, "0")).join("")}`;
 
 const readAccent = (
   value: string | null | undefined,
@@ -196,6 +133,16 @@ const createScheme = (
     base.text,
     base.background,
   );
+  const highlight = ensureContrast(
+    ensureContrast(
+      mix(base.paper, secondAccent, HIGHLIGHT_TINT),
+      base.paper,
+      towardsText,
+      MIN_HIGHLIGHT_CONTRAST,
+    ),
+    base.text,
+    base.paper,
+  );
 
   return Object.fromEntries(
     Object.entries({
@@ -203,6 +150,8 @@ const createScheme = (
       surface: base.surface,
       paper: base.paper,
       pin,
+      highlight,
+      "on-highlight": base.text,
       "rail-accent": railAccent,
       text: base.text,
       muted: base.muted,

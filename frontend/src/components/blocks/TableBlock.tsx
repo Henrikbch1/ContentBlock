@@ -3,9 +3,12 @@ import { useEffect, useId, useState } from "react";
 import { Section } from "../layout/Section";
 import { SectionTitle } from "../common/SectionTitle";
 import { EMPTY_MESSAGES } from "../../lib/uiMessages";
+import { isRangeTextActive } from "../../lib/dateRanges";
+import { collectActiveEntries } from "../../lib/tableActive";
 import { getTableCellText, getTableRows } from "../../lib/tableData";
 import type { TableRow } from "../../lib/tableData";
 import type { BlockProps, BlockTable } from "../../lib/types";
+import { TableActiveSummary } from "./TableActiveSummary";
 import { TableViews } from "./TableViews";
 import type { TableDisplayRow } from "./TableViews";
 
@@ -16,21 +19,32 @@ const MOBILE_PAGE_SIZE = 5;
 const getPageSize = (wide: boolean): number =>
   wide ? DESKTOP_PAGE_SIZE : MOBILE_PAGE_SIZE;
 
-const identifyRows = (rows: TableRow[]): TableDisplayRow[] => {
+const identifyRows = (rows: TableRow[], today: Date): TableDisplayRow[] => {
   const occurrences = new Map<string, number>();
   return rows.map((row) => {
     const values = row.cells.map((cell) => getTableCellText(cell.value));
     const content = JSON.stringify(values);
     const occurrence = occurrences.get(content) ?? 0;
     occurrences.set(content, occurrence + 1);
-    return { key: `${content}:${occurrence}`, values };
+    return {
+      key: `${content}:${occurrence}`,
+      values,
+      active: values.map((value) => isRangeTextActive(value, today)),
+    };
   });
 };
+
+type TableBlockProps = BlockProps<BlockTable> &
+  Readonly<{
+    /** Reference day for highlighting active date ranges; defaults to now. */
+    today?: Date;
+  }>;
 
 export const TableBlock = ({
   item,
   background,
-}: BlockProps<BlockTable>): React.JSX.Element => {
+  today = new Date(),
+}: TableBlockProps): React.JSX.Element => {
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(() =>
@@ -47,7 +61,7 @@ export const TableBlock = ({
   }, []);
 
   const [header, ...body] = getTableRows(item.data);
-  const rows = identifyRows(body).filter((row) =>
+  const rows = identifyRows(body, today).filter((row) =>
     row.values.some((value) => value.trim() !== ""),
   );
   const search = query.trim().toLocaleLowerCase();
@@ -69,6 +83,7 @@ export const TableBlock = ({
     return value || `Spalte ${index + 1}`;
   });
   const label = item.title?.trim() || "Tabelle";
+  const activeEntries = collectActiveEntries(headers, rows);
 
   return (
     <Section background={background}>
@@ -79,6 +94,7 @@ export const TableBlock = ({
         </p>
       ) : (
         <div className="flex flex-col gap-5">
+          <TableActiveSummary entries={activeEntries} />
           {rows.length > 0 && (
             <div className="flex max-w-md flex-col gap-2">
               <label className="font-semibold" htmlFor={searchId}>

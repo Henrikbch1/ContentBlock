@@ -90,6 +90,8 @@
   --cb-on-inverse: var(--cb-bg);
   --cb-paper: var(--cb-bg);
   --cb-pin: var(--cb-accent);
+  --cb-highlight: color-mix(in srgb, var(--cb-accent) 30%, var(--cb-paper));
+  --cb-on-highlight: var(--cb-text);
   --cb-rail-accent: var(--cb-accent);
   --cb-rail-edge: color-mix(
     in srgb,
@@ -106,6 +108,8 @@
   --cb-surface: var(--cb-neutral-light-surface);
   --cb-paper: var(--cb-neutral-light-paper);
   --cb-pin: var(--cb-neutral-light-pin);
+  --cb-highlight: var(--cb-neutral-light-highlight);
+  --cb-on-highlight: var(--cb-neutral-light-on-highlight);
   --cb-rail-accent: var(--cb-neutral-light-rail-accent);
   --cb-rail-edge: #b9bebc;
   --cb-text: var(--cb-neutral-light-text);
@@ -136,6 +140,8 @@
     --cb-surface: var(--cb-neutral-dark-surface);
     --cb-paper: var(--cb-neutral-dark-paper);
     --cb-pin: var(--cb-neutral-dark-pin);
+    --cb-highlight: var(--cb-neutral-dark-highlight);
+    --cb-on-highlight: var(--cb-neutral-dark-on-highlight);
     --cb-rail-accent: var(--cb-neutral-dark-rail-accent);
     --cb-rail-edge: #4d5452;
     --cb-shadow:
@@ -231,6 +237,8 @@
   --color-card-foreground: var(--cb-text);
   --color-paper: var(--cb-paper);
   --color-pin: var(--cb-pin);
+  --color-highlight: var(--cb-highlight);
+  --color-highlight-foreground: var(--cb-on-highlight);
   --color-rail: var(--cb-inverse);
   --color-rail-foreground: var(--cb-on-inverse);
   --color-rail-accent: var(--cb-rail-accent);

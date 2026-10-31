@@ -13,6 +13,8 @@ export const UI_LABELS = {
   document: "Dokument",
   readNews: "Beitrag lesen",
   viewEvent: "Termin ansehen",
+  tableActive: "gilt heute",
+  tableActiveSummary: "Gilt heute:",
 } as const;
 
 /** Zentrale Lade-/Fehler-/Leertexte, um Duplikate über Blocks/Pages zu vermeiden. */

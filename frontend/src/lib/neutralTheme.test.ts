@@ -79,6 +79,8 @@ describe("getNeutralTheme", () => {
           [text, color("accent"), 4.5],
           [text, color("accent-hover"), 4.5],
           [text, blend(background, color("accent"), 0.45), 4.5],
+          [color("on-highlight"), color("highlight"), 7],
+          [color("highlight"), paper, 1.25],
           [blend(primaryColor, onPrimary, 0.85), primaryColor, 4.5],
           [onInverse, inverse, 4.5],
           [blend(inverse, onInverse, 0.78), inverse, 4.5],
@@ -134,6 +136,12 @@ describe("getNeutralTheme", () => {
         expect(
           contrastRatio(color("text"), color("accent-hover")),
         ).toBeGreaterThanOrEqual(4.5);
+        expect(
+          contrastRatio(color("on-highlight"), color("highlight")),
+        ).toBeGreaterThanOrEqual(7);
+        expect(
+          contrastRatio(color("highlight"), color("paper")),
+        ).toBeGreaterThanOrEqual(1.25);
       }
     }
   });
