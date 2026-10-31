@@ -91,6 +91,7 @@ erDiagram
     PAGES_BLOCKS }o--|| BLOCK_NEWS : "item (wenn collection)"
     PAGES_BLOCKS }o--|| BLOCK_EVENTS : "item (wenn collection)"
     PAGES_BLOCKS }o--|| BLOCK_TICKER : "item (wenn collection)"
+    PAGES_BLOCKS }o--|| BLOCK_QUICKLINKS : "item (wenn collection)"
 
     %% ===== BLOCK-INHALTE =====
     BLOCK_HERO ||--o{ BLOCK_HERO_BUTTONS : "buttons (O2M)"
@@ -104,6 +105,8 @@ erDiagram
     BLOCK_DOCUMENTS }o--o| CATEGORIES : "filter_category (M2O)"
     BLOCK_NEWS }o--o| CATEGORIES : "filter_category (M2O)"
     BLOCK_EVENTS }o--o| CATEGORIES : "filter_category (M2O)"
+    BLOCK_QUICKLINKS ||--o{ BLOCK_QUICKLINKS_ITEMS : "items (O2M)"
+    BLOCK_QUICKLINKS_ITEMS }o--o| PAGES : "page (M2O)"
 
     %% ===== CONTENT UND STAMMDATEN =====
     CATEGORIES ||--o{ CATEGORIES : "parent (self-ref)"
@@ -148,6 +151,7 @@ erDiagram
         string type
         uuid page FK
         string external_url
+        string icon "Symbolschluessel (Select), optional"
         int sort
     }
     FOOTER {
@@ -318,6 +322,21 @@ erDiagram
         uuid filter_category FK
         int limit
     }
+    BLOCK_QUICKLINKS {
+        uuid id PK
+        string title
+        alias items
+    }
+    BLOCK_QUICKLINKS_ITEMS {
+        uuid id PK
+        uuid quicklinks FK
+        string label
+        string icon "Symbolschluessel (Select), optional"
+        string text
+        uuid page FK
+        string external_url
+        int sort
+    }
 
     CATEGORIES {
         uuid id PK
@@ -345,6 +364,7 @@ erDiagram
         uuid id PK
         string title
         uuid file FK
+        uuid file_monochrome FK "druckfreundliche S/W-Datei, optional"
         uuid category FK
     }
     NEWS {

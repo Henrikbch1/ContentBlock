@@ -41,6 +41,7 @@ const PUBLIC_READ = {
     "type",
     "page",
     "external_url",
+    "icon",
     "sort",
   ],
   footer: [
@@ -128,12 +129,23 @@ const PUBLIC_READ = {
     "filter_category",
     "limit",
   ],
+  block_quicklinks: ["id", "title", "items"],
+  block_quicklinks_items: [
+    "id",
+    "quicklinks",
+    "label",
+    "icon",
+    "text",
+    "page",
+    "external_url",
+    "sort",
+  ],
 
   // Stammdaten und Inhalte
   categories: ["id", "name", "slug", "parent", "sort"],
   roles: ["id", "name", "parent", "sort"],
   people: ["id", "first_name", "last_name", "role", "photo", "email", "phone"],
-  documents: ["id", "title", "file", "category"],
+  documents: ["id", "title", "file", "file_monochrome", "category"],
   news: [
     "id",
     "title",

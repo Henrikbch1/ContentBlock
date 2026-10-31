@@ -42,7 +42,7 @@ Neue Frontend-Felder oder -Collections muessen hier und im Skript ergaenzt werde
 | ---------------------- | ----------------------------------------------------------------------------------------------------------- |
 | `site`                 | id, navigation, footer, theme                                                                               |
 | `navigation`           | id, logo, brand_text, items                                                                                 |
-| `nav_items`            | id, navigation, label, parent, type, page, external_url, sort                                               |
+| `nav_items`            | id, navigation, label, parent, type, page, external_url, icon, sort                                         |
 | `footer`               | id, copyright, contact_text, legal_heading, imprint_label, privacy_label, imprint_page, privacy_page, columns |
 | `footer_links`         | id, footer, label, page, external_url, sort                                                                 |
 | `theme`                | id, primary_color, secondary_color, accent_color, background_color, surface_color, text_color, font_heading, font_body, border_radius, spacing_scale, container_width, shadow_style |
@@ -65,10 +65,12 @@ Neue Frontend-Felder oder -Collections muessen hier und im Skript ergaenzt werde
 | `block_ticker_items`   | id, ticker, text, link, sort                                                                                |
 | `block_news`           | id, background, title, mode, filter_category, limit                                                         |
 | `block_events`         | id, background, title, mode, filter_category, limit                                                         |
+| `block_quicklinks`     | id, title, items                                                                                            |
+| `block_quicklinks_items` | id, quicklinks, label, icon, text, page, external_url, sort                                               |
 | `categories`           | id, name, slug, parent, sort                                                                                |
 | `roles`                | id, name, parent, sort                                                                                      |
 | `people`               | id, first_name, last_name, role, photo, email, phone                                                        |
-| `documents`            | id, title, file, category                                                                                   |
+| `documents`            | id, title, file, file_monochrome, category                                                                  |
 | `news`                 | id, title, slug, published_date, teaser, cover_image, body, category                                        |
 | `events`               | id, title, slug, start_date, end_date, location, description, show_days_before, visible_from, category      |
 | `directus_files`       | id, title, description, type, filename_download, filesize, width, height                                    |
@@ -149,6 +151,20 @@ Flows stehen in [snapshots/flows.seed.json](snapshots/flows.seed.json) und werde
 | Events - visible_from                  | `visible_from = start_date - show_days_before` Tage. Fehlende Werte liest der Flow bei Updates aus dem bestehenden Item; auch ein reines Update von `show_days_before` rechnet neu. Bei Sammel-Updates mehrerer Items mit unvollstaendigem Payload bleibt `visible_from` unberuehrt. |
 
 ## Directus Runtime und AG Grid
+
+### Modellerweiterungen (31.10.2026)
+
+Neu: `documents.file_monochrome` (optionale druckfreundliche Schwarz-Weiß-Datei),
+`nav_items.icon` (Symbol aus einer festen Auswahlliste) und der Block
+`block_quicklinks` mit `block_quicklinks_items` (Schnellzugriff-Kacheln). Die
+Symbolschlüssel der Auswahlliste müssen mit
+`frontend/src/components/common/iconRegistry.ts` übereinstimmen; unbekannte
+Schlüssel zeigen kein Symbol. Vorher wurden PostgreSQL-Custom-Dump und
+JSON-Schema-Snapshot außerhalb des Repositorys gesichert:
+`%LOCALAPPDATA%/ContentBlock/backups/20261031-pre-extensions/`.
+In `snapshot.json` wurden nur diese Einträge ergänzt. Die lokale Instanz kennt
+einige ältere Snapshot-Felder (u. a. `background` der Blöcke, Teile von `theme`
+und `footer`) weiterhin nicht; diese Abweichung besteht unverändert.
 
 ### Directus 12.5.0 (09.10.2026)
 
