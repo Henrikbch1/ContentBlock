@@ -14,6 +14,8 @@ const DOCUMENT_FIELDS = [
   "title",
   "file.id",
   "file.filename_download",
+  "file_monochrome.id",
+  "file_monochrome.filename_download",
   "category.*",
 ] as const;
 

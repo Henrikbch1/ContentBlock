@@ -102,6 +102,8 @@ export interface Document {
   id: DirectusId;
   title?: string | null;
   file?: DirectusAsset;
+  /** Optional print-friendly black-and-white variant of `file`. */
+  file_monochrome?: DirectusAsset;
   category?: DirectusRelation<Category>;
 }
 

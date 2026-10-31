@@ -47,6 +47,15 @@ describe("getDocumentsForBlock", () => {
     expect(mocks.readItems).toHaveBeenCalledWith(
       "documents",
       expect.objectContaining({
+        fields: expect.arrayContaining([
+          "file_monochrome.id",
+          "file_monochrome.filename_download",
+        ]),
+      }),
+    );
+    expect(mocks.readItems).toHaveBeenCalledWith(
+      "documents",
+      expect.objectContaining({
         filter: {
           id: { _in: ["document-color", "document-monochrome"] },
         },

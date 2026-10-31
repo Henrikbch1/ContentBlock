@@ -61,6 +61,42 @@ describe("DocumentsBlock", () => {
     expect(monochrome).toHaveClass("min-h-11");
   });
 
+  it("offers color and print-friendly variants of one document", async () => {
+    mocks.getDocumentsForBlock.mockResolvedValue([
+      {
+        id: "form",
+        title: "Aufnahmeantrag",
+        file: { id: "color-file", filename_download: "antrag.pdf" },
+        file_monochrome: {
+          id: "mono-file",
+          filename_download: "antrag-sw.pdf",
+        },
+      },
+    ]);
+
+    render(<DocumentsBlock item={{ id: "block" }} />);
+
+    const color = await screen.findByRole("link", {
+      name: /^Farbe öffnen\s*:\s*Aufnahmeantrag \(öffnet in neuem Tab\)$/,
+    });
+    const monochrome = screen.getByRole("link", {
+      name: /^Schwarz-Weiß öffnen\s*:\s*Aufnahmeantrag, druckfreundlich \(öffnet in neuem Tab\)$/,
+    });
+    expect(color).toHaveAttribute(
+      "href",
+      "https://cms.example.test/assets/color-file",
+    );
+    expect(monochrome).toHaveAttribute(
+      "href",
+      "https://cms.example.test/assets/mono-file",
+    );
+    expect(monochrome).toHaveAttribute("target", "_blank");
+    expect(monochrome).toHaveClass("min-h-11");
+    expect(
+      screen.queryByRole("link", { name: /Dokument öffnen/ }),
+    ).not.toBeInTheDocument();
+  });
+
   it("uses the filename or a fallback when a title is absent", async () => {
     mocks.getDocumentsForBlock.mockResolvedValue([
       {

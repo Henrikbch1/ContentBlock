@@ -16,6 +16,7 @@ import { LoadingState } from "../common/LoadingState";
 import { NoticeMeta } from "../common/NoticeMeta";
 import { SectionTitle } from "../common/SectionTitle";
 import { Section } from "../layout/Section";
+import { DocumentLinks } from "./DocumentLinks";
 
 const getFileType = (fileName: string | null): string | null => {
   const extension = fileName?.match(/\.([a-z0-9]{1,5})$/i)?.[1];
@@ -66,17 +67,11 @@ export const DocumentsBlock = ({
                   {title}
                 </h3>
                 {fileUrl ? (
-                  <a
-                    className="mt-auto inline-flex min-h-11 items-center pt-5 text-base font-bold text-link underline decoration-2 underline-offset-4 hover:decoration-4"
-                    href={fileUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Dokument öffnen
-                    <span className="sr-only">
-                      : {title} (öffnet in neuem Tab)
-                    </span>
-                  </a>
+                  <DocumentLinks
+                    title={title}
+                    fileUrl={fileUrl}
+                    monochromeUrl={getAssetUrl(document.file_monochrome)}
+                  />
                 ) : (
                   <p
                     className="mt-auto pt-5 text-base text-muted-foreground"
