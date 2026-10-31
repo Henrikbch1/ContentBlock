@@ -288,7 +288,7 @@ Große Aushang-Kacheln mit Nadel, jede Kachel ist ein einziger Link. Oben ein 28
 Lucide-Linien-Symbole aus einer festen, im CMS wählbaren Liste (`components/common/iconRegistry.ts`). Sie stehen immer neben einer sichtbaren Beschriftung, sind `aria-hidden`, haben die Größe 1em und erben die Textfarbe. In der obersten Desktop-Menüleiste erscheinen sie erst ab 1280px, damit die Leiste einzeilig bleibt. Unbekannte Schlüssel zeigen kein Symbol.
 
 ### Heute gültige Zeiträume
-Tabellenzellen mit Datumsbereichen („01.02. – 15.05.“, auch über den Jahreswechsel) erhalten die Heute-Markierung als Fläche und darunter ein Badge „gilt heute“ in Vereinspetrol (text-sm, fett). Mobile Karten bekommen zusätzlich eine linke Kante in Nadelfarbe. Über der Tabelle fasst ein statischer Kasten „Gilt heute“ alle aktiven Einträge zusammen, damit sie auch bei Seitenumbruch und Filter sichtbar bleiben.
+Tabellenzellen mit Datumsbereichen („01.02. – 15.05.“, auch über den Jahreswechsel) erhalten die Heute-Markierung als Fläche und darunter ein Badge „gilt heute“ in Vereinspetrol (text-sm, fett), in der Tabelle wie in den mobilen Karten. Keine Seitenkante (siehe Detektor-Regel `side-tab`). Über der Tabelle fasst ein statischer Kasten „Gilt heute“ alle aktiven Einträge zusammen, damit sie auch bei Seitenumbruch und Filter sichtbar bleiben.
 
 ### Dokumentvarianten
 Hat ein Dokument eine Schwarz-Weiß-Datei, zeigt der Aushang statt „Dokument öffnen“ die Zeile „Version wählen“ mit den Textaktionen „Farbe öffnen“ und „Schwarz-Weiß öffnen“, beide 44px hoch.

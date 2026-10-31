@@ -107,13 +107,7 @@ export const TableViews = ({
     </div>
     <ol aria-label={`${label} als Karten`} className="grid gap-3 md:hidden">
       {rows.map((row) => (
-        <li
-          className={cardClassName(
-            "min-w-0 p-5",
-            row.active.some(Boolean) && "border-s-4 border-s-pin",
-          )}
-          key={row.key}
-        >
+        <li className={cardClassName("min-w-0 p-5")} key={row.key}>
           <dl className="flex flex-col gap-3">
             {headers.map((heading, index) => (
               <div
